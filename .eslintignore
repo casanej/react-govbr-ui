@@ -1,0 +1,6 @@
+node_modules
+**/node_modules
+assets/images/**/*
+
+rollup.config.js
+react-app-env.d.ts
