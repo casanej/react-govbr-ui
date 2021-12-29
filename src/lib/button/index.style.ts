@@ -17,6 +17,7 @@ interface ButtonProps {
     circle?: boolean;
     disabled?: boolean;
     fullWidth?: boolean;
+    isLoading?: boolean;
 }
 
 const handleButtonVariant = (props: any) => {
@@ -46,17 +47,36 @@ const handleButtonVariant = (props: any) => {
             color: ${props.theme.colors.appScheme.button.secondary.text};
             border: ${props.variant === 'secondary' ? `1px solid ${props.theme.colors.appScheme.button.primary.background}` : 'none'};
 
-            &:hover {
+            &:not(:disabled):hover {
                 background-color: ${props => `${props.theme.colors.appScheme.button.primary.background}${convertPercentageToAlpha(props.theme.properties.opacity.sm)}`};
             }
 
-            &:active {
+            &:not(:disabled):active {
                 background-color: ${props => `${props.theme.colors.appScheme.button.primary.background}${convertPercentageToAlpha(props.theme.properties.opacity.md)}`};
+            }
+
+            &:disabled {
+                opacity: ${props => props.theme.properties.opacity.md};
+                cursor: not-allowed;
             }
         `
     }
 
     return css``;
+}
+
+const handleLoadingVariant = (props: any) => {
+    switch (props.variant) {
+    case 'primary': return css`
+            color: ${props => props.theme.colors.appScheme.button.primary.background};
+        `
+    case 'secondary':
+    case 'tertiary': return css`
+            color: ${props => props.theme.colors.appScheme.button.secondary.background};
+        `
+    }
+
+    return css``
 }
 
 const handleButtonWidth = (props: ButtonProps): string => {
@@ -73,6 +93,7 @@ export const ButtonStyled = styled.button<ButtonProps>`
     align-items: center;
     vertical-align: middle;
     width: ${props => handleButtonWidth(props)};
+    min-width: 100px;
     height: ${props => buttonHeight[props.size]};
     border: 0;
     border-radius: ${props => props.circle ? '50%' : '100em'};
@@ -84,8 +105,8 @@ export const ButtonStyled = styled.button<ButtonProps>`
     cursor: pointer;
 
     ${props => handleButtonVariant(props)}
-
-    &:disabled {
-    }
-    
 `
+
+export const ButtonLoading = styled.div`
+    ${props => handleLoadingVariant(props)}
+`;

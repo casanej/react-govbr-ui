@@ -1,11 +1,13 @@
-import React, { ReactElement, useEffect } from 'react'
-import { ButtonSize, ButtonStyled, ButtonVariant } from './index.style';
+import React, { ReactElement } from 'react'
+import { Loading } from 'lib'
+import { ButtonSize, ButtonStyled, ButtonVariant, ButtonLoading} from './index.style';
 
 interface Props {
     label: string;
     circle?: boolean;
     disabled?: boolean;
     fullWidth?: boolean;
+    isLoading?: boolean;
     size?: ButtonSize;
     variant?: ButtonVariant;
 }
@@ -17,10 +19,16 @@ export const Button = (props: Props): ReactElement => {
             circle={props.circle}
             disabled={props.disabled}
             fullWidth={props.fullWidth && !props.circle}
+            isLoading={props.isLoading}
             size={props.size || 'md'}
             variant={props.variant || 'primary'}
         >
-            {props.label}
+            {props.isLoading
+                ? <ButtonLoading>
+                    {/* <div>Carregando</div> */}
+                    <Loading infinity='sm' variant='secondary' />
+                </ButtonLoading>
+                : props.label}
         </ButtonStyled>
     );
 };

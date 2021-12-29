@@ -19,6 +19,7 @@ const Template: ButtonStory = (args) => <ThemeProvider theme={theme}>
         circle={args.circle}
         disabled={args.disabled}
         fullWidth={args.fullWidth}
+        isLoading={args.isLoading}
         size={args.size}
         variant={args.variant}
     />
@@ -29,4 +30,5 @@ export const Primary = Template.bind({});
 Primary.args = {
     label: 'Button',
     variant: 'primary',
-};
+    size: 'md'
+}
