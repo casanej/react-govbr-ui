@@ -93,7 +93,7 @@ export const ButtonStyled = styled.button<ButtonProps>`
     align-items: center;
     vertical-align: middle;
     width: ${props => handleButtonWidth(props)};
-    min-width: 100px;
+    min-width: ${props => props.circle ? 'unset' : '100px'};
     height: ${props => buttonHeight[props.size]};
     border: 0;
     border-radius: ${props => props.circle ? '50%' : '100em'};
