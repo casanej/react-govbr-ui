@@ -1,24 +1,31 @@
 import { IconName } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from 'lib';
+import { Alert, Button } from 'lib';
+import { AlertTypes } from 'models';
 import React, { ReactElement, useEffect, useState } from 'react'
-import { InputAction, InputIcon, InputLabel, inputSize, InputStyled, InputTextStyled } from './index.style';
+import { InputAction, InputContent, InputIcon, InputLabel, inputSize, InputStyled, InputTextStyled } from './index.style';
 
 interface Props {
     action?: {
         icon: IconName;
         onClick: () => void;
+    };
+    alert?: {
+        message: string;
+        type: AlertTypes;
     }
+    direction?: 'row' | 'column';
+    disabled?: boolean;
+    helpText?: React.ReactNode;
     highlight?: boolean;
     icon?: IconName;
     label?: string;
-    direction?: 'row' | 'column';
     name?: string;
     size?: keyof typeof inputSize;
     value?: string;
     onChange?: (value: string, name: string) => void;
     placeholder?: string;
-    type?: React.HTMLInputTypeAttribute;
+    type?: string;
 }
 
 export const InputText = (props: Props): ReactElement => {
@@ -43,28 +50,39 @@ export const InputText = (props: Props): ReactElement => {
             {
                 props.label && <InputLabel htmlFor={name}>{props.label}</InputLabel>
             }
+            <InputContent>
+                {
+                    props.icon && <InputIcon>
+                        <FontAwesomeIcon icon={props.icon} color='#888' />
+                    </InputIcon>
+                }
+                <InputStyled
+                    alert={props.alert?.type}
+                    disabled={props.disabled}
+                    name={name}
+                    density={props.size || 'md'}
+                    hasIcon={!!props.icon}
+                    highlight={props.highlight}
+                    value={value}
+                    type={props.type || 'text'}
+                    placeholder={props.placeholder}
+                    onChange={handleChange}
+                />
+
+                {
+                    props.action && <InputAction>
+                        <Button circle variant='tertiary' size='sm' label={
+                            <FontAwesomeIcon icon={props.action.icon} color='#1351b4' />
+                        } />
+                    </InputAction>
+                }
+            </InputContent>
             {
-                props.icon && <InputIcon>
-                    <FontAwesomeIcon icon={props.icon} color='#888' />
-                </InputIcon>
+                props.alert && <Alert type={props.alert.type}>{props.alert.message}</Alert>
             }
-            <InputStyled
-                name={name}
-                density={props.size || 'md'}
-                hasIcon={!!props.icon}
-                highlight={props.highlight}
-                value={value}
-                type={props.type || 'text'}
-                placeholder={props.placeholder}
-                onChange={handleChange}
-            />
 
             {
-                props.action && <InputAction>
-                    <Button circle variant='tertiary' size='sm' label={
-                        <FontAwesomeIcon icon={props.action.icon} color='#1351b4' />
-                    } />
-                </InputAction>
+                props.helpText && <div>{props.helpText}</div>
             }
         </InputTextStyled>
     );

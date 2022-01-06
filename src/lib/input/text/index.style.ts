@@ -1,3 +1,4 @@
+import { alertColorTypes, AlertTypes } from 'models';
 import styled, { css } from 'styled-components';
 
 export const inputSize = {
@@ -7,19 +8,23 @@ export const inputSize = {
 }
 
 interface InputStyledProps {
+    alert?: AlertTypes
     density: keyof typeof inputSize;
     hasIcon?: boolean;
     highlight?: boolean;
 }
 
 export const InputTextStyled = styled.div<{ direction: 'row' | 'column' }>`
-    position: relative;
     display: flex;
     flex-direction: ${props => props.direction};
     justify-content: center;
     align-items: ${props => props.direction === 'row' ? 'center' : 'flex-start'};
     gap: 5px;
 `;
+
+export const InputContent = styled.div`
+    position: relative;
+`
 
 export const InputIcon = styled.div`
     position: absolute;
@@ -69,7 +74,15 @@ export const InputStyled = styled.input<InputStyledProps>`
             
     `}
 
+    &:disabled {
+        cursor: not-allowed;
+    }
+
     &:not(:disabled) {
+        ${props => props.alert && css`
+            border: 3px solid ${alertColorTypes[props.alert].background};
+        `}
+
         &:focus, &:focus-visible {
             outline: #c2850c;
             border: 3px solid #c2850c;

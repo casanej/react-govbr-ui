@@ -46,7 +46,7 @@ export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     body {
         background-color: ${props => props.theme.currentPallet.background.primary};
         color: ${props => props.theme.currentPallet.text.primary};
-        font-family: "Rawline", "Roboto", sans-serif;
+        font-family: "Rawline", "Raleway", sans-serif;
         font-size: 14px;
         width: 100%;
         height: 100vh;
