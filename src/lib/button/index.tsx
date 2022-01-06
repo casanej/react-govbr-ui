@@ -3,7 +3,7 @@ import { Loading } from 'lib'
 import { ButtonSize, ButtonStyled, ButtonVariant, ButtonLoading} from './index.style';
 
 interface Props {
-    label: string;
+    label: React.ReactNode;
     circle?: boolean;
     disabled?: boolean;
     fullWidth?: boolean;

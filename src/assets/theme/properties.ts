@@ -62,5 +62,19 @@ export const properties = {
         '9xh': '76px',
         '10x': '80px',
         '10xh': '84px'
+    },
+    surface: {
+        rounder: {
+            none: '0',
+            sm: '4px',
+            md: '8px',
+            lg: '16px',
+        },
+        width: {
+            none: '0',
+            sm: '1px',
+            md: '2px',
+            lg: '4px',
+        }
     }
 }

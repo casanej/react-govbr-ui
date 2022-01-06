@@ -41,9 +41,28 @@ const handleButtonVariant = (props: any) => {
             }
         `
     case 'secondary':
-    case 'tertiary':
         return css`
             background-color: ${props.theme.colors.appScheme.button.secondary.background};
+            color: ${props.theme.colors.appScheme.button.secondary.text};
+            border: ${props.variant === 'secondary' ? `1px solid ${props.theme.colors.appScheme.button.primary.background}` : 'none'};
+
+            &:not(:disabled):hover {
+                background-color: ${props => `${props.theme.colors.appScheme.button.primary.background}${convertPercentageToAlpha(props.theme.properties.opacity.sm)}`};
+            }
+
+            &:not(:disabled):active {
+                background-color: ${props => `${props.theme.colors.appScheme.button.primary.background}${convertPercentageToAlpha(props.theme.properties.opacity.md)}`};
+            }
+
+            &:disabled {
+                opacity: ${props => props.theme.properties.opacity.md};
+                cursor: not-allowed;
+            }
+        `
+
+    case 'tertiary':
+        return css`
+            background-color: transparent;
             color: ${props.theme.colors.appScheme.button.secondary.text};
             border: ${props.variant === 'secondary' ? `1px solid ${props.theme.colors.appScheme.button.primary.background}` : 'none'};
 

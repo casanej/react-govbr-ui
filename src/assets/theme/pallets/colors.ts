@@ -38,6 +38,17 @@ const appScheme = {
         primary: '#663399'
     },
     colors: {
+        secondary: {
+            secondary01: '#fff',
+            secondary02: '#f8f8f8',
+            secondary03: '#ededed',
+            secondary04: '#ccc',
+            secondary05: '#9e9d9d',
+            secondary06: '#888',
+            secondary07: '#555',
+            secondary08: '#333',
+            secondary09: '#000',
+        },
         blue: {
             '90': '#11181d',
             '80': '#1f303e',
@@ -108,6 +119,19 @@ const appScheme = {
                 '5': '#edf5ff',
             }
         },
+        gold: {
+            vivid: {
+                '80': '#3b2b15',
+                '70': '#5c410a',
+                '60': '#7a591a',
+                '50': '#936f38',
+                '40': '#c2850c',
+                '30': '#e5a000',
+                '20': '#ffbe2e',
+                '10': '#ffe396',
+                '5': '#fef0c8',
+            }
+        }
     }
 };
 

@@ -8,7 +8,7 @@ interface ButtonExport extends ComponentMeta<typeof Button> {}
 interface ButtonStory extends ComponentStory<typeof Button> {}
 
 export default {
-    title: 'Input/Button',
+    title: 'Layout/Button',
     component: Button,
 } as ButtonExport;
 
