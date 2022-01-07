@@ -17,6 +17,7 @@ const Template: LoadingStory = (args) => <ThemeProvider theme={theme}>
     <InputText
         alert={args.alert}
         action={args.action}
+        name={args.name}
         direction={args.direction}
         disabled={args.disabled}
         helpText={args.helpText}

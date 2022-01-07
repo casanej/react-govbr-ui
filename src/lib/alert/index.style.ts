@@ -6,6 +6,7 @@ export const AlertStyled = styled.div<{ type: AlertTypes }>`
     flex-direction: row;
     align-items: center;
     gap: 5px;
+    width: fit-content;
     min-width: 150px;
     padding: 5px;
     background-color: ${props => alertColorTypes[props.type].background};

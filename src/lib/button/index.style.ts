@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { convertPercentageToAlpha } from 'utils';
+import { hexColorApplyAlpha } from 'utils';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 
@@ -47,11 +47,11 @@ const handleButtonVariant = (props: any) => {
             border: ${props.variant === 'secondary' ? `1px solid ${props.theme.colors.appScheme.button.primary.background}` : 'none'};
 
             &:not(:disabled):hover {
-                background-color: ${props => `${props.theme.colors.appScheme.button.primary.background}${convertPercentageToAlpha(props.theme.properties.opacity.sm)}`};
+                background-color: ${props => `${hexColorApplyAlpha(props.theme.colors.appScheme.button.primary.background, props.theme.properties.opacity.sm)}`};
             }
 
             &:not(:disabled):active {
-                background-color: ${props => `${props.theme.colors.appScheme.button.primary.background}${convertPercentageToAlpha(props.theme.properties.opacity.md)}`};
+                background-color: ${props => `${hexColorApplyAlpha(props.theme.colors.appScheme.button.primary.background, props.theme.properties.opacity.md)}`};
             }
 
             &:disabled {
@@ -67,11 +67,11 @@ const handleButtonVariant = (props: any) => {
             border: ${props.variant === 'secondary' ? `1px solid ${props.theme.colors.appScheme.button.primary.background}` : 'none'};
 
             &:not(:disabled):hover {
-                background-color: ${props => `${props.theme.colors.appScheme.button.primary.background}${convertPercentageToAlpha(props.theme.properties.opacity.sm)}`};
+                background-color: ${props => `${hexColorApplyAlpha(props.theme.colors.appScheme.button.primary.background, props.theme.properties.opacity.sm)}`};
             }
 
             &:not(:disabled):active {
-                background-color: ${props => `${props.theme.colors.appScheme.button.primary.background}${convertPercentageToAlpha(props.theme.properties.opacity.md)}`};
+                background-color: ${props => `${hexColorApplyAlpha(props.theme.colors.appScheme.button.primary.background, props.theme.properties.opacity.md)}`};
             }
 
             &:disabled {

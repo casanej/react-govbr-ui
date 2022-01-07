@@ -33,9 +33,8 @@ export const InputIcon = styled.div`
 `
 
 export const InputLabel = styled.label`
-    margin-bottom: ${props => props.theme.properties.scale.half};
     line-height: ${props => props.theme.properties.lineHeight.medium};
-    font-size: ${props => props.theme.properties.scale.base};
+    font-size: 14px;
     font-weight: 600;
 `
 

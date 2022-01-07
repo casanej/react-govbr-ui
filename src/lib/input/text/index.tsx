@@ -57,6 +57,7 @@ export const InputText = (props: Props): ReactElement => {
                     </InputIcon>
                 }
                 <InputStyled
+                    id={name}
                     alert={props.alert?.type}
                     disabled={props.disabled}
                     name={name}
