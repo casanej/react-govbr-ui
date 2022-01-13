@@ -52,6 +52,7 @@
       "paths": {
         "lib": ["./src/lib/index.ts"],
         "assets": ["./src/assets/index.ts"],
+        "context": ["./src/context/index.ts"],
         "utils": ["./src/utils/index.ts"],
         "models": ["./src/models/index.ts"],
         "hooks": ["./src/hooks/index.ts"],

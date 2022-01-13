@@ -2,9 +2,15 @@ import { alertColorTypes, AlertTypes } from 'models';
 import styled, { css } from 'styled-components';
 import { hexColorApplyAlpha } from 'utils';
 
+export enum CheckTypes {
+    noChecked = 0,
+    checked = 1,
+    indeterminate = 2
+}
+
 interface CheckboxInputProps {
     alert?: AlertTypes;
-    checked?: boolean;
+    checked?: CheckTypes;
 }
 
 export const CheckboxStyled = styled.div`
@@ -32,7 +38,7 @@ export const CheckboxContent = styled.div`
     font-weight: 500;
 `;
 
-export const CheckboxInput = styled.input`
+export const CheckboxInput = styled.input<{ ref: any }>`
     opacity: 0;
     position: absolute;
 `;
@@ -75,7 +81,7 @@ export const CheckboxInputCustom = styled.label<CheckboxInputProps>`
         position: absolute;
     }
 
-    ${props => props.checked && css`
+    ${props => props.checked === 1 && css`
         &:after {
             left: 9px;
             top: 5px;
@@ -84,6 +90,17 @@ export const CheckboxInputCustom = styled.label<CheckboxInputProps>`
             border: solid #1351b4;
             border-width: 0 3px 3px 0;
             transform: rotate(45deg);
+        }
+    `}
+
+    ${props => props.checked === 2 && css`
+        &:after {
+            left: 5px;
+            top: 10px;
+            width: 13px;
+            height: 3px;
+            border: solid #1351b4;
+            border-width: 0 0px 3px 0;
         }
     `}
 

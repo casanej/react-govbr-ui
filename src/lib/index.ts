@@ -1,5 +1,6 @@
 export * from './alert';
 export * from './checkbox';
+export * from './checkbox-manager';
 export * from './button';
 export * from './input';
 export * from './loading';
