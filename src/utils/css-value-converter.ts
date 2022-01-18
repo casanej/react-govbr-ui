@@ -1,4 +1,4 @@
-export const hexColorApplyAlpha = (color: string, percentage: number) => {
+export const hexColorApplyAlpha = (color: string, percentage: number): string => {
     const decimalValue = Math.round(percentage * 255);
     let hexValue = '00';
 

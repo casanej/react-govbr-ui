@@ -9,34 +9,29 @@ export interface ThemePatternPallet {
     dark: PalletModel;
 }
 
-interface PalletModelButton {
-    default: string;
-    text: string;
-    border?: string;
-}
-
 export interface PalletModel {
+    table: {
+        header: {
+            background: {
+                primary: string;
+                hover: string;
+            },
+            text: {
+                primary: string;
+            }
+        },
+        body: {
+            background: {},
+            tr: {
+                hover: string;
+            }
+            text: {},
+        }
+    },
     text: {
         primary: string;
-        secondary: string;
-        success: string;
-        danger: string;
-        info: string;
-        light: string;
-        dark: string;
     };
     background: {
         primary: string;
-        primaryGradient: string;
-        secondary: string;
     };
-    button: {
-        primary: PalletModelButton;
-        secondary: PalletModelButton;
-        success: PalletModelButton;
-        danger: PalletModelButton;
-        info: PalletModelButton;
-        light: PalletModelButton;
-        dark: PalletModelButton;
-    }
 }

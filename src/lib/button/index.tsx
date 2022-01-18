@@ -10,9 +10,14 @@ interface Props {
     isLoading?: boolean;
     size?: ButtonSize;
     variant?: ButtonVariant;
+    onClick?: () => void;
 }
 
 export const Button = (props: Props): ReactElement => {
+
+    const handleClick = () => {
+        if (props.onClick) props.onClick();
+    }
 
     return (
         <ButtonStyled
@@ -22,6 +27,7 @@ export const Button = (props: Props): ReactElement => {
             isLoading={props.isLoading}
             size={props.size || 'md'}
             variant={props.variant || 'primary'}
+            onClick={handleClick}
         >
             {props.isLoading
                 ? <ButtonLoading>

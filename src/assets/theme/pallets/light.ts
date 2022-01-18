@@ -1,50 +1,30 @@
+import { hexColorApplyAlpha } from 'utils';
 import { PalletModel } from '.';
-
-const colorBlack = '#212121';
+import { theme } from '..';
 
 export const lightTheme: PalletModel = {
-    text: {
-        primary: colorBlack,
-        secondary: '',
-        success: '',
-        danger: '',
-        info: '',
-        light: '',
-        dark: ''
+    table: {
+        header: {
+            background: {
+                primary: '#f0f0f0',
+                hover: '#1351b473'
+            },
+            text: {
+                primary: '#1351b4',
+            }
+        },
+        body: {
+            background: {},
+            tr: {
+                hover: '#1351b4',
+            },
+            text: {},
+        }
     },
     background: {
         primary: '#FFF',
-        primaryGradient: '',
-        secondary: ''
     },
-    button: {
-        primary: {
-            default: '#1351b4',
-            text: ''
-        },
-        secondary: {
-            default: '',
-            text: ''
-        },
-        success: {
-            default: '',
-            text: ''
-        },
-        danger: {
-            default: '',
-            text: ''
-        },
-        info: {
-            default: '',
-            text: ''
-        },
-        light: {
-            default: '',
-            text: ''
-        },
-        dark: {
-            default: '',
-            text: ''
-        },
+    text: {
+        primary: '#212121',
     }
 };
