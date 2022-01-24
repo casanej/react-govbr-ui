@@ -1,6 +1,7 @@
 #folder removes
 node_modules
 build
+dist
 
 #files removes
 **/*.lock
