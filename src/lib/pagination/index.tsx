@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useReducer, useState } from 'react'
-import { Divider, Dropdown } from 'lib';
+import { Divider, InputSelect } from 'lib';
 import { PaginationLeftSide, PaginationRightSide, PaginationStyled } from './index.style';
 import { paginationInitialState, paginationReducer } from 'hooks'
 
@@ -11,7 +11,9 @@ export const Pagination = (props: Props): ReactElement => {
     return (
         <PaginationStyled>
             <PaginationLeftSide>
-                <Dropdown />
+                <InputSelect
+                    items={[]}
+                />
                 <Divider direction='vertical' />
                 <div>SET LIST</div>
                 <Divider direction='vertical' />

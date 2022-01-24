@@ -24,6 +24,7 @@ export const InputTextStyled = styled.div<{ direction: 'row' | 'column' }>`
 
 export const InputContent = styled.div`
     position: relative;
+    width: 100%;
 `
 
 export const InputIcon = styled.div`

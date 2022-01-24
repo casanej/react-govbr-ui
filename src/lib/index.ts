@@ -3,8 +3,8 @@ export * from './button';
 export * from './checkbox';
 export * from './checkbox-manager';
 export * from './divider';
-export * from './dropdown';
 export * from './input';
+export * from './item';
 export * from './loading';
 export * from './table';
 

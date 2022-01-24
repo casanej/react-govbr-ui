@@ -6,6 +6,7 @@ import { CheckTypes } from '../checkbox/index.style';
 interface Props {
     children: React.ReactNode;
     selectAll?: boolean;
+    onCheckAll?: (values: Array<{ name: string; value: boolean }>) => void;
 }
 
 export const CheckboxManager = (props: Props): ReactElement => {

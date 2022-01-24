@@ -24,6 +24,8 @@ interface Props {
     size?: keyof typeof inputSize;
     value?: string;
     onChange?: (value: string, name: string) => void;
+    onFocus?: () => void;
+    onBlur?: () => void;
     placeholder?: string;
     type?: string;
 }
@@ -34,7 +36,7 @@ export const InputText = (props: Props): ReactElement => {
 
     useEffect(() => {
         if (props.name) setName(props.name);
-        if (props.value) setValue(props.value);
+        if (typeof props.value === 'string') setValue(props.value);
     }, [props.name, props.value]);
 
     useEffect(() => {
@@ -68,6 +70,8 @@ export const InputText = (props: Props): ReactElement => {
                     type={props.type || 'text'}
                     placeholder={props.placeholder}
                     onChange={handleChange}
+                    onFocus={props.onFocus}
+                    onBlur={props.onBlur}
                 />
 
                 {
