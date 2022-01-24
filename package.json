@@ -5,7 +5,9 @@
   "module": "dist/index.js",
   "files": [
     "dist",
-    "README.md"
+    "lib",
+    "README.md",
+    "LICENSE"
   ],
   "repository": "",
   "author": "Rafael Casanje <rafael.casanje@gmail.com>",
