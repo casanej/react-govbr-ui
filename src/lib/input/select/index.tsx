@@ -50,7 +50,7 @@ export const InputSelect = (props: Props): ReactElement => {
             </InputSelectContent>
             <InputSelectMenu isOpen={menuOpen}>
                 {
-                    props.items.map((item, index) => <Item key={index} />)
+                    props.items.map((item, index) => <Item key={index} type='text'>Item</Item>)
                 }
             </InputSelectMenu>
         </InputSelectStyled>

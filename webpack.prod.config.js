@@ -1,5 +1,4 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -7,10 +6,10 @@ const Dotenv = require('dotenv-webpack');
 
 const config = {
   mode: "production",
-  entry: "./src/index.tsx",
+  entry: "./src/index.ts",
   output: {
     path: path.resolve(__dirname, "build"),
-    publicPath: "/build/",
+    publicPath: "/dist/",
     filename: "[name].[contenthash].js",
   },
   module: {
@@ -75,7 +74,8 @@ const config = {
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".jsx"],
     alias: {
-      libs: path.resolve(__dirname, 'src/libs/'),
+      lib: path.resolve(__dirname, 'src/lib/'),
+      context: path.resolve(__dirname, 'src/context/'),
       assets: path.resolve(__dirname, 'src/assets/'),
       utils: path.resolve(__dirname, 'src/utils/'),
       models: path.resolve(__dirname, 'src/models/'),
@@ -89,9 +89,6 @@ const config = {
   },
   plugins: [
     new Dotenv(),
-    new HtmlWebpackPlugin({
-      template: "public/index.html",
-    }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
     }),

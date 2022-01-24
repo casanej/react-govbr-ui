@@ -1,7 +1,12 @@
 {
   "name": "react-govbr-ui",
   "version": "1.0.0",
-  "main": "src/index.tsx",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "repository": "",
   "author": "Rafael Casanje <rafael.casanje@gmail.com>",
   "license": "MIT",
@@ -50,6 +55,7 @@
     "base64-inline-loader": "^2.0.1",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.3.0",
+    "dotenv-webpack": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-plugin-react": "^7.26.0",
     "eslint-plugin-react-hooks": "^4.2.0",
