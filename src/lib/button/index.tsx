@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react'
 import { Loading } from 'lib'
 import { ButtonSize, ButtonStyled, ButtonVariant, ButtonLoading} from './index.style';
 
+type ButtonTypes = 'button' | 'submit' | 'reset';
+
 interface Props {
     label: React.ReactNode;
     circle?: boolean;
@@ -9,6 +11,7 @@ interface Props {
     fullWidth?: boolean;
     isLoading?: boolean;
     size?: ButtonSize;
+    type?: ButtonTypes;
     variant?: ButtonVariant;
     onClick?: () => void;
 }
@@ -26,6 +29,7 @@ export const Button = (props: Props): ReactElement => {
             fullWidth={props.fullWidth && !props.circle}
             isLoading={props.isLoading}
             size={props.size || 'md'}
+            type={props.type || 'button'}
             variant={props.variant || 'primary'}
             onClick={handleClick}
         >

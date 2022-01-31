@@ -1,49 +1,27 @@
 import { alertColorTypes, AlertTypes } from 'models';
 import styled, { css } from 'styled-components';
 
-export const inputSize = {
-    sm: '32px',
-    md: '40px',
-    lg: '48px'
-}
-
 interface InputStyledProps {
-    alert?: AlertTypes
-    density: keyof typeof inputSize;
+    alert?: AlertTypes;
     hasIcon?: boolean;
     highlight?: boolean;
 }
 
-export const InputTextStyled = styled.div<{ direction: 'row' | 'column' }>`
+export type InputTextLabelDirection = 'row' | 'column';
+
+export const InputTextAreaStyled = styled.div``;
+
+export const InputTextAreaContent = styled.div<{ direction: InputTextLabelDirection }>`
+    width: 100%;
     display: flex;
     flex-direction: ${props => props.direction};
-    justify-content: center;
-    align-items: ${props => props.direction === 'row' ? 'center' : 'flex-start'};
-    gap: 5px;
+    gap: ${props => props.direction === 'row' ? '40px' : '0'};
 `;
 
-export const InputContent = styled.div`
-    position: relative;
+export const TextAreaStyled = styled.textarea<InputStyledProps>`
     width: 100%;
-`
-
-export const InputIcon = styled.div`
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-`
-
-export const InputAction = styled.div`
-    position: absolute;
-    bottom: 3.5px;
-    right: 3.5px;
-`
-
-export const InputStyled = styled.input<InputStyledProps>`
-    height: ${props => inputSize[props.density]};
-    width: 100%;
-    padding: 0 ${props => props.hasIcon ? props.theme.properties.scale['4x'] : props.theme.properties.scale['2x']};
-    border: 3px solid rgba(0, 0, 0, 0);
+    border: 1px solid #888888;
+    padding: 12px;
     border-radius: ${props => props.theme.properties.surface.rounder.sm};
 
     ${props => props.highlight
@@ -87,5 +65,14 @@ export const InputStyled = styled.input<InputStyledProps>`
             border: 3px solid #c2850c;
         }
     }
+`;
 
+export const InputTextAreaCounter = styled.div`
+    span {
+        font-weight: bold;
+    }
+`
+
+export const InputTextAuxiliary = styled.div`
+    font-size: 14px;
 `;

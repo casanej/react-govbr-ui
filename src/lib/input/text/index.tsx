@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Alert, Button } from 'lib';
 import { AlertTypes } from 'models';
 import React, { ReactElement, useEffect, useState } from 'react'
-import { InputAction, InputContent, InputIcon, InputLabel, inputSize, InputStyled, InputTextStyled } from './index.style';
+import { InputLabel } from '../components/general.style';
+import { InputAction, InputContent, InputIcon, inputSize, InputStyled, InputTextStyled } from './index.style';
 
 interface Props {
     action?: {
