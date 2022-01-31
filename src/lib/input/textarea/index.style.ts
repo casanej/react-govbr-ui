@@ -1,13 +1,12 @@
 import { alertColorTypes, AlertTypes } from 'models';
 import styled, { css } from 'styled-components';
+import { InputTextLabelDirection } from '../components/general.style';
 
 interface InputStyledProps {
     alert?: AlertTypes;
     hasIcon?: boolean;
     highlight?: boolean;
 }
-
-export type InputTextLabelDirection = 'row' | 'column';
 
 export const InputTextAreaStyled = styled.div``;
 
@@ -66,12 +65,6 @@ export const TextAreaStyled = styled.textarea<InputStyledProps>`
         }
     }
 `;
-
-export const InputTextAreaCounter = styled.div`
-    span {
-        font-weight: bold;
-    }
-`
 
 export const InputTextAuxiliary = styled.div`
     font-size: 14px;

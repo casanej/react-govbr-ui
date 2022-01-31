@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
-export const InputLabel = styled.label`
+export type InputTextLabelDirection = 'row' | 'column';
+
+export const InputLabel = styled.label<{ direction: InputTextLabelDirection }>`
     line-height: ${props => props.theme.properties.lineHeight.medium};
     font-size: 14px;
     font-weight: 600;
-    width: 150px;
+    width: ${props => props.direction === 'row' ? '150px' : 'inherit'};
 `

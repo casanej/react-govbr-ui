@@ -1,8 +1,9 @@
 import { Alert } from 'lib';
 import { AlertTypes } from 'models';
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useRef, useState } from 'react'
 import { InputLabel } from '../components/general.style';
-import { InputTextAreaContent, InputTextAreaCounter, InputTextAreaStyled, InputTextAuxiliary, TextAreaStyled } from './index.style';
+import { TextAreaCounter } from './components';
+import { InputTextAreaContent, InputTextAreaStyled, InputTextAuxiliary, TextAreaStyled } from './index.style';
 
 interface Props {
     alert?: {
@@ -25,12 +26,12 @@ export const InputTextArea = (props: Props): ReactElement => {
     const name = props.name || 'default_textarea';
     const rows = props.rows || 8;
     const cols = props.cols || 100;
-    const [countChars, setCountChars] = useState<number>(0);
+    const [charsLen, setCharsLen] = useState<number>(0);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const { value } = event.target;
 
-        setCountChars(value.length);
+        setCharsLen(value.length);
 
         if (props.onChange) props.onChange(value, name);
     }
@@ -39,7 +40,7 @@ export const InputTextArea = (props: Props): ReactElement => {
         <InputTextAreaStyled>
             <InputTextAreaContent direction={props.labelDirection || 'column'} >
                 {
-                    props.label && <InputLabel htmlFor={name}>{props.label}</InputLabel>
+                    props.label && <InputLabel htmlFor={name} direction={props.labelDirection || 'column'}>{props.label}</InputLabel>
                 }
                 <TextAreaStyled
                     id={name}
@@ -53,17 +54,7 @@ export const InputTextArea = (props: Props): ReactElement => {
                 />
             </InputTextAreaContent>
             {
-                props.count && <InputTextAreaCounter>{
-                    props.maxLength && props.maxLength !== 0
-                        ? <>
-                            {
-                                props.maxLength > 0 && countChars === 0
-                                    ? <div>Limite máximo de <span>{props.maxLength}</span> caracteres</div>
-                                    : <div>Restam <span>{props.maxLength - countChars}</span> caracteres</div>
-                            }
-                        </>
-                        : <div><span>{countChars}</span> caracteres digitados</div>
-                }</InputTextAreaCounter>
+                props.count && <TextAreaCounter charsLen={charsLen} maxLength={props.maxLength} />
             }
             {
                 props.alert && <Alert type={props.alert.type}>{props.alert.message}</Alert>
