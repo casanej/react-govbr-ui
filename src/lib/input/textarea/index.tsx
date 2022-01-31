@@ -1,6 +1,6 @@
 import { Alert } from 'lib';
 import { AlertTypes } from 'models';
-import React, { ReactElement, useRef, useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { InputLabel } from '../components/general.style';
 import { TextAreaCounter } from './components';
 import { InputTextAreaContent, InputTextAreaStyled, InputTextAuxiliary, TextAreaStyled } from './index.style';

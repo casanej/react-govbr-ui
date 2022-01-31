@@ -51,7 +51,7 @@ export const InputText = (props: Props): ReactElement => {
     return (
         <InputTextStyled direction={props.direction || 'column'}>
             {
-                props.label && <InputLabel htmlFor={name}>{props.label}</InputLabel>
+                props.label && <InputLabel direction={props.direction || 'column'} htmlFor={name}>{props.label}</InputLabel>
             }
             <InputContent>
                 {

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { ReactElement } from 'react'
 import { TextAreaCounterStyled } from './index.style';
 
 interface Props {
