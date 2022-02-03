@@ -33,6 +33,10 @@ const appScheme = {
             background: '#ffffff',
             text: '#1351B4'
         },
+        quaternary: {
+            background: '#f8f8f8',
+            text: '#1351B4'
+        }
     },
     background: {
         primary: '#663399'

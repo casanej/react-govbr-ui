@@ -20,6 +20,7 @@ export const InputTextStyled = styled.div<{ direction: 'row' | 'column' }>`
     justify-content: center;
     align-items: ${props => props.direction === 'row' ? 'center' : 'flex-start'};
     gap: 5px;
+    width: 100%;
 `;
 
 export const InputContent = styled.div`
@@ -87,5 +88,6 @@ export const InputStyled = styled.input<InputStyledProps>`
             border: 3px solid #c2850c;
         }
     }
+
 
 `;

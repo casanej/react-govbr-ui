@@ -1,36 +1,18 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactElement, useCallback, useState } from 'react'
 import { Button, Divider } from 'lib';
 import { MenuContent, MenuFooter, MenuFooterInfo, MenuFooterLinks, MenuFooterLogos, MenuFooterSocial, MenuHeader, MenuItems, MenuStyled } from './index.style';
-import { MenuItemGroup, MenuItemsProps } from 'models';
+import { MenuFooterProps, MenuHeaderProps, MenuItemGroup, MenuItemsProps } from 'models';
 import { MenuEvident, MenuExternalLink, MenuItem } from './components';
 import { Link } from 'react-router-dom';
 
 interface Props {
     open: boolean;
     onClose: () => void;
-    footer?: {
-        external?: Array<{
-            url: string;
-            label: string;
-        }>;
-        info?: React.ReactNode[]
-        logos?: React.ReactNode[]
-        social?: {
-            title: string;
-            links: Array<{
-                icon: IconName;
-                url: string;
-            }>
-        }
-    };
+    footer?: MenuFooterProps;
     items: MenuItemsProps[];
-    header?: {
-        logo?: React.ReactNode;
-        title?: React.ReactNode;
-    };
+    header?: MenuHeaderProps;
 }
 
 export const Menu = (props: Props): ReactElement => {

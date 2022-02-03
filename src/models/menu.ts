@@ -20,3 +20,35 @@ export interface MenuItem {
     disabled?: boolean;
     icon?: IconName;
 }
+
+export interface MenuHeaderProps {
+    logo?: React.ReactNode;
+    title?: React.ReactNode;
+}
+
+export interface MenuFooterProps {
+    external?: Array<{
+        url: string;
+        label: string;
+    }>;
+    info?: React.ReactNode[]
+    logos?: React.ReactNode[]
+    social?: {
+        title: string;
+        links: Array<{
+            icon: IconName;
+            url: string;
+        }>
+    }
+}
+
+export interface MenuFunctionalities {
+    icon: IconName;
+    label: string;
+    url?: string;
+    onClick?: () => void;
+}
+
+export interface MenuLoggedActions {
+    logout: () => void;
+}

@@ -23,6 +23,13 @@ export const ItemStyled = styled.div < { disabled?: boolean; isActive?: boolean 
             &:active {
                 background-color: ${props => hexColorApplyAlpha('#2670e8', props.theme.properties.opacity.sm)}
             }
+
+            &:focus-visible {
+                outline-color: #c2850c;
+                outline-style: dashed;
+                outline-width: 4px;
+                outline-offset: -4px;
+            }
         `
         : css`
             &:hover {
@@ -31,6 +38,13 @@ export const ItemStyled = styled.div < { disabled?: boolean; isActive?: boolean 
 
             &:active {
                 background-color: ${props => hexColorApplyAlpha('#333333', props.theme.properties.opacity.md)}
+            }
+
+            &:focus-visible {
+                outline-color: #c2850c;
+                outline-style: dashed;
+                outline-width: 4px;
+                outline-offset: -4px;
             }
         `}
     

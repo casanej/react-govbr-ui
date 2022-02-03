@@ -54,9 +54,11 @@ export const TextAreaStyled = styled.textarea<InputStyledProps>`
             border: 3px solid ${alertColorTypes[props.alert].background};
         `}
 
-        &:focus, &:focus-visible {
-            outline: #c2850c;
-            border: 3px solid #c2850c;
+        &:focus-visible {
+            outline-color: #c2850c;
+            outline-style: dashed;
+            outline-width: 4px;
+            outline-offset: -4px;
         }
 
         &:active {

@@ -4,7 +4,7 @@ import { ButtonSize, ButtonStyled, ButtonVariant, ButtonLoading} from './index.s
 
 type ButtonTypes = 'button' | 'submit' | 'reset';
 
-interface Props {
+export interface ButtonProps {
     label: React.ReactNode;
     circle?: boolean;
     disabled?: boolean;
@@ -16,7 +16,7 @@ interface Props {
     onClick?: () => void;
 }
 
-export const Button = (props: Props): ReactElement => {
+export const Button = (props: ButtonProps): ReactElement => {
 
     const handleClick = () => {
         if (props.onClick) props.onClick();

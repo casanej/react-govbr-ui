@@ -4,10 +4,12 @@ export * from './button';
 export * from './checkbox';
 export * from './checkbox-manager';
 export * from './divider';
+export * from './header';
 export * from './input';
 export * from './item';
 export * from './loading';
 export * from './menu';
+export * from './menu-context';
 export * from './table';
 
 import { library } from '@fortawesome/fontawesome-svg-core'

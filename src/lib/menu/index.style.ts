@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const MenuStyled = styled.div<{ isOpen: boolean;}>`
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.45);
@@ -16,6 +18,14 @@ export const MenuContent = styled.div`
     width: 100%;
     max-width: 25%;
     padding: 0 20px;
+
+    @media (max-width: 900px) {
+        max-width: 50%;
+    }
+
+    @media (max-width: 600px) {
+        max-width: 100%;
+    }
 `;
 
 export const MenuHeader = styled.div`

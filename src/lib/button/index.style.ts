@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { hexColorApplyAlpha } from 'utils';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'quaternary';
 
 const buttonHeight = {
     sm: '32px',
@@ -79,6 +79,25 @@ const handleButtonVariant = (props: any) => {
                 cursor: not-allowed;
             }
         `
+    case 'quaternary':
+        return css`
+            background-color: ${props.theme.colors.appScheme.button.quaternary.background};
+            color: ${props.theme.colors.appScheme.button.quaternary.text};
+            border: ${props.variant === 'secondary' ? `1px solid ${props.theme.colors.appScheme.button.primary.background}` : 'none'};
+
+            &:not(:disabled):hover {
+                background-color: ${props => `${hexColorApplyAlpha(props.theme.colors.appScheme.button.primary.background, props.theme.properties.opacity.sm)}`};
+            }
+
+            &:not(:disabled):active {
+                background-color: ${props => `${hexColorApplyAlpha(props.theme.colors.appScheme.button.primary.background, props.theme.properties.opacity.md)}`};
+            }
+
+            &:disabled {
+                opacity: ${props => props.theme.properties.opacity.md};
+                cursor: not-allowed;
+            }
+        `
     }
 
     return css``;
@@ -90,7 +109,8 @@ const handleLoadingVariant = (props: any) => {
             color: ${props => props.theme.colors.appScheme.button.primary.background};
         `
     case 'secondary':
-    case 'tertiary': return css`
+    case 'tertiary':
+    case 'quaternary': return css`
             color: ${props => props.theme.colors.appScheme.button.secondary.background};
         `
     }
@@ -112,7 +132,7 @@ export const ButtonStyled = styled.button<ButtonProps>`
     align-items: center;
     vertical-align: middle;
     width: ${props => handleButtonWidth(props)};
-    min-width: ${props => props.circle ? 'unset' : '100px'};
+    min-width: ${props => props.circle ? buttonHeight[props.size] : '100px'};
     height: ${props => buttonHeight[props.size]};
     border: 0;
     border-radius: ${props => props.circle ? '50%' : '100em'};

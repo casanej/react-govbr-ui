@@ -9,13 +9,11 @@ interface Props {
 
 export const Avatar = (props: Props): ReactElement => {
 
-    return (
-        <AvatarStyled>
-            {
-                props.image
-                    ? <AvatarImage src={props.image} />
-                    : <FontAwesomeIcon icon={faUserCircle} color='#c5d4eb' size='3x' />
-            }
-        </AvatarStyled>
-    );
+    return <AvatarStyled>
+        {
+            props.image
+                ? <AvatarImage src={props.image} />
+                : <FontAwesomeIcon icon={faUserCircle} color='#c5d4eb' size='3x' />
+        }
+    </AvatarStyled>;
 };

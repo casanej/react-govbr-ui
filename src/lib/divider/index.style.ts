@@ -1,11 +1,18 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export type DividerDirection = 'horizontal' | 'vertical';
 
 export const DividerStyled = styled.div<{ direction: DividerDirection }>`
-    width: ${props => props.direction === 'horizontal' ? '100%' : '1px'};
-    height: ${props => props.direction === 'vertical' ? '100%' : '1px'};
-    margin: ${props => props.direction === 'horizontal' ? '0 auto' : '0 auto'};
-    margin-top: ${props => props.direction === 'vertical' ? '0 auto' : '0 auto'};
     background-color: #cccccc;
+    margin: 0 auto;
+
+    ${props => props.direction === 'horizontal'
+        ? css`
+            width: 100%;
+            height: 1px;
+        `
+        : css`
+            width: 1px;
+            max-height: 100vh;
+        `}
 `;

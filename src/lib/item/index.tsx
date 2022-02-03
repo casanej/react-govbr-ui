@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react'
+import React, { ReactElement, useCallback, useState } from 'react'
 import { Checkbox } from 'lib';
 import { ItemStyled } from './index.style';
 import { CheckTypes } from '../checkbox/index.style';
@@ -13,9 +13,7 @@ export const Item = (props: Props): ReactElement => {
     const [isActive, setIsActive] = useState<CheckTypes>(0);
 
     const handleClickItem = useCallback(() => {
-        console.log('[CLICOU AQUI 1]');
         if (props.type === 'checkbox') {
-            console.log('[CLICOU AQUI 2]', isActive);
             if (isActive === 1) setIsActive(0);
             else setIsActive(1);
         }
