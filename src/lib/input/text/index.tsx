@@ -41,11 +41,10 @@ export const InputText = (props: Props): ReactElement => {
     }, [props.name, props.value]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        if (props.onChange) {
-            const { value, name } = event.target;
+        const { value, name } = event.target;
+        setValue(value);
 
-            props.onChange(event, value, name);
-        }
+        if (props.onChange) props.onChange(event, value, name);
     }
 
     return (
