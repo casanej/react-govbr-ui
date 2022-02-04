@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { MenuContext } from 'lib'
 import { ThemeProvider } from 'styled-components';
@@ -12,19 +12,30 @@ export default {
     component: MenuContext,
 } as LoadingExport;
 
-const Template: LoadingStory = (args) => <ThemeProvider theme={theme}>
-    <GlobalStyle theme={{ ...theme }} />
-    <div style={{padding: 20}}>
-        <MenuContext
-            items={args.items}
-            title={args.title}
-        />
-    </div>
-</ThemeProvider>
+const Template: LoadingStory = (args) => {
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        setOpen(args.open || false);
+    }, [args.open]);
+
+    return <ThemeProvider theme={theme}>
+        <GlobalStyle theme={{ ...theme }} />
+        <div style={{padding: 20}}>
+            <MenuContext
+                open={open}
+                items={args.items}
+                title={args.title}
+                onClose={() => setOpen(false)}
+            />
+        </div>
+    </ThemeProvider>
+}
 
 export const Default = Template.bind({});
 
 Default.args = {
+    open: false,
     title: 'Acesso Rápido',
     items: [
         { label: 'Home', icon: 'home', url: '' },
