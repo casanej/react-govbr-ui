@@ -8,7 +8,7 @@ const process = async (filepath) => {
     const fileIndexRelative = fileRelative.findIndex(x => x === 'src');
 
     fileLines.forEach(line => {
-        const regTest = new RegExp(/\"(lib|assets|context|utils|models|hooks|components)\"/);
+        const regTest = new RegExp(/[\"'](lib|assets|context|utils|models|hooks|components)[\"']/);
         if (regTest.test(line)) {
             const testLine = regTest.exec(line);
             const pathKey = testLine[1];

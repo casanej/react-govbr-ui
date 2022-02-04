@@ -18,7 +18,8 @@ function readDir(dir) {
                 const isFile = stat.isFile();
 
                 if (isFile) {
-                    if (name === 'index' || name === 'index.style') processFile.process(filepath);
+                    console.log("[NAME]", name)
+                    if (name === 'index' || name === 'index.style' || name === 'index.d') processFile.process(filepath);
                 } else {
                     const subDir = `${dir}/${filename}`;
                     readDir(subDir);

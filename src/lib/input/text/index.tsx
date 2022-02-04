@@ -1,10 +1,16 @@
 import { IconName } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import NumberFormat, { NumberFormatProps } from 'react-number-format';
 import { Alert, Button } from 'lib';
 import { AlertTypes } from 'models';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { InputLabel } from '../components/general.style';
 import { InputAction, InputContent, InputIcon, inputSize, InputStyled, InputTextStyled } from './index.style';
+
+interface OnChangeValueParameter {
+    normal: string;
+    masked: string;
+}
 
 interface Props {
     action?: {
@@ -23,9 +29,10 @@ interface Props {
     icon?: IconName;
     label?: string;
     name?: string;
+    numberFormat?: NumberFormatProps;
     size?: keyof typeof inputSize;
     value?: string;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: string, name: string) => void;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: OnChangeValueParameter, name: string) => void;
     onFocus?: () => void;
     onBlur?: () => void;
     placeholder?: string;
@@ -33,6 +40,7 @@ interface Props {
 }
 
 export const InputText = (props: Props): ReactElement => {
+    const [valueString, setValueString] = useState<string>('');
     const [value, setValue] = useState<string>('');
     const [name, setName] = useState<string>('input-text');
 
@@ -43,10 +51,26 @@ export const InputText = (props: Props): ReactElement => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { value, name } = event.target;
+
+        const finalValue = {
+            normal: value,
+            masked: valueString || value
+        }
         setValue(value);
 
-        if (props.onChange) props.onChange(event, value, name);
+        if (props.onChange) props.onChange(event, finalValue, name);
     }
+
+    if (props.numberFormat) return <NumberFormat
+        customInput={InputText}
+        format={props.numberFormat.format}
+        mask={props.numberFormat.mask}
+        value={value}
+        onValueChange={(values) => {
+            setValue(values.formattedValue);
+            setValueString(values.value);
+        }}
+    />
 
     return (
         <InputTextStyled direction={props.direction || 'column'}>

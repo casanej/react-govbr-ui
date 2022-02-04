@@ -24,6 +24,7 @@ const Template: LoadingStory = (args) => <ThemeProvider theme={theme}>
         highlight={args.highlight}
         icon={args.icon}
         label={args.label}
+        numberFormat={args.numberFormat}
         size={args.size}
         placeholder={args.placeholder}
         value={args.value}
@@ -35,6 +36,7 @@ export const Default = Template.bind({});
 export const InputWithAlert = Template.bind({});
 export const InputWithAlertDisabled = Template.bind({});
 export const InputWithHelpText = Template.bind({});
+export const InputWithMask = Template.bind({});
 
 Default.args = {
     size: 'md',
@@ -64,4 +66,12 @@ InputWithHelpText.args = {
     helpText: 'Help text',
     size: 'md',
     placeholder: 'Placeholder',
+}
+
+InputWithMask.args = {
+    size: 'md',
+    placeholder: 'Placeholder',
+    numberFormat: {
+        format: '#### #### #### ####',
+    },
 }
