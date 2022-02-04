@@ -55,7 +55,7 @@ export const Header = (props: Props): ReactElement => {
                     ? <HeaderSearching>
                         <InputText
                             placeholder='O que você procura'
-                            onChange={(value) => setSearchValue(value)}
+                            onChange={(_, value) => setSearchValue(value)}
                             action={{
                                 icon: 'search',
                                 onClick: handleOnSearch
@@ -82,7 +82,7 @@ export const Header = (props: Props): ReactElement => {
                                 !menuMinified && !isCompact && <div>
                                     <InputText
                                         placeholder='O que você procura'
-                                        onChange={(value) => setSearchValue(value)}
+                                        onChange={(_, value) => setSearchValue(value)}
                                         action={{
                                             icon: 'search',
                                             onClick: handleOnSearch
