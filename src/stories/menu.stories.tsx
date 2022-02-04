@@ -4,7 +4,7 @@ import { Menu } from 'lib'
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle, theme } from 'assets';
 import { BrowserRouter } from 'react-router-dom';
-import { MenuItemsProps } from 'models';
+import { MenuFooterProps, MenuItemsProps } from 'models';
 
 interface InputSelectExport extends ComponentMeta<typeof Menu> {}
 interface InputSelectStory extends ComponentStory<typeof Menu> {}
@@ -76,7 +76,32 @@ const items: MenuItemsProps[] = [
     { label: 'Sobre', groupType: 'item', url: '' }
 ]
 
+const footer: MenuFooterProps = {
+    external: [
+        { label: 'Políticas de Uso', url: '' },
+        { label: 'Termos de Uso', url: '' },
+        { label: 'Política de Privacidade', url: '' },
+    ],
+    info: [
+        <div key={'info-1'}>Todo conteúdo deste site <strong>NÃO</strong> tem nenhum tipo de validade</div>,
+        '© 2020 - Todos os direitos reservados'
+    ],
+    logos: [
+        <img key={'logos-1'} src='http://xptoevents.com/img/logo-blue.png' />,
+        <img key={'logos-2'} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_Mx5GZJOj9pB1lFAFBFPSseT8Aoos6M_3kQ&usqp=CAU' />
+    ],
+    social: {
+        title: 'Siga-nos',
+        links: [
+            { icon: 'cog', url: '' },
+            { icon: 'cog', url: '' },
+            { icon: 'cog', url: '' },
+        ]
+    }
+}
+
 export const Default = Template.bind({});
+export const MenuComplete = Template.bind({});
 export const MenuWithFooter = Template.bind({});
 
 Default.args = {
@@ -84,31 +109,15 @@ Default.args = {
     items
 }
 
+MenuComplete.args = {
+    open: true,
+    items,
+    footer
+}
+
 MenuWithFooter.args = {
     open: true,
     items,
-    footer: {
-        external: [
-            { label: 'Políticas de Uso', url: '' },
-            { label: 'Termos de Uso', url: '' },
-            { label: 'Política de Privacidade', url: '' },
-        ],
-        info: [
-            <div key={'info-1'}>Todo conteúdo deste site <strong>NÃO</strong> tem nenhum tipo de validade</div>,
-            '© 2020 - Todos os direitos reservados'
-        ],
-        logos: [
-            <img key={'logos-1'} src='http://xptoevents.com/img/logo-blue.png' />,
-            <img key={'logos-2'} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_Mx5GZJOj9pB1lFAFBFPSseT8Aoos6M_3kQ&usqp=CAU' />
-        ],
-        social: {
-            title: 'Siga-nos',
-            links: [
-                { icon: 'cog', url: '' },
-                { icon: 'cog', url: '' },
-                { icon: 'cog', url: '' },
-            ]
-        }
-    }
+    footer
 }
 

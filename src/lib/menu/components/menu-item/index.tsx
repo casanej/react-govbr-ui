@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { MenuItemGroup, MenuItemsProps } from 'models';
 import { MenuItemList } from '..';
 import { MenuItemContent, menuItemDensity, MenuItemLabel, MenuItemStyled, MenuItemVariant } from './index.style';
+import { MenuItemRedirect } from './menu-item-redirect';
 
 interface Props {
     item: MenuItemsProps;
@@ -29,18 +30,14 @@ export const MenuItem = (props: Props): ReactElement => {
         }
     }
 
-    return <>
+    return <MenuItemRedirect item={props.item}>
         <MenuItemStyled variant={props.variant || 'primary'} density={props.density || 'lg'} onClick={handleToggleOpen}>
             <MenuItemContent>
                 <div>
                     {
                         item.icon && <FontAwesomeIcon icon={item.icon} />
                     }
-                    {
-                        item.groupType === 'item'
-                            ? <Link to={item.url || ''}><MenuItemLabel>{item.label}</MenuItemLabel></Link>
-                            : <MenuItemLabel>{item.label}</MenuItemLabel>
-                    }
+                    <MenuItemLabel>{item.label}</MenuItemLabel>
                 </div>
                 {
                     item.groupType === 'expand' && <>
@@ -67,5 +64,5 @@ export const MenuItem = (props: Props): ReactElement => {
                 }
             </>
         }
-    </>;
+    </MenuItemRedirect>;
 };
