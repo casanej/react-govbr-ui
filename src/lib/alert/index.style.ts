@@ -13,4 +13,5 @@ export const AlertStyled = styled.div<{ type: AlertTypes }>`
     color: ${props => alertColorTypes[props.type].color};
     font-style: italic;
     font-weight: 500;
+    font-size: 14px;
 `;
