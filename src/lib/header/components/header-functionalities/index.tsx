@@ -24,19 +24,17 @@ export const HeaderFunctionalities = (props: Props): ReactElement | null => {
 
     const buttonSearch = <Button
         circle
-        label={<FontAwesomeIcon icon={faSearch} color={'#1351b4'}/>}
         variant={'tertiary'}
         onClick={() => props.onSearchStart()}
-    />
+    ><FontAwesomeIcon icon={faSearch} color={'#1351b4'}/></Button>
 
     if (props.minified) {
         return <HeaderFunctionalitiesStyled>
             <Button
                 circle
-                label={<FontAwesomeIcon icon={faTh} color={menuIsOpen ? '#fff' : '#1351b4'}/>}
                 variant={menuIsOpen ? 'primary' : 'tertiary'}
                 onClick={() => setMenuIsOpen(!menuIsOpen)}
-            />
+            ><FontAwesomeIcon icon={faTh} color={menuIsOpen ? '#fff' : '#1351b4'}/></Button>
             {buttonSearch}
             <MenuContext
                 title='Funcionalidades do Sistema'
@@ -55,9 +53,8 @@ export const HeaderFunctionalities = (props: Props): ReactElement | null => {
                 circle
                 variant='tertiary'
                 size='sm'
-                label={<FontAwesomeIcon icon={functionality.icon} color='#1351b4'/>}
                 onClick={functionality.onClick}
-            />)
+            ><FontAwesomeIcon icon={functionality.icon} color='#1351b4'/></HeaderFunctionality>)
         }
         {
             props.showSearch && buttonSearch

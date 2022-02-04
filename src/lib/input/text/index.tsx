@@ -77,9 +77,7 @@ export const InputText = (props: Props): ReactElement => {
 
                 {
                     props.action && <InputAction>
-                        <Button circle variant='tertiary' size='sm' label={
-                            <FontAwesomeIcon icon={props.action.icon} color='#1351b4' />
-                        } />
+                        <Button circle variant='tertiary' size='sm'><FontAwesomeIcon icon={props.action.icon} color='#1351b4' /></Button>
                     </InputAction>
                 }
             </InputContent>

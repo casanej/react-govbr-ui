@@ -5,7 +5,7 @@ import { ButtonSize, ButtonStyled, ButtonVariant, ButtonLoading} from './index.s
 type ButtonTypes = 'button' | 'submit' | 'reset';
 
 export interface ButtonProps {
-    label: React.ReactNode;
+    children: React.ReactNode;
     circle?: boolean;
     disabled?: boolean;
     fullWidth?: boolean;
@@ -38,7 +38,7 @@ export const Button = (props: ButtonProps): ReactElement => {
                     {/* <div>Carregando</div> */}
                     <Loading infinity='sm' variant='secondary' />
                 </ButtonLoading>
-                : props.label}
+                : props.children}
         </ButtonStyled>
     );
 };

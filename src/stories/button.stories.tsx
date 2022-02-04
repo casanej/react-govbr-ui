@@ -15,20 +15,19 @@ export default {
 const Template: ButtonStory = (args) => <ThemeProvider theme={theme}>
     <GlobalStyle theme={{ ...theme }} />
     <Button
-        label={args.label}
         circle={args.circle}
         disabled={args.disabled}
         fullWidth={args.fullWidth}
         isLoading={args.isLoading}
         size={args.size}
         variant={args.variant}
-    />
+    >{args.children}</Button>
 </ThemeProvider>
 
 export const Primary = Template.bind({});
 
 Primary.args = {
-    label: 'Button',
+    children: 'Button',
     variant: 'primary',
     size: 'md'
 }

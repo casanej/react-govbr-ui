@@ -48,7 +48,7 @@ export const Menu = (props: Props): ReactElement => {
                         {props.header?.title}
                     </div>
                 </div>
-                <Button label={<FontAwesomeIcon icon={faTimes} />} circle variant='tertiary' onClick={props.onClose} />
+                <Button circle variant='tertiary' onClick={props.onClose}><FontAwesomeIcon icon={faTimes} /></Button>
             </MenuHeader>
             <Divider />
             <MenuItems>
@@ -95,7 +95,7 @@ export const Menu = (props: Props): ReactElement => {
                                 <div>
                                     {
                                         props.footer.social.links.map((social, socialIndex) => <Link key={socialIndex} to={social.url}>
-                                            <Button label={<FontAwesomeIcon icon={social.icon} color='#1351b4' size='lg' />} circle variant='tertiary' />
+                                            <Button circle variant='tertiary'><FontAwesomeIcon icon={social.icon} color='#1351b4' size='lg' /></Button>
                                         </Link>)
                                     }
                                 </div>

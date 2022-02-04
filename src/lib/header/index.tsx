@@ -19,6 +19,7 @@ interface Props {
         items?: MenuItemsProps[];
         footer?: MenuFooterProps;
     };
+    onSearch?: (value: string) => void;
     subTitle?: string;
 }
 
@@ -40,7 +41,8 @@ export const Header = (props: Props): ReactElement => {
 
     const handleOnSearch = (value?: string) => {
         const inputValue = value || searchValue;
-        console.log('[TO SEARCH]', inputValue);
+
+        if (props.onSearch) props.onSearch(inputValue);
     }
 
     return <HeaderStyled>
@@ -59,7 +61,7 @@ export const Header = (props: Props): ReactElement => {
                                 onClick: handleOnSearch
                             }}
                         />
-                        <Button label={<FontAwesomeIcon icon={faTimes} />} variant='tertiary' circle onClick={() => setIsSearching(false)}/>
+                        <Button variant='tertiary' circle onClick={() => setIsSearching(false)}><FontAwesomeIcon icon={faTimes} /></Button>
                     </HeaderSearching>
                     : <>
                         <HeaderTitleMenu compact={isCompact}>
@@ -67,10 +69,9 @@ export const Header = (props: Props): ReactElement => {
                                 {
                                     props.menuItems?.items && props.menuItems?.items.length > 0 && <Button
                                         circle
-                                        label={<FontAwesomeIcon icon={faBars} />}
                                         variant='tertiary'
                                         onClick={() => setMenuIsOpen(true)}
-                                    />
+                                    ><FontAwesomeIcon icon={faBars} /></Button>
                                 }
                                 <HeaderTitleContent>
                                     <HeaderTitle>{props.title}</HeaderTitle>

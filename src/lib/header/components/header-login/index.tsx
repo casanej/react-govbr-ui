@@ -18,17 +18,17 @@ export const HeaderLogin = (props: Props): ReactElement => {
     useOnClickOutside(menuRef, () => setIsOpen(false));
 
     if (!props.logged) return <Link to='/login'>
-        <Button label={<>
+        <Button variant='quaternary'>
             <div style={{display: 'flex', flexDirection: 'row', gap: 10}}>
                 <FontAwesomeIcon icon={faUser} />
                 <div>Entrar</div>
             </div>
-        </>} variant='quaternary' />
+        </Button>
     </Link>
 
     return <HeaderLoginStyled>
         <Avatar image={props.logged.avatar} />
-        <Button label={<FontAwesomeIcon icon={faChevronDown} />} circle variant='tertiary' size='sm' onClick={() => setIsOpen(true)} />
+        <Button circle variant='tertiary' size='sm' onClick={() => setIsOpen(true)}><FontAwesomeIcon icon={faChevronDown} /></Button>
         <HeaderMenuLoggedIn ref={menuRef} open={isOpen}>
             {props.logged.menuContent}
         </HeaderMenuLoggedIn>

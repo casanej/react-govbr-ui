@@ -24,10 +24,9 @@ export const HeaderLinks = (props: Props): ReactElement | null => {
         return <HeaderLinksStyled>
             <Button
                 circle
-                label={<><FontAwesomeIcon icon={faEllipsisV} color={menuIsOpen ? '#fff' : '#1351b4'}/></>}
                 variant={menuIsOpen ? 'primary' : 'tertiary'}
                 onClick={() => setMenuIsOpen(!menuIsOpen)}
-            />
+            ><FontAwesomeIcon icon={faEllipsisV} color={menuIsOpen ? '#fff' : '#1351b4'}/></Button>
             <MenuContext
                 title='Acesso Rápido'
                 items={props.links}

@@ -24,9 +24,8 @@ export const TableHeaderContent = (props: Props): ReactElement => {
                 <Button
                     circle
                     variant='tertiary'
-                    label={<FontAwesomeIcon icon={faTimes} />}
                     onClick={() => setIsSearching(false)}
-                />
+                ><FontAwesomeIcon icon={faTimes} /></Button>
             </div>
         </TableHeaderContentStyled>;
     }
@@ -37,15 +36,13 @@ export const TableHeaderContent = (props: Props): ReactElement => {
             <Button
                 circle
                 variant='tertiary'
-                label={<FontAwesomeIcon icon={faSearch} />}
                 onClick={() => setIsSearching(true)}
-            />
+            ><FontAwesomeIcon icon={faSearch} /></Button>
             {
                 props.actions && <Button
                     circle
                     variant='tertiary'
-                    label={<FontAwesomeIcon icon={faEllipsisV} />}
-                />
+                ><FontAwesomeIcon icon={faEllipsisV} /></Button>
             }
         </div>
     </TableHeaderContentStyled>;
