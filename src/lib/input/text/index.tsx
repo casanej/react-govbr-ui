@@ -15,7 +15,7 @@ interface Props {
         message: string;
         type: AlertTypes;
     }
-    inputCustomProps: any;
+    inputCustomProps?: any;
     direction?: 'row' | 'column';
     disabled?: boolean;
     helpText?: React.ReactNode;
