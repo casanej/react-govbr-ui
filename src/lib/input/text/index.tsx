@@ -24,7 +24,7 @@ interface Props {
     name?: string;
     size?: keyof typeof inputSize;
     value?: string;
-    onChange?: (value: string, name: string) => void;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: string, name: string) => void;
     onFocus?: () => void;
     onBlur?: () => void;
     placeholder?: string;
@@ -40,12 +40,12 @@ export const InputText = (props: Props): ReactElement => {
         if (typeof props.value === 'string') setValue(props.value);
     }, [props.name, props.value]);
 
-    useEffect(() => {
-        if (props.onChange) props.onChange(value, name);
-    }, [value]);
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setValue(event.target.value);
+        if (props.onChange) {
+            const { value, name } = event.target;
+
+            props.onChange(event, value, name);
+        }
     }
 
     return (
