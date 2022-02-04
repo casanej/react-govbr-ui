@@ -15,6 +15,7 @@ interface Props {
         message: string;
         type: AlertTypes;
     }
+    inputCustomProps: any;
     direction?: 'row' | 'column';
     disabled?: boolean;
     helpText?: React.ReactNode;
@@ -72,6 +73,7 @@ export const InputText = (props: Props): ReactElement => {
                     onChange={handleChange}
                     onFocus={props.onFocus}
                     onBlur={props.onBlur}
+                    {...props.inputCustomProps}
                 />
 
                 {
