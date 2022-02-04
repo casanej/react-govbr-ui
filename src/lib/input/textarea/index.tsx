@@ -17,7 +17,7 @@ interface Props {
     labelDirection?: 'row' | 'column';
     maxLength?: number;
     name?: string;
-    onChange?: (value: string, name: string) => void;
+    onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>, value: string, name: string) => void;
     placeholder?: string;
     rows?: number;
 }
@@ -33,7 +33,7 @@ export const InputTextArea = (props: Props): ReactElement => {
 
         setCharsLen(value.length);
 
-        if (props.onChange) props.onChange(value, name);
+        if (props.onChange) props.onChange(event, value, name);
     }
 
     return (
