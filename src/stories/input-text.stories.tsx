@@ -3,6 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { InputText } from 'lib'
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle, theme } from 'assets';
+import { OnChangeValueParameter } from 'models';
 
 interface LoadingExport extends ComponentMeta<typeof InputText> {}
 interface LoadingStory extends ComponentStory<typeof InputText> {}
@@ -12,25 +13,32 @@ export default {
     component: InputText,
 } as LoadingExport;
 
-const Template: LoadingStory = (args) => <ThemeProvider theme={theme}>
-    <GlobalStyle theme={{ ...theme }} />
-    <InputText
-        alert={args.alert}
-        action={args.action}
-        name={args.name}
-        direction={args.direction}
-        disabled={args.disabled}
-        helpText={args.helpText}
-        highlight={args.highlight}
-        icon={args.icon}
-        label={args.label}
-        maskObj={args.maskObj}
-        size={args.size}
-        placeholder={args.placeholder}
-        value={args.value}
-        type={args.type}
-    />
-</ThemeProvider>
+const Template: LoadingStory = (args) => {
+    const handleChange = (value:OnChangeValueParameter, name:string) => {
+        console.log('[HANDLE CHANGE]', value, name);
+    }
+
+    return <ThemeProvider theme={theme}>
+        <GlobalStyle theme={{ ...theme }} />
+        <InputText
+            alert={args.alert}
+            action={args.action}
+            name={args.name}
+            direction={args.direction}
+            disabled={args.disabled}
+            helpText={args.helpText}
+            highlight={args.highlight}
+            icon={args.icon}
+            label={args.label}
+            maskObj={args.maskObj}
+            size={args.size}
+            placeholder={args.placeholder}
+            value={args.value}
+            type={args.type}
+            onChange={handleChange}
+        />
+    </ThemeProvider>
+}
 
 export const Default = Template.bind({});
 export const InputWithAlert = Template.bind({});

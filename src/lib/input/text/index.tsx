@@ -2,16 +2,11 @@ import { IconName } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnyMaskedOptions } from 'imask';
 import { Alert, Button } from 'lib';
-import { AlertTypes } from 'models';
+import { AlertTypes, OnChangeValueParameter } from 'models';
 import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import { useIMask } from 'react-imask';
 import { InputLabel } from '../components/general.style';
 import { InputAction, InputContent, InputIcon, inputSize, InputStyled, InputTextStyled } from './index.style';
-
-interface OnChangeValueParameter {
-    normal: string;
-    masked: string;
-}
 
 interface Props {
     action?: {
@@ -34,7 +29,7 @@ interface Props {
     maskObj?: AnyMaskedOptions;
     size?: keyof typeof inputSize;
     value?: string;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: OnChangeValueParameter, name: string) => void;
+    onChange?: (value: OnChangeValueParameter, name: string) => void;
     onFocus?: () => void;
     onBlur?: () => void;
     placeholder?: string;
@@ -42,7 +37,6 @@ interface Props {
 }
 
 export const InputText = (props: Props): ReactElement => {
-    const [event, setEvent] = useState<React.ChangeEvent<HTMLInputElement>>();
     const [name, setName] = useState<string>('input-text');
     const { ref, value, setValue, unmaskedValue } = useIMask(props.maskObj || { mask: String });
 
@@ -57,7 +51,7 @@ export const InputText = (props: Props): ReactElement => {
             masked: value
         };
 
-        if (props.onChange) props.onChange(event!, finalValue, name);
+        if (props.onChange) props.onChange(finalValue, name);
     }, [value]);
 
     return (
@@ -84,7 +78,6 @@ export const InputText = (props: Props): ReactElement => {
                     value={value}
                     type={props.type || 'text'}
                     placeholder={props.placeholder}
-                    onChange={(e) => setEvent(e)}
                     onFocus={props.onFocus}
                     onBlur={props.onBlur}
                     {...props.inputCustomProps}
