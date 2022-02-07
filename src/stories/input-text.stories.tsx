@@ -24,7 +24,7 @@ const Template: LoadingStory = (args) => <ThemeProvider theme={theme}>
         highlight={args.highlight}
         icon={args.icon}
         label={args.label}
-        numberFormat={args.numberFormat}
+        maskObj={args.maskObj}
         size={args.size}
         placeholder={args.placeholder}
         value={args.value}
@@ -71,7 +71,10 @@ InputWithHelpText.args = {
 InputWithMask.args = {
     size: 'md',
     placeholder: 'Placeholder',
-    numberFormat: {
-        format: '#### #### #### ####',
+    maskObj: {
+        mask: [
+            { mask: '(00) 0000-0000' },
+            { mask: '(00) 00000-0000' },
+        ],
     },
 }

@@ -1,9 +1,10 @@
 import { IconName } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import NumberFormat, { NumberFormatProps } from 'react-number-format';
+import { AnyMaskedOptions } from 'imask';
 import { Alert, Button } from 'lib';
 import { AlertTypes } from 'models';
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useRef, useState } from 'react'
+import { useIMask } from 'react-imask';
 import { InputLabel } from '../components/general.style';
 import { InputAction, InputContent, InputIcon, inputSize, InputStyled, InputTextStyled } from './index.style';
 
@@ -29,7 +30,8 @@ interface Props {
     icon?: IconName;
     label?: string;
     name?: string;
-    numberFormat?: NumberFormatProps;
+    maxLength?: number;
+    maskObj?: AnyMaskedOptions;
     size?: keyof typeof inputSize;
     value?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: OnChangeValueParameter, name: string) => void;
@@ -40,37 +42,23 @@ interface Props {
 }
 
 export const InputText = (props: Props): ReactElement => {
-    const [valueString, setValueString] = useState<string>('');
-    const [value, setValue] = useState<string>('');
+    const [event, setEvent] = useState<React.ChangeEvent<HTMLInputElement>>();
     const [name, setName] = useState<string>('input-text');
+    const { ref, value, setValue, unmaskedValue } = useIMask(props.maskObj || { mask: String });
 
     useEffect(() => {
         if (props.name) setName(props.name);
         if (typeof props.value === 'string') setValue(props.value);
     }, [props.name, props.value]);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        const { value, name } = event.target;
-
+    useEffect(() => {
         const finalValue = {
-            normal: value,
-            masked: valueString || value
-        }
-        setValue(value);
+            normal: unmaskedValue,
+            masked: value
+        };
 
-        if (props.onChange) props.onChange(event, finalValue, name);
-    }
-
-    if (props.numberFormat) return <NumberFormat
-        customInput={InputText}
-        format={props.numberFormat.format}
-        mask={props.numberFormat.mask}
-        value={value}
-        onValueChange={(values) => {
-            setValue(values.formattedValue);
-            setValueString(values.value);
-        }}
-    />
+        if (props.onChange) props.onChange(event!, finalValue, name);
+    }, [value]);
 
     return (
         <InputTextStyled direction={props.direction || 'column'}>
@@ -84,6 +72,7 @@ export const InputText = (props: Props): ReactElement => {
                     </InputIcon>
                 }
                 <InputStyled
+                    ref={ref}
                     id={name}
                     alert={props.alert?.type}
                     disabled={props.disabled}
@@ -91,10 +80,11 @@ export const InputText = (props: Props): ReactElement => {
                     density={props.size || 'md'}
                     hasIcon={!!props.icon}
                     highlight={props.highlight}
+                    maxLength={props.maxLength || undefined}
                     value={value}
                     type={props.type || 'text'}
                     placeholder={props.placeholder}
-                    onChange={handleChange}
+                    onChange={(e) => setEvent(e)}
                     onFocus={props.onFocus}
                     onBlur={props.onBlur}
                     {...props.inputCustomProps}

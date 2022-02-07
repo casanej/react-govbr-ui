@@ -29,8 +29,9 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
     "@svgr/webpack": "^5.5.0",
+    "imask": "^6.4.1-alpha.0",
     "react": "^17.0.2",
-    "react-number-format": "^4.9.1",
+    "react-imask": "^6.4.1-alpha.0",
     "styled-components": "^5.3.1",
     "styled-media-query": "^2.1.2"
   },
