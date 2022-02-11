@@ -12,5 +12,8 @@ export const InputSelectMenu = styled.div<{ isOpen: boolean }>`
     top: 100%;
     left: 0;
     width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
     z-index: 10;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 `

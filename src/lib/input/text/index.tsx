@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnyMaskedOptions } from 'imask';
 import { Alert, Button } from 'lib';
 import { AlertTypes, OnChangeValueParameter } from 'models';
-import React, { ReactElement, useEffect, useRef, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { useIMask } from 'react-imask';
 import { InputLabel } from '../components/general.style';
 import { InputAction, InputContent, InputIcon, inputSize, InputStyled, InputTextStyled } from './index.style';
@@ -16,7 +16,8 @@ interface Props {
     alert?: {
         message: string;
         type: AlertTypes;
-    }
+    };
+    autoComplete?: boolean;
     inputCustomProps?: any;
     direction?: 'row' | 'column';
     disabled?: boolean;
@@ -69,6 +70,7 @@ export const InputText = (props: Props): ReactElement => {
                     ref={ref}
                     id={name}
                     alert={props.alert?.type}
+                    autoComplete={props.autoComplete ? 'on' : 'off'}
                     disabled={props.disabled}
                     name={name}
                     density={props.size || 'md'}

@@ -14,5 +14,6 @@ export const DividerStyled = styled.div<{ direction: DividerDirection }>`
         : css`
             width: 1px;
             max-height: 100vh;
+            height: 100%;
         `}
 `;

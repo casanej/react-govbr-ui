@@ -7,6 +7,7 @@ interface Props {
     children: React.ReactNode;
     type: 'text' | 'radio' | 'checkbox';
     disabled?: boolean;
+    onClick?: () => void;
 }
 
 export const Item = (props: Props): ReactElement => {
@@ -17,6 +18,8 @@ export const Item = (props: Props): ReactElement => {
             if (isActive === 1) setIsActive(0);
             else setIsActive(1);
         }
+
+        if (props.onClick) props.onClick();
     }, [props.type, isActive]);
 
     const handleChecked = (_: string, values: CheckTypes) => {

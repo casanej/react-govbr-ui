@@ -1,51 +1,89 @@
+/* eslint-disable no-case-declarations */
 interface PaginationReduceState {
     page: number;
-    limit: number;
-    limits: number[];
+    maxPages: number;
+    totalItems: number;
+    initialItem: number;
+    finalItem: number;
+    pageSize: number;
     total: number;
-    pages: number;
-    next: number;
-    prev: number;
     hasNext: boolean;
     hasPrev: boolean;
 }
 
-export enum PaginationReduceActions {
-    NEXT_PAGE = 'NEXT_PAGE',
-    PREVIOUS_PAGE = 'PREVIOUS_PAGE',
-    SET_LIMITS = 'SET_LIMITS',
-}
+export type PaginationReduceActions =
+    | { type: 'setPage'; payload: { page: number } }
+    | { type: 'nextPage'; }
+    | { type: 'previousPage'; }
+    | { type: 'setPageSize'; payload: { pageSize: number } }
+    | { type: 'setMaxPages'; payload: { pageSize: number } }
+    | { type: 'setTotalItems'; payload: { totalItems: number } }
 
 export const paginationInitialState: PaginationReduceState = {
     page: 1,
-    limit: 10,
-    limits: [10, 20, 30],
+    pageSize: 10,
+    maxPages: 1,
+    totalItems: 1,
+    initialItem: 1,
+    finalItem: 10,
     total: 0,
-    pages: 0,
-    next: 1,
-    prev: 1,
     hasNext: false,
     hasPrev: false,
 }
 
-export const paginationReducer = (state: PaginationReduceState, action: PaginationReduceActions) => {
-    switch (action) {
-    case PaginationReduceActions.NEXT_PAGE:
+export const paginationReducer = (state: PaginationReduceState, action: PaginationReduceActions):PaginationReduceState => {
+    switch (action.type) {
+    case 'setPage':
+        const newPage = action.payload.page;
+        const newInitialItem = 1 + state.pageSize * (newPage - 1);
+        const newFinalItem = state.pageSize * newPage > state.totalItems ? state.totalItems : state.pageSize * newPage;
+
         return {
             ...state,
-            page: state.next,
-            hasNext: state.next < state.pages,
+            page: newPage,
+            initialItem: newInitialItem,
+            finalItem: newFinalItem,
+            hasNext: newPage < state.maxPages,
+            hasPrev: newPage > 1,
         }
-    case PaginationReduceActions.PREVIOUS_PAGE:
+    case 'nextPage':
+        const nextPage = state.page + 1;
         return {
             ...state,
-            page: state.prev,
-            hasPrev: state.prev > 1,
+            page: nextPage > state.maxPages ? state.maxPages : nextPage,
+            hasNext: nextPage < state.maxPages,
         }
-    case PaginationReduceActions.SET_LIMITS:
+    case 'previousPage':
+        const previousPage = state.page - 1;
         return {
             ...state,
-            limits: state.limits,
+            page: previousPage < 1 ? 1 : previousPage,
+            hasPrev: previousPage > 1,
+        }
+    case 'setPageSize':
+        const newPageSize = action.payload.pageSize;
+        return {
+            ...state,
+            page: 1,
+            initialItem: 1,
+            finalItem: newPageSize > state.totalItems ? state.totalItems : newPageSize,
+            pageSize: newPageSize,
+            maxPages: Math.ceil(state.totalItems / newPageSize),
+        }
+    case 'setMaxPages':
+        return {
+            ...state,
+            maxPages: Math.ceil(state.totalItems / state.pageSize),
+        }
+    case 'setTotalItems':
+        const maxPages = Math.ceil(state.totalItems / state.pageSize);
+        const totalItems = action.payload?.totalItems;
+        return {
+            ...state,
+            totalItems,
+            maxPages,
+            hasNext: state.pageSize < totalItems,
+            finalItem: totalItems < state.pageSize ? totalItems : state.pageSize,
         }
     default:
         return state

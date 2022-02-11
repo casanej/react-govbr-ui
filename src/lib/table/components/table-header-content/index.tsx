@@ -10,6 +10,7 @@ interface Props {
         text: React.ReactNode;
         function: () => void;
     }>
+    hasSearch?: boolean;
 }
 
 export const TableHeaderContent = (props: Props): ReactElement => {
@@ -33,11 +34,13 @@ export const TableHeaderContent = (props: Props): ReactElement => {
     return <TableHeaderContentStyled>
         <div>{props.title}</div>
         <div>
-            <Button
-                circle
-                variant='tertiary'
-                onClick={() => setIsSearching(true)}
-            ><FontAwesomeIcon icon={faSearch} /></Button>
+            {
+                props.hasSearch && <Button
+                    circle
+                    variant='tertiary'
+                    onClick={() => setIsSearching(true)}
+                ><FontAwesomeIcon icon={faSearch} /></Button>
+            }
             {
                 props.actions && <Button
                     circle

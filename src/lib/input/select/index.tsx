@@ -2,36 +2,51 @@ import React, { ReactElement, useCallback, useEffect, useState } from 'react'
 import { InputText, Item } from 'lib';
 import { InputSelectContent, InputSelectMenu, InputSelectStyled } from './index.style';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
-
-interface SelectItemProps {
-    label: string;
-    value: string;
-    disabled?: boolean;
-}
+import { SelectItemProps } from 'models';
 
 interface Props {
     items: SelectItemProps[];
     icon?: IconName;
     multiple?: boolean;
+    placeholder?: string;
+    selectedItems?: SelectItemProps[];
+    onChange?: (item: SelectItemProps[]) => void;
 }
 
 export const InputSelect = (props: Props): ReactElement => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [inputFocus, setInputFocus] = useState<boolean>(false);
-    const [itemsSelected, setItemsSelected] = useState<Array<string>>([]);
+    const [itemsSelected, setItemsSelected] = useState<SelectItemProps[]>([]);
 
-    const handleInputValue = useCallback(() => {
-        if (itemsSelected.length === 1) return itemsSelected[0];
-        if (itemsSelected.length > 1) return `${itemsSelected[0]} + (${itemsSelected.length - 1})`;
+    useEffect(() => {
+        if (props.selectedItems) setItemsSelected(props.selectedItems.map(item => item));
+    }, []);
 
-        return '';
+    useEffect(() => {
+        if (props.onChange) props.onChange(itemsSelected);
     }, [itemsSelected])
 
     useEffect(() => {
         setMenuOpen(inputFocus);
     }, [inputFocus]);
 
-    const toggleMenu = () => setMenuOpen(oldToggle => !oldToggle);
+    const handleInputValue = useCallback((): string => {
+        if (itemsSelected.length === 1) return itemsSelected[0].value;
+        if (itemsSelected.length > 1) return `${itemsSelected[0]} + (${itemsSelected.length - 1})`;
+
+        return '';
+    }, [itemsSelected])
+
+    const handleSelectChange = (item: SelectItemProps) => {
+        if (props.multiple) {
+            setItemsSelected(oldItems => {
+                return [...oldItems, item];
+            })
+        } else {
+            setItemsSelected([item])
+            setInputFocus(false);
+        }
+    }
 
     return (
         <InputSelectStyled>
@@ -41,16 +56,16 @@ export const InputSelect = (props: Props): ReactElement => {
                     value={inputFocus ? '' : handleInputValue()}
                     placeholder={ props.multiple ? 'Selecione os itens' : 'Selecione o item' }
                     onFocus={ () => setInputFocus(true) }
-                    onBlur={ () => setInputFocus(false) }
                     action={{
                         icon: menuOpen ? 'angle-up' : 'angle-down',
-                        onClick: toggleMenu
+                        onClick: () => setInputFocus(true)
                     }}
+                    autoComplete={false}
                 />
             </InputSelectContent>
-            <InputSelectMenu isOpen={menuOpen}>
+            <InputSelectMenu isOpen={inputFocus} >
                 {
-                    props.items.map((item, index) => <Item key={index} type='text'>Item</Item>)
+                    props.items.map((item, index) => <Item key={index} type='text' onClick={() => handleSelectChange(item)}>{item.label}</Item>)
                 }
             </InputSelectMenu>
         </InputSelectStyled>
