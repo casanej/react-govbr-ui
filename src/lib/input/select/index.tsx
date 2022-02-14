@@ -1,8 +1,9 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react'
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { InputText, Item } from 'lib';
 import { InputSelectContent, InputSelectMenu, InputSelectStyled } from './index.style';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { SelectItemProps } from 'models';
+import { useOnClickOutside } from 'hooks';
 
 interface Props {
     items: SelectItemProps[];
@@ -14,9 +15,12 @@ interface Props {
 }
 
 export const InputSelect = (props: Props): ReactElement => {
+    const inputSelectRef = useRef<HTMLDivElement>()
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [inputFocus, setInputFocus] = useState<boolean>(false);
     const [itemsSelected, setItemsSelected] = useState<SelectItemProps[]>([]);
+
+    useOnClickOutside(inputSelectRef, () => setInputFocus(false));
 
     useEffect(() => {
         if (props.selectedItems) setItemsSelected(props.selectedItems.map(item => item));
@@ -49,7 +53,7 @@ export const InputSelect = (props: Props): ReactElement => {
     }
 
     return (
-        <InputSelectStyled>
+        <InputSelectStyled ref={inputSelectRef}>
             <InputSelectContent>
                 <InputText
                     icon={props.icon}
@@ -58,7 +62,7 @@ export const InputSelect = (props: Props): ReactElement => {
                     onFocus={ () => setInputFocus(true) }
                     action={{
                         icon: menuOpen ? 'angle-up' : 'angle-down',
-                        onClick: () => setInputFocus(true)
+                        onClick: () => setInputFocus(oldFocus => !oldFocus)
                     }}
                     autoComplete={false}
                 />

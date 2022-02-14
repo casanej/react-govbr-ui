@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const InputSelectStyled = styled.div`
+export const InputSelectStyled = styled.div<{ ref: any }>`
     position: relative;
 `
 
