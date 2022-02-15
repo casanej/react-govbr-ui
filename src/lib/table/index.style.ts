@@ -5,6 +5,7 @@ export const TableStyled = styled.div`
     flex-direction: column;
     gap: 10px;
     min-width: 378px;
+    font-size: 14px;
 `;
 
 export const TableHeader = styled.div``;

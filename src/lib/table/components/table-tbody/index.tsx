@@ -19,7 +19,9 @@ export const TableTBody = (props: Props): ReactElement => {
         const column = props.columns.find((column) => column.accessor === key);
         const row = rawRow[key];
 
-        if (column?.type === 'custom') {
+        if (!column) return null;
+
+        if (column.type === 'custom') {
             const columnRender = column as TableColumnCustom;
             return <TableTd
                 key={key}
@@ -31,7 +33,7 @@ export const TableTBody = (props: Props): ReactElement => {
 
         return <TableTd
             key={key}
-            type={column?.type || 'text'}
+            type={column.type || 'text'}
         >
             {row.value}
         </TableTd>
