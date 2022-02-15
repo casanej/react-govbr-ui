@@ -1,9 +1,10 @@
 import { Checkbox } from 'lib';
+import { TableColumn } from 'models';
 import React, { ReactElement, useMemo } from 'react'
 import { TableTHeadStyled, TableHeadTr, TableTh } from './index.style';
 
 interface Props {
-    columns: Array<any>;
+    columns: TableColumn[];
     width?: string;
     hasAction?: boolean;
     hasSelect?: boolean;
@@ -12,7 +13,7 @@ interface Props {
 
 export const TableTHead = (props: Props): ReactElement => {
     const numColumns = useMemo(() => {
-        return props.hasAction ? props.columns.length : props.columns.length + 1;
+        return props.hasAction ? props.columns.length + 1 : props.columns.length;
     }, [props.columns, props.hasAction]);
 
     return (

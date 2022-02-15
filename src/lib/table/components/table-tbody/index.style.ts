@@ -17,10 +17,6 @@ export const TableBody = styled.tbody`
     }
 `;
 
-export const TableTd = styled.td`
-    padding: 16px 24px;
-`;
-
 export const TableTdActions = styled.div`
     display: flex;
     flex-direction: row;

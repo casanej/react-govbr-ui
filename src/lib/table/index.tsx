@@ -1,15 +1,12 @@
-import { PageObj, TableActions, TablePaginationTypes } from 'models';
+import { PageObj, TableActions, TableColumn, TablePaginationTypes, TableRow } from 'models';
 import React, { ReactElement, useState } from 'react'
 import { Pagination } from '../pagination';
 import { TableHeaderContent, TableTBody, TableTHead } from './components';
 import { TableBody, TableCustom, TableFooter, TableHeader, TableStyled } from './index.style';
 
 interface Props {
-    columns: Array<{
-        title: string;
-        accessor: string;
-    }>;
-    rows: Array<any>;
+    columns: TableColumn[];
+    rows: TableRow[];
     actions?: TableActions[];
     hasSearch?: boolean;
     hasSelect?: boolean;
@@ -42,6 +39,7 @@ export const Table = (props: Props): ReactElement => {
                             ? props.rows.slice(pageObj.initialItem - 1, pageObj.finalItem)
                             : props.rows
                         }
+                        columns={props.columns}
                     />
                 </TableCustom>
             </TableBody>

@@ -1,11 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Checkbox } from 'lib';
-import { TableActions } from 'models';
+import { Button } from 'lib';
+import { TableActions, TableColumn, TableColumnCustom, TableRow } from 'models';
 import React, { ReactElement } from 'react'
-import { TableBody, TableBodyTr, TableTd, TableTdActions } from './index.style';
+import { TableTd } from '..';
+import { TableBody, TableBodyTr, TableTdActions } from './index.style';
 
 interface Props {
-    rows: Array<any>;
+    rows: TableRow[];
+    columns: TableColumn[]
     actions?: TableActions[];
     hasSelect?: boolean;
     onSelectRow?: (e: any) => void;
@@ -13,19 +15,39 @@ interface Props {
 
 export const TableTBody = (props: Props): ReactElement => {
 
+    const handleTdRender = (rawRow: TableRow, key: string) => {
+        const column = props.columns.find((column) => column.accessor === key);
+        const row = rawRow[key];
+
+        if (column?.type === 'custom') {
+            const columnRender = column as TableColumnCustom;
+            return <TableTd
+                key={key}
+                type='custom'
+                renderer={columnRender.renderer}
+                value={row.value}
+            />
+        }
+
+        return <TableTd
+            key={key}
+            type={column?.type || 'text'}
+        >
+            {row.value}
+        </TableTd>
+    }
+
     return <TableBody>
         {
             props.rows.map((row: any, index) => <TableBodyTr key={`table-row-${index}`}>
                 {
-                    props.hasSelect && <TableTd width={'50px'}>
-                        <Checkbox name={`table-row-${index}`} onChange={props.onSelectRow} />
-                    </TableTd>
+                    props.hasSelect && <TableTd type='checkbox' name={`table-row-${index}`} onSelectRow={props.onSelectRow} />
                 }
                 {
-                    Object.keys(row).map((key: string) => <TableTd key={key}>{row[key].value}</TableTd>)
+                    Object.keys(row).map((key: string) => handleTdRender(row, key))
                 }
                 {
-                    props.actions && <TableTd>
+                    props.actions && <TableTd type='text'>
                         <TableTdActions>
                             {
                                 props.actions.map(action => <Button key={action.label} variant='tertiary' circle onClick={action.fn}><FontAwesomeIcon icon={action.icon} /></Button>)
