@@ -8,7 +8,7 @@ import { useIMask } from 'react-imask';
 import { InputLabel } from '../components/general.style';
 import { InputAction, InputContent, InputIcon, inputSize, InputStyled, InputTextStyled } from './index.style';
 
-interface Props {
+export interface InputTextProps {
     action?: {
         icon: IconName;
         onClick: () => void;
@@ -37,7 +37,7 @@ interface Props {
     type?: string;
 }
 
-export const InputText = (props: Props): ReactElement => {
+export const InputText = (props: InputTextProps): ReactElement => {
     const [name, setName] = useState<string>('input-text');
     const { ref, value, setValue, unmaskedValue } = useIMask(props.maskObj || { mask: String });
 

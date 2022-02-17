@@ -67,6 +67,15 @@ const tableColumns: TableColumn[] = [
     { title: 'Coluna Final Muito Muito Grande 10', accessor: 'column10' },
 ]
 
+const tableColumnsCustom: TableColumn[] = [
+    { title: 'TABLE_NUM_SOLICITATION', accessor: 'column1'},
+    { title: 'TABLE_DATE_CREATION', accessor: 'column2'},
+    { title: 'TABLE_DATE_SOLICITATION', accessor: 'column3'},
+    { title: 'TABLE_GENERATED_ORDERS', accessor: 'column4'},
+    { title: 'TABLE_REQUESTED_BENEFITS', accessor: 'column5'},
+    { title: 'TABLE_SITUATION', accessor: 'column6'},
+]
+
 const tableRows: TableRow[] = [
     {
         column1: { value: 'Valor 1' },
@@ -308,7 +317,7 @@ TablePaginatedUncontrolled.args = {
 }
 
 TableSmall.args = {
-    columns: tableColumns,
+    columns: tableColumnsCustom,
     rows: tableRows,
     hasSelect: false,
     paginated: {

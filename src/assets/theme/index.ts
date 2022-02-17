@@ -63,7 +63,8 @@ export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
         position: relative;
         justify-content: flex-start;
         align-items: flex-start;
-        min-height: 100%; 
+        min-height: 100%;
+        padding: 10px;
     }
 `
 

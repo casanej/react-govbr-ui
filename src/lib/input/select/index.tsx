@@ -1,30 +1,27 @@
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { InputText, Item } from 'lib';
-import { InputSelectContent, InputSelectMenu, InputSelectStyled } from './index.style';
+import { InputSelectContent, InputSelectLabel, InputSelectMenu, InputSelectStyled } from './index.style';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { SelectItemProps } from 'models';
 import { useOnClickOutside } from 'hooks';
 
-interface Props {
+export interface InputSelectProps {
     items: SelectItemProps[];
     icon?: IconName;
+    label?: string;
     multiple?: boolean;
     placeholder?: string;
     selectedItems?: SelectItemProps[];
     onChange?: (item: SelectItemProps[]) => void;
 }
 
-export const InputSelect = (props: Props): ReactElement => {
+export const InputSelect = (props: InputSelectProps): ReactElement => {
     const inputSelectRef = useRef<HTMLDivElement>()
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [inputFocus, setInputFocus] = useState<boolean>(false);
-    const [itemsSelected, setItemsSelected] = useState<SelectItemProps[]>([]);
+    const [itemsSelected, setItemsSelected] = useState<SelectItemProps[]>(props.selectedItems || []);
 
     useOnClickOutside(inputSelectRef, () => setInputFocus(false));
-
-    useEffect(() => {
-        if (props.selectedItems) setItemsSelected(props.selectedItems.map(item => item));
-    }, []);
 
     useEffect(() => {
         if (props.onChange) props.onChange(itemsSelected);
@@ -35,8 +32,8 @@ export const InputSelect = (props: Props): ReactElement => {
     }, [inputFocus]);
 
     const handleInputValue = useCallback((): string => {
-        if (itemsSelected.length === 1) return itemsSelected[0].value;
-        if (itemsSelected.length > 1) return `${itemsSelected[0]} + (${itemsSelected.length - 1})`;
+        if (itemsSelected.length === 1) return itemsSelected[0].label;
+        if (itemsSelected.length > 1) return `${itemsSelected[0].label} + (${itemsSelected.length - 1})`;
 
         return '';
     }, [itemsSelected])
@@ -55,6 +52,9 @@ export const InputSelect = (props: Props): ReactElement => {
     return (
         <InputSelectStyled ref={inputSelectRef}>
             <InputSelectContent>
+                {
+                    props.label && <InputSelectLabel>{props.label}</InputSelectLabel>
+                }
                 <InputText
                     icon={props.icon}
                     value={inputFocus ? '' : handleInputValue()}
