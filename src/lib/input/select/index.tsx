@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 import { InputText, Item } from 'lib';
 import { InputSelectContent, InputSelectLabel, InputSelectMenu, InputSelectStyled } from './index.style';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
@@ -21,6 +21,18 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
     const [inputFocus, setInputFocus] = useState<boolean>(false);
     const [itemsSelected, setItemsSelected] = useState<SelectItemProps[]>(props.selectedItems || []);
 
+    useEffect(() => {
+        if (props.selectedItems) {
+            setItemsSelected(oldSelected => {
+                if (props.selectedItems) {
+                    if (JSON.stringify(oldSelected) !== JSON.stringify(props.selectedItems)) return props.selectedItems;
+                }
+
+                return oldSelected
+            });
+        }
+    }, [props.selectedItems])
+
     useOnClickOutside(inputSelectRef, () => setInputFocus(false));
 
     useEffect(() => {
@@ -31,7 +43,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
         setMenuOpen(inputFocus);
     }, [inputFocus]);
 
-    const handleInputValue = useCallback((): string => {
+    const handleInputValue = useMemo((): string => {
         if (itemsSelected.length === 1) return itemsSelected[0].label;
         if (itemsSelected.length > 1) return `${itemsSelected[0].label} + (${itemsSelected.length - 1})`;
 
@@ -57,7 +69,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                 }
                 <InputText
                     icon={props.icon}
-                    value={inputFocus ? '' : handleInputValue()}
+                    value={inputFocus ? '' : handleInputValue}
                     placeholder={ props.multiple ? 'Selecione os itens' : 'Selecione o item' }
                     onFocus={ () => setInputFocus(true) }
                     action={{

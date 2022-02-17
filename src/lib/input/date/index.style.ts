@@ -25,7 +25,6 @@ export const InputDateYearSelect = styled.div`
 
 export const InputDateMenu = styled.div<{ activeMonths: number }>`
     display: grid;
-    margin: 32px 0 0;
     grid-template-columns: repeat(${ props => props.activeMonths}, 350px);
     grid-gap: 0 64px;
 `;

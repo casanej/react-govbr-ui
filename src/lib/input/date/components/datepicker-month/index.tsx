@@ -1,9 +1,10 @@
 import React from 'react';
 import { useMonth } from '@datepicker-react/hooks';
 import { Day } from '..';
+import { WEEK_LABELS } from 'utils';
 
 export function Month({ year, month, firstDayOfWeek }: any) {
-    const { days, weekdayLabels, monthLabel } = useMonth({
+    const { days, weekdayLabels } = useMonth({
         year,
         month,
         firstDayOfWeek
@@ -11,9 +12,6 @@ export function Month({ year, month, firstDayOfWeek }: any) {
 
     return (
         <div>
-            <div style={{ textAlign: 'center', margin: '0 0 16px' }}>
-                <strong>{monthLabel}</strong>
-            </div>
             <div
                 style={{
                     display: 'grid',
@@ -25,7 +23,7 @@ export function Month({ year, month, firstDayOfWeek }: any) {
             >
                 {weekdayLabels.map(dayLabel =>
                     <div style={{ textAlign: 'center' }} key={dayLabel}>
-                        {dayLabel}
+                        {WEEK_LABELS[dayLabel as keyof typeof WEEK_LABELS]}
                     </div>
                 )}
             </div>

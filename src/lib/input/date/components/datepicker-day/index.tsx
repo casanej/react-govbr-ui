@@ -1,13 +1,9 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useMemo } from 'react';
 import { useDay } from '@datepicker-react/hooks';
 import datepickerContext from '../../datepicker.context';
+import { DayButton, DayTypeSelect } from './index.style';
 
-function getColor(
-    isSelected: any,
-    isSelectedStartOrEnd: any,
-    isWithinHoverRange: any,
-    isDisabled: any
-) {
+function getColor( isSelected: any, isSelectedStartOrEnd: any, isWithinHoverRange: any, isDisabled: any ) {
     return ({
         selectedFirstOrLastColor,
         normalColor,
@@ -76,34 +72,26 @@ export function Day({ dayLabel, date }: any) {
         disabledDate
     );
 
+    const handleTypeDaySelect = useMemo((): DayTypeSelect => {
+        if (disabledDate) return 'disabled'
+        if (isSelectedStartOrEnd) return 'selected_start_or_end';
+        if (isSelected) return 'selected_between';
+        if (isWithinHoverRange) return 'selecting_hover';
+
+        return 'none';
+    }, [isSelected, isSelectedStartOrEnd, isWithinHoverRange, disabledDate])
+
     return (
-        <button
+        <DayButton
             onClick={onClick}
             onKeyDown={onKeyDown}
             onMouseEnter={onMouseEnter}
             tabIndex={tabIndex}
             type='button'
             ref={dayRef}
-            style={{
-                padding: '8px',
-                border: 0,
-                color: getColorFn({
-                    selectedFirstOrLastColor: '#FFFFFF',
-                    normalColor: '#001217',
-                    selectedColor: '#FFFFFF',
-                    rangeHoverColor: '#FFFFFF',
-                    disabledColor: '#808285'
-                }),
-                background: getColorFn({
-                    selectedFirstOrLastColor: '#00aeef',
-                    normalColor: '#FFFFFF',
-                    selectedColor: '#71c9ed',
-                    rangeHoverColor: '#71c9ed',
-                    disabledColor: '#FFFFFF'
-                })
-            }}
+            typeSelect={handleTypeDaySelect}
         >
             {dayLabel}
-        </button>
+        </DayButton>
     );
 }

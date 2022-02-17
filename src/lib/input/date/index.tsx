@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { useDatepicker as useDatePicker, START_DATE, FocusedInput, OnDatesChangeProps } from '@datepicker-react/hooks';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { toDate, add } from 'date-fns'
+import { toDate } from 'date-fns'
 import { Button, InputSelect, InputText } from 'lib';
 import DatePickerContext from './datepicker.context';
 import { Month } from './components';
@@ -49,8 +49,6 @@ export const InputDate = (props: Props) => {
         onDateHover,
         onDateSelect,
         onDateFocus,
-        goToPreviousMonths,
-        goToNextMonths,
         goToDate
     } = useDatePicker({
         startDate: state.startDate,
@@ -58,15 +56,37 @@ export const InputDate = (props: Props) => {
         focusedInput: state.focusedInput,
         onDatesChange: handleDateChange,
         initialVisibleMonth: initialDate,
+        firstDayOfWeek: 0,
         numberOfMonths: props.numberOfMonths || 1
     });
+
+    const handleChangeMonth = useCallback((isNext: boolean): void => {
+        const currentMonth = month;
+        const currentYear = year;
+        let changedMonth = isNext ? currentMonth + 1 : currentMonth - 1;
+        let changedYear = year;
+
+        if (changedMonth < 0) {
+            changedYear = currentYear - 1;
+            changedMonth = 11;
+        }
+
+        if (changedMonth > 11) {
+            changedYear = currentYear + 1;
+            changedMonth = 0;
+        }
+
+        setMonth(changedMonth);
+        setYear(changedYear);
+        goToDate(new Date(changedYear, changedMonth));
+    }, [month, year]);
 
     function handleDateChange(data: OnDatesChangeProps) {
         if (!data.focusedInput) {
             setState({ ...data, focusedInput: START_DATE });
         } else {
             if (props.range) {
-                setState(data);
+                setState({ ...data, endDate: null });
             } else {
                 setState(oldData => ({
                     ...oldData,
@@ -79,43 +99,22 @@ export const InputDate = (props: Props) => {
 
     return (
         <DatePickerContext.Provider
-            value={{
-                focusedDate,
-                isDateFocused,
-                isDateSelected,
-                isDateHovered,
-                isDateBlocked,
-                isFirstOrLastSelectedDate,
-                onDateSelect,
-                onDateFocus,
-                onDateHover
-            }}
+            value={{ focusedDate, isDateFocused, isDateSelected, isDateHovered, isDateBlocked, isFirstOrLastSelectedDate, onDateSelect, onDateFocus, onDateHover }}
         >
-            <div>
-                <strong>Focused input: </strong>
-                {state.focusedInput}
-            </div>
-            <div>
-                <strong>Start date: </strong>
-                {state.startDate && state.startDate.toLocaleString()}
-            </div>
-            <div>
-                <strong>End date: </strong>
-                {state.endDate && state.endDate.toLocaleString()}
-            </div>
-
-            <Button onClick={goToPreviousMonths}>Previous</Button>
-            <Button onClick={goToNextMonths}>Next</Button>
             <InputDateStyled
                 activeMonths={activeMonths.length}
             >
                 <InputDateActions>
-                    <Button variant='tertiary' circle onClick={goToPreviousMonths}><FontAwesomeIcon icon={faChevronLeft} /></Button>
+                    <Button variant='tertiary' circle onClick={() => handleChangeMonth(false)}><FontAwesomeIcon icon={faChevronLeft} /></Button>
 
                     <InputSelect
                         items={MONTHS}
                         selectedItems={[MONTHS[month]]}
-                        onChange={(e) => setMonth(parseInt(e[0].value))}
+                        onChange={(e) => {
+                            const newMonth = parseInt(e[0].value);
+                            goToDate(new Date(year, newMonth));
+                            setMonth(newMonth)
+                        }}
                     />
 
                     <InputDateYearSelect>
@@ -123,11 +122,17 @@ export const InputDate = (props: Props) => {
                             value={year.toString()}
                             type='number'
                             maxLength={4}
-                            onChange={(e) => setYear(parseInt(e.normal))}
+                            onChange={(e) => {
+                                if (e.normal.length === 4) {
+                                    const newYear = parseInt(e.normal);
+                                    setYear(parseInt(e.normal))
+                                    goToDate(new Date(newYear, month));
+                                }
+                            }}
                         />
                     </InputDateYearSelect>
 
-                    <Button variant='tertiary' circle onClick={goToNextMonths}><FontAwesomeIcon icon={faChevronRight} /></Button>
+                    <Button variant='tertiary' circle onClick={() => handleChangeMonth(true)}><FontAwesomeIcon icon={faChevronRight} /></Button>
                 </InputDateActions>
                 <InputDateMenu
                     activeMonths={activeMonths.length}

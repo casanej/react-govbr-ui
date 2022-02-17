@@ -39,11 +39,14 @@ export interface InputTextProps {
 
 export const InputText = (props: InputTextProps): ReactElement => {
     const [name, setName] = useState<string>('input-text');
-    const { ref, value, setValue, unmaskedValue } = useIMask(props.maskObj || { mask: String });
+    const { ref, value, setValue, unmaskedValue, setUnmaskedValue } = useIMask(props.maskObj || { mask: String });
 
     useEffect(() => {
         if (props.name) setName(props.name);
-        if (typeof props.value === 'string') setValue(props.value);
+        if (typeof props.value === 'string') {
+            setUnmaskedValue(props.value);
+            setValue(props.value);
+        }
     }, [props.name, props.value]);
 
     useEffect(() => {

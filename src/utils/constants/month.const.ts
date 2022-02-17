@@ -12,3 +12,13 @@ export const MONTHS = [
     { value: '10', label: 'Novembro' },
     { value: '11', label: 'Dezembro' },
 ]
+
+export const WEEK_LABELS = {
+    Su: 'Dom',
+    Mo: 'Seg',
+    Tu: 'Ter',
+    We: 'Qua',
+    Th: 'Qui',
+    Fr: 'Sex',
+    Sa: 'Sáb'
+}
