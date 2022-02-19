@@ -13,6 +13,7 @@ export interface InputSelectProps {
     placeholder?: string;
     selectedItems?: SelectItemProps[];
     onChange?: (item: SelectItemProps[]) => void;
+    onFocus?: () => void;
 }
 
 export const InputSelect = (props: InputSelectProps): ReactElement => {
