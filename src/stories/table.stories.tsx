@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Table } from 'lib'
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle, theme } from 'assets';
-import { PageObj, TableActions, TableColumn, TableRow } from 'models';
+import { PageObj, TableColumn, TableColumnAction, TableRow } from 'models';
 
 interface LoadingExport extends ComponentMeta<typeof Table> {}
 interface LoadingStory extends ComponentStory<typeof Table> {}
@@ -32,7 +32,7 @@ const Template: LoadingStory = (args) => {
                     ? args.rows.slice(pageObj.initialItem - 1, pageObj.finalItem)
                     : args.rows
                 }
-                actions={args.actions}
+                hasActions={args.hasActions}
                 hasSelect={args.hasSelect}
                 paginated={args.paginated}
                 onPaginationChange={(pageObj: PageObj) => setPageObj(pageObj)}
@@ -41,7 +41,7 @@ const Template: LoadingStory = (args) => {
     </ThemeProvider>
 }
 
-const actions: TableActions[] = [
+const actions: TableColumnAction[] = [
     { fn: () => console.log('action 1'), label: 'Action 1', icon: 'cog' },
     { fn: () => console.log('action 2'), label: 'Action 2', icon: 'wrench' },
     { fn: () => console.log('action 3'), label: 'Action 3', icon: 'cog' },
@@ -55,11 +55,11 @@ export const TableCustom = Template.bind({});
 export const TableWithActions = Template.bind({});
 
 const tableColumns: TableColumn[] = [
-    { title: 'Coluna 1', accessor: 'column1', type: 'custom', renderer: (value: string | number) => <div style={{backgroundColor: 'red'}}>{value}</div> },
-    { title: 'Coluna 2', accessor: 'column2', type: 'money' },
-    { title: 'Coluna Muito Muito Grande 3', accessor: 'column3', type: 'number' },
-    { title: 'Coluna 4', accessor: 'column4', type: 'money_min' },
-    { title: 'Coluna Muito Grande 5', accessor: 'column5', type: 'number_min' },
+    { title: 'Coluna 1', accessor: 'column1' },
+    { title: 'Coluna 2', accessor: 'column2' },
+    { title: 'Coluna Muito Muito Grande 3', accessor: 'column3' },
+    { title: 'Coluna 4', accessor: 'column4' },
+    { title: 'Coluna Muito Grande 5', accessor: 'column5' },
     { title: 'Coluna Grande 6', accessor: 'column6' },
     { title: 'Coluna 7', accessor: 'column7' },
     { title: 'Coluna 8', accessor: 'column8' },
@@ -68,7 +68,7 @@ const tableColumns: TableColumn[] = [
 ]
 
 const tableColumnsCustom: TableColumn[] = [
-    { title: 'TABLE_NUM_SOLICITATION', accessor: 'column1'},
+    { title: 'TABLE_NUM_SOLICITATION', accessor: 'column1', type: 'custom', renderer: (value: any) => <div style={{backgroundColor: 'red', padding: ' 0 10px'}}>{value}</div> },
     { title: 'TABLE_DATE_CREATION', accessor: 'column2'},
     { title: 'TABLE_DATE_SOLICITATION', accessor: 'column3'},
     { title: 'TABLE_GENERATED_ORDERS', accessor: 'column4'},
@@ -88,6 +88,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -100,6 +101,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -112,6 +114,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -124,6 +127,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -136,6 +140,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -148,6 +153,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -160,6 +166,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -172,6 +179,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -184,6 +192,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -196,6 +205,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -208,6 +218,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -220,6 +231,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -232,6 +244,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -244,6 +257,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
     {
         column1: { value: 'Valor 1' },
@@ -256,6 +270,7 @@ const tableRows: TableRow[] = [
         column8: { value: 'Valor 8' },
         column9: { value: 'Valor 9' },
         column10: { value: 'Valor 10' },
+        actions
     },
 ]
 
@@ -281,7 +296,7 @@ Default.args = {
 }
 
 TableCustom.args = {
-    columns: tableColumns,
+    columns: tableColumnsCustom,
     rows: tableRowsTypes,
     hasSelect: false,
     paginated: {
@@ -293,7 +308,7 @@ TableWithActions.args = {
     columns: tableColumns,
     rows: tableRows,
     hasSelect: false,
-    actions
+    hasActions: true,
 }
 
 TablePaginatedControlled.args = {
@@ -317,7 +332,7 @@ TablePaginatedUncontrolled.args = {
 }
 
 TableSmall.args = {
-    columns: tableColumnsCustom,
+    columns: tableColumns,
     rows: tableRows,
     hasSelect: false,
     paginated: {

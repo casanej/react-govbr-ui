@@ -1,4 +1,4 @@
-import { PageObj, TableActions, TableColumn, TablePaginationTypes, TableRow } from 'models';
+import { PageObj, TableColumn, TablePaginationTypes, TableRow } from 'models';
 import React, { ReactElement, useState } from 'react'
 import { Pagination } from '../pagination';
 import { TableHeaderContent, TableTBody, TableTHead } from './components';
@@ -7,7 +7,7 @@ import { TableBody, TableCustom, TableFooter, TableHeader, TableStyled } from '.
 interface Props {
     columns: TableColumn[];
     rows: TableRow[];
-    actions?: TableActions[];
+    hasActions?: boolean;
     hasSearch?: boolean;
     hasSelect?: boolean;
     paginated?: TablePaginationTypes;
@@ -31,9 +31,9 @@ export const Table = (props: Props): ReactElement => {
             </TableHeader>
             <TableBody>
                 <TableCustom>
-                    <TableTHead hasAction={!!props.actions} hasSelect={props.hasSelect} columns={props.columns} />
+                    <TableTHead hasAction={props.hasActions} hasSelect={props.hasSelect} columns={props.columns} />
                     <TableTBody
-                        actions={props.actions}
+                        hasAction={props.hasActions}
                         hasSelect={props.hasSelect}
                         rows={props.paginated && props.paginated.type === 'uncontrolled'
                             ? props.rows.slice(pageObj.initialItem - 1, pageObj.finalItem)

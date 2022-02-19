@@ -1,41 +1,10 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { ReactNode } from 'react';
 
-export interface TableActions {
-    icon: IconName;
-    label: string;
-    fn: () => void;
-}
+// ======================= /* TABLE COLUMN */ ======================= //
+export type TableColumn = TableColumnCustom | TableColumnActions | TableColumnDefault;
 
-export type TableColumnTypes = 'text' | 'number' | 'number_min' | 'date' | 'boolean' | 'money' | 'money_min';
-
-export interface TableRow {
-    [key: string]: {
-        value: string | number;
-    };
-}
-
-export type TableTdTypes = TableTdTypeCheckBox | TableTdTypeCustom | TableTdTypeGeneric;
-
-export interface TableTdTypeCheckBox {
-    type: 'checkbox';
-    name: string;
-    onSelectRow?: (e: any) => void;
-}
-
-export interface TableTdTypeCustom {
-    type: 'custom';
-    value: string | number;
-    renderer: (value: string | number) => ReactNode;
-}
-
-export interface TableTdTypeGeneric {
-    type: TableColumnTypes;
-    children: ReactNode;
-    width?: string;
-}
-
-export type TableColumn = TableColumnCustom | TableColumnDefault;
+export type TableColumnTypes = 'text' | 'number' | 'number_min' | 'date' | 'boolean' | 'money' | 'money_min' | 'action';
 
 export interface TableColumnDefault {
     title: string;
@@ -48,4 +17,72 @@ export interface TableColumnCustom {
     title: string;
     accessor: string;
     renderer: (value: string | number) => ReactNode;
+}
+
+export interface TableColumnActions {
+    type: 'actions';
+    accessor: 'actions';
+    title: string;
+    actions: TableColumnAction[];
+}
+
+// ======================= /* TABLE ROW */ ======================= //
+
+export interface TableRowValue {
+    value: string | number;
+}
+
+export type TableRow = TableRowDefault | TableRowAction;
+
+export interface TableRowDefault {
+    [key: string]: TableRowValue;
+}
+
+export interface TableRowAction {
+    actions: TableColumnAction[];
+}
+
+// ======================= /* TABLE TD TYPES */ ======================= //
+
+export type TableTdTypes = TableTdTypeCheckBox | TableTdTypeCustom | TableTdTypeActions | TableTdTypeGeneric;
+
+export interface TableTdTypeCheckBox extends TableTdTypesDefault {
+    type: 'checkbox';
+    payload: {
+        name: string;
+        onSelectRow?: (e: any) => void;
+    }
+}
+
+export interface TableTdTypeCustom extends TableTdTypesDefault {
+    type: 'custom';
+    payload: {
+        value: TableRowValue;
+        renderer: (value: string | number) => ReactNode;
+    }
+}
+
+export interface TableTdTypeActions extends TableTdTypesDefault {
+    type: 'actions';
+    payload: {
+        func: TableColumnAction[];
+    }
+}
+
+export interface TableTdTypeGeneric extends TableTdTypesDefault {
+    type: TableColumnTypes;
+    children: ReactNode;
+}
+
+export interface TableTdTypesDefault {
+    width?: string;
+    payload: {};
+}
+
+// ======================= /* OTHERS MODELS */ ======================= //
+
+export interface TableColumnAction {
+    icon: IconName;
+    label: string;
+    fn: <IData = any>(payload?: IData) => void;
 }

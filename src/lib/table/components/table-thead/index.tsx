@@ -13,8 +13,13 @@ interface Props {
 
 export const TableTHead = (props: Props): ReactElement => {
     const numColumns = useMemo(() => {
-        return props.hasAction ? props.columns.length + 1 : props.columns.length;
-    }, [props.columns, props.hasAction]);
+        let totalColumns = props.columns.length;
+
+        if (props.hasAction) totalColumns++;
+        if (props.hasSelect) totalColumns++;
+
+        return totalColumns;
+    }, [props.columns, props.hasAction, props.hasSelect]);
 
     return (
         <TableTHeadStyled>
