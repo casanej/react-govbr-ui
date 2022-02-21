@@ -19,6 +19,7 @@ const Template: InputDateStory = (args) => <ThemeProvider theme={theme}>
     <GlobalStyle theme={{ ...theme }} />
     <InputDate
         initialDate={args.initialDate}
+        label={args.label}
         numberOfMonths={args.numberOfMonths}
         range={args.range}
         onChange={args.onChange}
@@ -30,7 +31,8 @@ export const InputDateRange = Template.bind({});
 
 Default.args = {
     numberOfMonths: 1,
-    range: false
+    range: false,
+    label: 'Período'
 }
 
 InputDateRange.args = {

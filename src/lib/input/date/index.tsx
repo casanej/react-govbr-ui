@@ -6,7 +6,7 @@ import { format, toDate } from 'date-fns'
 import { Button, InputSelect, InputText } from 'lib';
 import DatePickerContext from './datepicker.context';
 import { Month } from './components';
-import { InputDateActions, InputDateMenu, InputDatePickerMenu, InputDateStyled, InputDateYearSelect } from './index.style';
+import { InputDateActions, InputDateMenu, InputDatePickerMenu, InputDateStyled, InputDateYearSelect, InputLabel } from './index.style';
 import { InputDateInitialDates } from 'models';
 import { MONTHS } from 'utils';
 import { useOnClickOutside } from 'hooks';
@@ -14,6 +14,7 @@ import { useOnClickOutside } from 'hooks';
 interface Props {
     initialDate?: InputDateInitialDates;
     hasTime?: boolean;
+    label?: string;
     numberOfMonths?: number;
     range?: boolean;
     onChange?: (dates: Date[]) => void;
@@ -75,6 +76,12 @@ export const InputDate = (props: Props) => {
         goToDate(new Date(changedYear, changedMonth));
     }, [month, year]);
 
+    const handlePlaceholder = useMemo((): string => {
+        if (props.range) return 'dd/mm/aaaa até dd/mm/aaaa';
+
+        return 'dd/mm/aaaa';
+    }, []);
+
     function handleDateChange(data: OnDatesChangeProps) {
         if (!data.focusedInput) {
             setState({ ...data, focusedInput: START_DATE });
@@ -114,12 +121,16 @@ export const InputDate = (props: Props) => {
             value={{ focusedDate, isDateFocused, isDateSelected, isDateHovered, isDateBlocked, isFirstOrLastSelectedDate, onDateSelect, onDateFocus, onDateHover }}
         >
             <InputDateStyled ref={pickerRef}>
+                {
+                    props.label && <InputLabel>{props.label}</InputLabel>
+                }
                 <InputText
                     value={handleDateLabel}
                     action={{
-                        icon: 'calendar',
+                        icon: 'calendar-alt',
                         onClick: () => setDatePickerOpen(oldValue => !oldValue)
                     }}
+                    placeholder={handlePlaceholder}
                     onFocus={() => setDatePickerOpen(true)}
                 />
                 <InputDatePickerMenu

@@ -1,15 +1,25 @@
 import styled from 'styled-components';
 import { InputText } from 'lib';
 
-export const InputDateStyled = styled.div<{ref: any}>`
+export const InputDateStyled = styled.div<{ ref: any }>`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     position: relative;
+`;
+
+export const InputLabel = styled.div`
+    font-weight: bold;
 `;
 
 export const InputDatePickerMenu = styled.div<{ activeMonths: number; isOpen: boolean; }>`
     display: ${props => props.isOpen ? 'flex' : 'none'};
     flex-direction: column;
     position: absolute;
+    top: 63px;
+    left: 0;
     gap: 5px;
+    background-color: #fff;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
     width: calc(350px * ${ props => props.activeMonths} + 68px * (${ props => props.activeMonths} - 1));
 `;
