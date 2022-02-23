@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { ReactElement } from 'react'
+import { format } from 'date-fns';
 import { Button, Checkbox } from 'lib';
 import { TableTdTypeActions, TableTdTypeCheckBox, TableTdTypeCustom, TableTdTypes } from 'models';
-import React, { ReactElement } from 'react'
 import { formatNumber } from 'utils';
 import { TableTdStyled } from './index.style';
 
@@ -26,7 +27,7 @@ export const TableTd = (props: Props): ReactElement => {
         const customProps = props.payload as TableTdTypeCustom['payload'];
 
         return <TableTdStyled>
-            {customProps.renderer(customProps.value.value.toString())}
+            {customProps.renderer(customProps.value.toString())}
         </TableTdStyled>
     }
 
@@ -41,6 +42,11 @@ export const TableTd = (props: Props): ReactElement => {
     }
 
     if (['number', 'number_min', 'money', 'money_min'].includes(props.type)) return <TableTdStyled width={props.width}>{formatNumber(props.children as string | number, props.type)}</TableTdStyled>;
+
+    if ( props.type === 'date') return <TableTdStyled width={props.width}>{new Date(props.children as string).toLocaleDateString()}</TableTdStyled>;
+    if ( props.type === 'date_time') return <TableTdStyled width={props.width}>
+        {format(new Date(props.children as string), 'dd/MM/yyyy HH:mm')}
+    </TableTdStyled>;
 
     return <TableTdStyled width={props.width} >{props.children}</TableTdStyled>;
 };

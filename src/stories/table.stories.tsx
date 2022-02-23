@@ -69,12 +69,12 @@ const tableColumns: TableColumn[] = [
 ]
 
 const tableColumnsCustom: TableColumn[] = [
-    { title: 'TABLE_NUM_SOLICITATION', accessor: 'request_num' },
-    { title: 'TABLE_DATE_CREATION', accessor: 'data_criacao' },
-    { title: 'TABLE_DATE_SOLICITATION', accessor: 'data_solicitacao' },
-    { title: 'TABLE_GENERATED_ORDERS', accessor: 'pedidos_gerados' },
-    { title: 'TABLE_REQUESTED_BENEFITS', accessor: 'beneficios_solicitados' },
-    { title: 'TABLE_SITUATION', accessor: 'id_status', type: 'number'},
+    { title: 'COLUNA 1', accessor: 'coluna1' },
+    { title: 'COLUNA 2', accessor: 'coluna2', type: 'date' },
+    { title: 'COLUNA 3', accessor: 'coluna3', type: 'date_time' },
+    { title: 'COLUNA 4', accessor: 'coluna4' },
+    { title: 'COLUNA 5', accessor: 'coluna5' },
+    { title: 'COLUNA 6', accessor: 'coluna6', type: 'number'},
 ]
 
 const tableRows: TableRow[] = [
@@ -96,11 +96,11 @@ const tableRows: TableRow[] = [
 ]
 
 const tableRowsTypes: TableRow[] = [
-    { beneficios_solicitados: 0, data_criacao: '2022-02-22T12:22:39.036846', data_solicitacao: '2022-02-22T00:00:00', id: 132, id_status: 4, pedidos_gerados: 0, request_num: 'OAUFST/22' },
-    { beneficios_solicitados: 0, data_criacao: '2022-02-22T12:22:39.036846', data_solicitacao: '2022-02-22T00:00:00', id: 132, id_status: 4, pedidos_gerados: 0, request_num: 'OAUFST/22' },
-    { beneficios_solicitados: 0, data_criacao: '2022-02-22T12:22:39.036846', data_solicitacao: '2022-02-22T00:00:00', id: 132, id_status: 4, pedidos_gerados: 0, request_num: 'OAUFST/22' },
-    { beneficios_solicitados: 0, data_criacao: '2022-02-22T12:22:39.036846', data_solicitacao: '2022-02-22T00:00:00', id: 132, id_status: 4, pedidos_gerados: 0, request_num: 'OAUFST/22' },
-    { beneficios_solicitados: 0, data_criacao: '2022-02-22T12:22:39.036846', data_solicitacao: '2022-02-22T00:00:00', id: 132, id_status: 4, pedidos_gerados: 0, request_num: 'OAUFST/22' },
+    { coluna5: 0, coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
+    { coluna5: 0, coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
+    { coluna5: 0, coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
+    { coluna5: 0, coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
+    { coluna5: 0, coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
 ]
 
 Default.args = {

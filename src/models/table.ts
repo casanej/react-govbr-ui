@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 // ======================= /* TABLE COLUMN */ ======================= //
 export type TableColumn = TableColumnCustom | TableColumnActions | TableColumnDefault;
 
-export type TableColumnTypes = 'text' | 'number' | 'number_min' | 'date' | 'boolean' | 'money' | 'money_min' | 'action';
+export type TableColumnTypes = 'text' | 'number' | 'number_min' | 'date' | 'date_time' | 'boolean' | 'money' | 'money_min' | 'action';
 
 export interface TableColumnDefault {
     title: string;
