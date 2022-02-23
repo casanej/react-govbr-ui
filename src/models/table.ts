@@ -28,14 +28,10 @@ export interface TableColumnActions {
 
 // ======================= /* TABLE ROW */ ======================= //
 
-export interface TableRowValue {
-    value: string | number;
-}
-
 export type TableRow = TableRowDefault | TableRowAction;
 
 export interface TableRowDefault {
-    [key: string]: TableRowValue;
+    [key: string]: string | number;
 }
 
 export interface TableRowAction {
@@ -57,7 +53,7 @@ export interface TableTdTypeCheckBox extends TableTdTypesDefault {
 export interface TableTdTypeCustom extends TableTdTypesDefault {
     type: 'custom';
     payload: {
-        value: TableRowValue;
+        value: string | number;
         renderer: (value: string | number) => ReactNode;
     }
 }

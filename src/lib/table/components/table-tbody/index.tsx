@@ -1,5 +1,5 @@
 import { TableColumn, TableColumnAction, TableColumnActions, TableColumnCustom, TableRow, TableRowDefault } from 'models';
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useMemo } from 'react'
 import { TableTd } from '..';
 import { TableBody, TableBodyTr } from './index.style';
 
@@ -13,6 +13,8 @@ interface Props {
 }
 
 export const TableTBody = (props: Props): ReactElement => {
+
+    const columnsOrder = useMemo(() => props.columns.map(column => column.accessor), [props.columns]);
 
     const handleTdRender = (rawRow: TableRow, key: string) => {
         const column = props.columns.find((column) => column.accessor === key);
@@ -49,7 +51,7 @@ export const TableTBody = (props: Props): ReactElement => {
             type={column.type || 'text'}
             payload={{}}
         >
-            {row.value.toString()}
+            {row.toString()}
         </TableTd>
     }
 
@@ -63,7 +65,7 @@ export const TableTBody = (props: Props): ReactElement => {
                     }}/>
                 }
                 {
-                    Object.keys(row).map((key: string) => handleTdRender(row[key], key))
+                    columnsOrder.map((key: string) => handleTdRender(row[key], key))
                 }
             </TableBodyTr>)
         }
