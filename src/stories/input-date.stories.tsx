@@ -10,9 +10,6 @@ interface InputDateStory extends ComponentStory<typeof InputDate> {}
 export default {
     title: 'Input/Date',
     component: InputDate,
-    argTypes: {
-        onChange: { action: 'onChange' },
-    }
 } as InputDateExport;
 
 const Template: InputDateStory = (args) => <ThemeProvider theme={theme}>
@@ -32,7 +29,8 @@ export const InputDateRange = Template.bind({});
 Default.args = {
     numberOfMonths: 1,
     range: false,
-    label: 'Período'
+    label: 'Período',
+    onChange: (dates) => console.log('[DATES]', dates)
 }
 
 InputDateRange.args = {
@@ -41,4 +39,5 @@ InputDateRange.args = {
         start: new Date(2022, 7, 19),
         end: new Date(2022, 7, 27)
     },
+    onChange: (dates) => console.log('[DATES]', dates)
 }

@@ -8,12 +8,14 @@ import { useOnClickOutside } from 'hooks';
 export interface InputSelectProps {
     items: SelectItemProps[];
     icon?: IconName;
+    hasReset?: boolean;
     label?: string;
     multiple?: boolean;
     placeholder?: string;
     selectedItems?: SelectItemProps[];
     onChange?: (item: SelectItemProps[]) => void;
     onFocus?: () => void;
+    onReset?: () => void;
 }
 
 export const InputSelect = (props: InputSelectProps): ReactElement => {
@@ -62,6 +64,13 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
         }
     }
 
+    const handleOnReset = () => {
+        setInputFocus(false);
+        setItemsSelected([]);
+
+        if (props.onReset) props.onReset();
+    }
+
     return (
         <InputSelectStyled ref={inputSelectRef}>
             <InputSelectContent>
@@ -73,6 +82,8 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                     value={inputFocus ? '' : handleInputValue}
                     placeholder={ props.multiple ? 'Selecione os itens' : 'Selecione o item' }
                     onFocus={ () => setInputFocus(true) }
+                    onReset={handleOnReset}
+                    hasReset={false}
                     action={{
                         icon: menuOpen ? 'angle-up' : 'angle-down',
                         onClick: () => setInputFocus(oldFocus => !oldFocus)

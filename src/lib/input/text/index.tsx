@@ -34,6 +34,7 @@ export interface InputTextProps {
     onChange?: (value: OnChangeValueParameter, name: string) => void;
     onFocus?: () => void;
     onBlur?: () => void;
+    onReset?: () => void;
     placeholder?: string;
     type?: string;
 }
@@ -62,6 +63,8 @@ export const InputText = (props: InputTextProps): ReactElement => {
     const handleReset = () => {
         setValue('');
         setUnmaskedValue('');
+
+        if (props.onReset) props.onReset();
     }
 
     return (

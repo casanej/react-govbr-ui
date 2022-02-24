@@ -2,12 +2,12 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useDatepicker as useDatePicker, START_DATE, FocusedInput, OnDatesChangeProps } from '@datepicker-react/hooks';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { format, toDate } from 'date-fns'
+import { format, toDate, isValid } from 'date-fns'
 import { Button, InputSelect, InputText } from 'lib';
 import DatePickerContext from './datepicker.context';
 import { Month } from './components';
 import { InputDateActions, InputDateMenu, InputDatePickerMenu, InputDateStyled, InputDateYearSelect, InputLabel } from './index.style';
-import { InputDateInitialDates } from 'models';
+import { InputDateInitialDates, OnChangeValueParameter } from 'models';
 import { MONTHS } from 'utils';
 import { useOnClickOutside } from 'hooks';
 
@@ -39,21 +39,39 @@ export const InputDate = (props: Props) => {
         return null;
     }, [props.range]);
 
-    const [state, setState] = useState<{ startDate: Date | null; endDate: Date | null; focusedInput: FocusedInput }>({
+    const [dateState, setDateState] = useState<{ startDate: Date | null; endDate: Date | null; focusedInput: FocusedInput }>({
         startDate: rangeDate(false),
         endDate: rangeDate(true),
         focusedInput: START_DATE,
     });
 
     const { firstDayOfWeek, activeMonths, isDateSelected, isDateHovered, isFirstOrLastSelectedDate, isDateBlocked, isDateFocused, focusedDate, onDateHover, onDateSelect, onDateFocus, goToDate } = useDatePicker({
-        startDate: state.startDate,
-        endDate: state.endDate,
-        focusedInput: state.focusedInput,
+        startDate: dateState.startDate,
+        endDate: dateState.endDate,
+        focusedInput: dateState.focusedInput,
         onDatesChange: handleDateChange,
         initialVisibleMonth: initialDate,
         firstDayOfWeek: 0,
         numberOfMonths: props.numberOfMonths || 1
     });
+
+    const handleDateMask = useMemo((): string => {
+        if (props.range) return '00/00/0000 até 00/00/0000';
+        if (props.hasTime) return '00/00/0000 00:00';
+
+        return '00/00/00'
+    }, [props.range, props.hasTime]);
+
+    const setDateAndGo = (date: Date, startDate: Date, endDate: Date): void => {
+        setDateState(oldDates => ({
+            ...oldDates,
+            startDate,
+            endDate,
+        }))
+        setMonth(date.getMonth());
+        setYear(date.getFullYear());
+        goToDate(props.range ? endDate : startDate);
+    }
 
     const handleChangeMonth = useCallback((isNext: boolean): void => {
         const currentMonth = month;
@@ -84,12 +102,12 @@ export const InputDate = (props: Props) => {
 
     function handleDateChange(data: OnDatesChangeProps) {
         if (!data.focusedInput) {
-            setState({ ...data, focusedInput: START_DATE });
+            setDateState({ ...data, focusedInput: START_DATE });
         } else {
             if (props.range) {
-                setState({ ...data, endDate: null });
+                setDateState({ ...data, endDate: null });
             } else {
-                setState(oldData => ({
+                setDateState(oldData => ({
                     ...oldData,
                     startDate: data.startDate,
                     endDate: data.startDate,
@@ -102,19 +120,48 @@ export const InputDate = (props: Props) => {
         const dateFormat = props.hasTime ? 'dd/MM/yyyy hh:mm:ss' : 'dd/MM/yyyy';
 
         if (props.range) {
-            if (state.startDate && state.endDate) {
-                if (props.onChange) props.onChange([state.startDate, state.endDate]);
-                return `${format(state.startDate, dateFormat)} até ${format(state.endDate, dateFormat)}`
+            if (dateState.startDate && dateState.endDate) {
+                if (props.onChange) props.onChange([dateState.startDate, dateState.endDate]);
+                return `${format(dateState.startDate, dateFormat)} até ${format(dateState.endDate, dateFormat)}`
             }
         } else {
-            if (state.startDate) {
-                if (props.onChange) props.onChange([state.startDate]);
-                return format(state.startDate, dateFormat);
+            if (dateState.startDate) {
+                if (props.onChange) props.onChange([dateState.startDate]);
+                return format(dateState.startDate, dateFormat);
             }
         }
 
+        if (props.onChange) props.onChange([]);
+
         return '';
-    }, [props.hasTime, props.range, state.startDate, state.endDate]);
+    }, [props.hasTime, props.range, dateState.startDate, dateState.endDate]);
+
+    const handleChangeDate = (value: OnChangeValueParameter) => {
+        const { masked } = value;
+
+        if (masked) {
+            if (props.range) {
+                const splittedDates = masked.split(' até ');
+                const formattedDates = splittedDates.map(date => date.split('/').map(item => parseInt(item)));
+                const validDates = formattedDates.map(date => new Date(date[2], date[1] - 1, date[0]));
+
+                if (isValid(validDates[0]) && isValid(validDates[1]) && formattedDates[1][2].toString().length >= 4) setDateAndGo(validDates[1], validDates[0], validDates[1]);
+            } else {
+                const formattedDate = masked.split('/').map(item => parseInt(item));
+                const validDate = new Date(formattedDate[2], formattedDate[1] - 1, formattedDate[0]);
+
+                if (isValid(validDate) && formattedDate[2].toString().length >= 4) setDateAndGo(validDate, validDate, validDate);
+            }
+        }
+    }
+
+    const handleOnReset = () => {
+        setDateState({
+            startDate: null,
+            endDate: null,
+            focusedInput: START_DATE,
+        });
+    }
 
     return (
         <DatePickerContext.Provider
@@ -130,8 +177,13 @@ export const InputDate = (props: Props) => {
                         icon: 'calendar-alt',
                         onClick: () => setDatePickerOpen(oldValue => !oldValue)
                     }}
-                    hasReset
+                    maskObj={{
+                        mask: handleDateMask,
+                    }}
+                    hasReset={!!dateState.startDate}
+                    onReset={handleOnReset}
                     placeholder={handlePlaceholder}
+                    onChange={handleChangeDate}
                     onFocus={() => setDatePickerOpen(true)}
                 />
                 <InputDatePickerMenu
