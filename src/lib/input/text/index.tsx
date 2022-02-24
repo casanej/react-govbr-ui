@@ -1,4 +1,4 @@
-import { IconName } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, IconName } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnyMaskedOptions } from 'imask';
 import { Alert, Button } from 'lib';
@@ -6,7 +6,7 @@ import { AlertTypes, OnChangeValueParameter } from 'models';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useIMask } from 'react-imask';
 import { InputLabel } from '../components/general.style';
-import { InputAction, InputContent, InputIcon, inputSize, InputStyled, InputTextStyled } from './index.style';
+import { InputAction, InputContent, InputIcon, InputReset, inputSize, InputStyled, InputTextStyled } from './index.style';
 
 export interface InputTextProps {
     action?: {
@@ -21,6 +21,7 @@ export interface InputTextProps {
     inputCustomProps?: any;
     direction?: 'row' | 'column';
     disabled?: boolean;
+    hasReset?: boolean;
     helpText?: React.ReactNode;
     highlight?: boolean;
     icon?: IconName;
@@ -58,6 +59,11 @@ export const InputText = (props: InputTextProps): ReactElement => {
         if (props.onChange) props.onChange(finalValue, name);
     }, [value]);
 
+    const handleReset = () => {
+        setValue('');
+        setUnmaskedValue('');
+    }
+
     return (
         <InputTextStyled direction={props.direction || 'column'}>
             {
@@ -87,6 +93,12 @@ export const InputText = (props: InputTextProps): ReactElement => {
                     onBlur={props.onBlur}
                     {...props.inputCustomProps}
                 />
+
+                {
+                    props.hasReset && <InputReset>
+                        <Button circle variant='tertiary' size='sm' onClick={handleReset}><FontAwesomeIcon icon={faTimes} color='#a3a3a3' /></Button>
+                    </InputReset>
+                }
 
                 {
                     props.action && <InputAction>

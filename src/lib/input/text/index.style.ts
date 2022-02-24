@@ -34,6 +34,12 @@ export const InputIcon = styled.div`
     left: 12px;
 `
 
+export const InputReset = styled.div`
+    position: absolute;
+    bottom: 3.5px;
+    right: 35.5px;
+`;
+
 export const InputAction = styled.div`
     position: absolute;
     bottom: 3.5px;

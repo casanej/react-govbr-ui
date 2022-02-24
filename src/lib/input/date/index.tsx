@@ -130,6 +130,7 @@ export const InputDate = (props: Props) => {
                         icon: 'calendar-alt',
                         onClick: () => setDatePickerOpen(oldValue => !oldValue)
                     }}
+                    hasReset
                     placeholder={handlePlaceholder}
                     onFocus={() => setDatePickerOpen(true)}
                 />
