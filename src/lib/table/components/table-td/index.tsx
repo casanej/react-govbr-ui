@@ -7,10 +7,11 @@ import { formatNumber } from 'utils';
 import { TableTdStyled } from './index.style';
 
 interface Props {
-    children?: string | number;
-    type: TableTdTypes['type'];
-    width?: string;
+    children?: React.ReactNode;
     payload: TableTdTypes['payload'];
+    type: TableTdTypes['type'];
+    colSpan?: number;
+    width?: string;
 }
 
 export const TableTd = (props: Props): ReactElement => {
@@ -48,5 +49,5 @@ export const TableTd = (props: Props): ReactElement => {
         {format(new Date(props.children as string), 'dd/MM/yyyy HH:mm')}
     </TableTdStyled>;
 
-    return <TableTdStyled width={props.width} >{props.children}</TableTdStyled>;
+    return <TableTdStyled width={props.width} colSpan={props.colSpan} >{props.children}</TableTdStyled>;
 };

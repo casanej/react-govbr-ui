@@ -17,7 +17,7 @@ export const Pagination = (props: Props): ReactElement => {
     useEffect(() => {
         dispatch({ type: 'setTotalItems', payload: { totalItems: props.totalItems } });
         dispatch({ type: 'setPageSize', payload: { pageSize: 10 } });
-    }, []);
+    }, [props.totalItems]);
 
     useEffect(() => {
         if (props.onChange) props.onChange({

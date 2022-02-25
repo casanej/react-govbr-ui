@@ -33,6 +33,7 @@ const Template: LoadingStory = (args) => {
                     ? args.rows.slice(pageObj.initialItem - 1, pageObj.finalItem)
                     : args.rows
                 }
+                isLoading={args.isLoading}
                 hasActions={args.hasActions}
                 hasSelect={args.hasSelect}
                 paginated={args.paginated}
@@ -49,6 +50,8 @@ const actions: TableColumnAction[] = [
 ]
 
 export const Default = Template.bind({});
+export const TableEmpty = Template.bind({});
+export const TableLoading = Template.bind({});
 export const TablePaginatedControlled = Template.bind({});
 export const TablePaginatedUncontrolled = Template.bind({});
 export const TableSmall = Template.bind({});
@@ -116,6 +119,19 @@ TableCustom.args = {
     paginated: {
         type: 'uncontrolled',
     }
+}
+
+TableEmpty.args = {
+    columns: tableColumns,
+    rows: [],
+    hasSelect: false
+}
+
+TableLoading.args = {
+    columns: tableColumns,
+    rows: [],
+    isLoading: true,
+    hasSelect: false
 }
 
 TableWithActions.args = {

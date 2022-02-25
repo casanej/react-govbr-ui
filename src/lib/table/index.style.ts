@@ -21,6 +21,16 @@ export const TableCustom = styled.table`
     min-width: 1000px;
 `;
 
+export const TableLoading = styled.tbody`
+    > tr td {
+        padding: 10px;
+
+        > div {
+            margin: 0 auto;
+        }
+    }
+`;
+
 export const TableFooter = styled.div``;
 
 export const TableTitle = styled.div``;

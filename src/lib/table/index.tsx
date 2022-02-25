@@ -1,12 +1,13 @@
 import { PageObj, TableColumn, TablePaginationTypes, TableRow } from 'models';
 import React, { ReactElement, useState } from 'react'
-import { Pagination } from '../pagination';
+import { Loading, Pagination } from 'lib';
 import { TableHeaderContent, TableTBody, TableTHead } from './components';
-import { TableBody, TableCustom, TableFooter, TableHeader, TableStyled } from './index.style';
+import { TableBody, TableCustom, TableFooter, TableHeader, TableLoading, TableStyled } from './index.style';
 
 interface Props {
     columns: TableColumn[];
     rows: TableRow[];
+    isLoading?: boolean;
     hasActions?: boolean;
     hasSearch?: boolean;
     hasSelect?: boolean;
@@ -32,15 +33,25 @@ export const Table = (props: Props): ReactElement => {
             <TableBody>
                 <TableCustom>
                     <TableTHead hasAction={props.hasActions} hasSelect={props.hasSelect} columns={props.columns} />
-                    <TableTBody
-                        hasAction={props.hasActions}
-                        hasSelect={props.hasSelect}
-                        rows={props.paginated && props.paginated.type === 'uncontrolled'
-                            ? props.rows.slice(pageObj.initialItem - 1, pageObj.finalItem)
-                            : props.rows
-                        }
-                        columns={props.columns}
-                    />
+                    {
+                        props.isLoading
+                            ? <TableLoading>
+                                <tr>
+                                    <td colSpan={props.columns.length }>
+                                        <Loading infinity='md' />
+                                    </td>
+                                </tr>
+                            </TableLoading>
+                            : <TableTBody
+                                hasAction={props.hasActions}
+                                hasSelect={props.hasSelect}
+                                rows={props.paginated && props.paginated.type === 'uncontrolled'
+                                    ? props.rows.slice(pageObj.initialItem - 1, pageObj.finalItem)
+                                    : props.rows
+                                }
+                                columns={props.columns}
+                            />
+                    }
                 </TableCustom>
             </TableBody>
             <TableFooter>

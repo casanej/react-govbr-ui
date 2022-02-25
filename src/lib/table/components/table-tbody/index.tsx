@@ -55,6 +55,12 @@ export const TableTBody = (props: Props): ReactElement => {
         </TableTd>
     }
 
+    if (props.rows.length === 0) return <TableTd type={'text'} payload={{}} colSpan={props.columns.length} >
+        <div style={{textAlign: 'center'}}>
+            <h3>Não há informações para exibir</h3>
+        </div>
+    </TableTd>;
+
     return <TableBody>
         {
             props.rows.map((row: any, index) => <TableBodyTr key={`table-row-${index}`}>
