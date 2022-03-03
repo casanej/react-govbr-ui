@@ -1,4 +1,3 @@
-import { LinkRedirect } from 'components';
 import styled from 'styled-components';
 import { hexColorApplyAlpha } from 'utils';
 
@@ -11,7 +10,7 @@ export const HeaderLinksStyled = styled.div`
     gap: 8px;
 `;
 
-export const HeaderLink = styled(LinkRedirect)`
+export const HeaderLink = styled.div`
     padding: 8px;
     color: #1351b4;
 

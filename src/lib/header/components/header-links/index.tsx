@@ -1,5 +1,6 @@
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LinkRedirect } from 'components';
 import { Button, MenuContext } from 'lib';
 import { HeaderLinkProps } from 'models';
 import React, { ReactElement, useState } from 'react'
@@ -40,7 +41,9 @@ export const HeaderLinks = (props: Props): ReactElement | null => {
     return (
         <HeaderLinksStyled>
             {
-                props.links.map((link, index) => <HeaderLink key={index} label={link.label} url={link.url} external={link.external} />)
+                props.links.map((link, index) => <LinkRedirect key={index} url={link.url} external={link.external}>
+                    <HeaderLink>{link.label}</HeaderLink>
+                </LinkRedirect>)
             }
         </HeaderLinksStyled>
     );
