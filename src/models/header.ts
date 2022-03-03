@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 export interface HeaderLinkProps {
     label: string;
     url: string;
+    external?: boolean;
 }
 
 export interface HeaderLoginProps {

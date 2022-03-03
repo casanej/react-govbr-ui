@@ -40,7 +40,7 @@ export const HeaderLinks = (props: Props): ReactElement | null => {
     return (
         <HeaderLinksStyled>
             {
-                props.links.map((link, index) => <HeaderLink key={index} to={link.url}>{link.label}</HeaderLink>)
+                props.links.map((link, index) => <HeaderLink key={index} label={link.label} url={link.url} external={link.external} />)
             }
         </HeaderLinksStyled>
     );

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { LinkRedirect } from 'components';
 import styled from 'styled-components';
 import { hexColorApplyAlpha } from 'utils';
 
@@ -11,7 +11,7 @@ export const HeaderLinksStyled = styled.div`
     gap: 8px;
 `;
 
-export const HeaderLink = styled(Link)`
+export const HeaderLink = styled(LinkRedirect)`
     padding: 8px;
     color: #1351b4;
 
