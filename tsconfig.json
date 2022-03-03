@@ -56,7 +56,10 @@
         "utils": ["./src/utils/index.ts"],
         "models": ["./src/models/index.ts"],
         "hooks": ["./src/hooks/index.ts"],
-        "components": ["./src/components/index.ts"]
+        "components": ["./src/components/index.ts"],
+        "@fortawesome/fontawesome-common-types": [
+          "./node_modules/@fortawesome/fontawesome-common-types/index"
+        ]
       },                          /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
       // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
       "typeRoots":  ["node_modules/@types"],                       /* List of folders to include type definitions from. */
