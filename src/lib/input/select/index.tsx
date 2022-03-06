@@ -53,6 +53,13 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
         return '';
     }, [itemsSelected])
 
+    const inputPlaceholder = useMemo((): string => {
+        if (props.placeholder) return props.placeholder;
+        if (props.multiple) return 'Selecione os itens';
+
+        return 'Selecione o item';
+    }, [props.placeholder, props.multiple]);
+
     const handleSelectChange = (item: SelectItemProps) => {
         if (props.multiple) {
             setItemsSelected(oldItems => {
@@ -80,7 +87,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                 <InputText
                     icon={props.icon}
                     value={inputFocus ? '' : handleInputValue}
-                    placeholder={ props.multiple ? 'Selecione os itens' : 'Selecione o item' }
+                    placeholder={inputPlaceholder}
                     onFocus={ () => setInputFocus(true) }
                     onReset={handleOnReset}
                     hasReset={false}

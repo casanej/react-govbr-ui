@@ -19,11 +19,13 @@ const Template: InputSelectStory = (args) => <ThemeProvider theme={theme}>
         items={args.items}
         label={args.label}
         multiple={args.multiple}
+        placeholder={args.placeholder}
     />
 </ThemeProvider>
 
 export const Default = Template.bind({});
 export const SelectWithLabel = Template.bind({});
+export const SelectWithPlaceholder = Template.bind({});
 
 const items = [
     { label: 'Item 1', value: 'item1' },
@@ -40,4 +42,9 @@ Default.args = {
 SelectWithLabel.args = {
     items,
     label: 'Select with label'
+}
+
+SelectWithPlaceholder.args = {
+    items,
+    placeholder: 'Selecione'
 }
