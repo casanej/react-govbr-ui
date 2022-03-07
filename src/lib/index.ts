@@ -10,6 +10,7 @@ export * from './item';
 export * from './loading';
 export * from './menu';
 export * from './menu-context';
+export * from './modal';
 export * from './pagination';
 export * from './table';
 
