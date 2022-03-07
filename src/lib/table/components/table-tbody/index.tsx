@@ -57,7 +57,7 @@ export const TableTBody = (props: Props): ReactElement => {
 
     if (props.rows.length === 0) return <TableTd type={'text'} payload={{}} colSpan={props.columns.length} >
         <div style={{textAlign: 'center'}}>
-            <h3>Não há informações para exibir</h3>
+            <h3>Nenhum registro encontrado</h3>
         </div>
     </TableTd>;
 
