@@ -2,7 +2,7 @@ import { faTimes, IconName } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnyMaskedOptions } from 'imask';
 import { Alert, Button } from 'lib';
-import { AlertTypes, OnChangeValueParameter } from 'models';
+import { AlertTypes, InputVariants, OnChangeValueParameter } from 'models';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useIMask } from 'react-imask';
 import { InputLabel } from '../components/general.style';
@@ -23,7 +23,6 @@ export interface InputTextProps {
     disabled?: boolean;
     hasReset?: boolean;
     helpText?: React.ReactNode;
-    highlight?: boolean;
     icon?: IconName;
     label?: string;
     name?: string;
@@ -37,6 +36,7 @@ export interface InputTextProps {
     onReset?: () => void;
     placeholder?: string;
     type?: string;
+    variant?: InputVariants;
 }
 
 export const InputText = (props: InputTextProps): ReactElement => {
@@ -87,13 +87,13 @@ export const InputText = (props: InputTextProps): ReactElement => {
                     name={name}
                     density={props.size || 'md'}
                     hasIcon={!!props.icon}
-                    highlight={props.highlight}
                     maxLength={props.maxLength || undefined}
                     value={value}
                     type={props.type || 'text'}
                     placeholder={props.placeholder}
                     onFocus={props.onFocus}
                     onBlur={props.onBlur}
+                    variant={props.variant || 'primary'}
                     {...props.inputCustomProps}
                 />
 

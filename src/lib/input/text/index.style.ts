@@ -1,4 +1,4 @@
-import { alertColorTypes, AlertTypes } from 'models';
+import { alertColorTypes, AlertTypes, InputVariants } from 'models';
 import styled, { css } from 'styled-components';
 
 export const inputSize = {
@@ -7,11 +7,34 @@ export const inputSize = {
     lg: '48px'
 }
 
+const handleVariant = (variant: InputVariants) => {
+    if (variant === 'secondary') return css`
+        background-color: ${props => props.theme.colors.appScheme.colors.secondary.secondary02};
+        border: none;
+
+        &:not(:disabled) {
+            &:hover {
+                background-color: rgba(51, 51, 51, .16);
+            }
+        }
+    `
+
+    return css`
+        border: 1px solid ${props => props.theme.colors.appScheme.colors.secondary.secondary06};
+
+        &:not(:disabled) {
+            &:hover {
+                background-color: rgba(51, 51, 51, .16);
+            }
+        }
+    `
+}
+
 interface InputStyledProps {
-    alert?: AlertTypes
     density: keyof typeof inputSize;
+    variant: InputVariants;
+    alert?: AlertTypes
     hasIcon?: boolean;
-    highlight?: boolean;
 }
 
 export const InputTextStyled = styled.div<{ direction: 'row' | 'column' }>`
@@ -53,27 +76,7 @@ export const InputStyled = styled.input<InputStyledProps>`
     border: 3px solid rgba(0, 0, 0, 0);
     border-radius: ${props => props.theme.properties.surface.rounder.sm};
 
-    ${props => props.highlight
-        ? css`
-            background-color: ${props => props.theme.colors.appScheme.colors.secondary.secondary02};
-            border: none;
-
-            &:not(:disabled) {
-                &:hover {
-                    background-color: rgba(51, 51, 51, .16);
-                }
-            }
-        `
-        : css`
-            border: 1px solid ${props => props.theme.colors.appScheme.colors.secondary.secondary06};
-
-            &:not(:disabled) {
-                &:hover {
-                    background-color: rgba(51, 51, 51, .16);
-                }
-            }
-            
-    `}
+    ${props => handleVariant(props.variant)}
 
     &:disabled {
         cursor: not-allowed;

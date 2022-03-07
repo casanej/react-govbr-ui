@@ -27,7 +27,6 @@ const Template: LoadingStory = (args) => {
             direction={args.direction}
             disabled={args.disabled}
             helpText={args.helpText}
-            highlight={args.highlight}
             icon={args.icon}
             label={args.label}
             maskObj={args.maskObj}
@@ -36,11 +35,13 @@ const Template: LoadingStory = (args) => {
             value={args.value}
             type={args.type}
             onChange={handleChange}
+            variant={args.variant}
         />
     </ThemeProvider>
 }
 
 export const Default = Template.bind({});
+export const Secondary = Template.bind({});
 export const InputWithAlert = Template.bind({});
 export const InputWithAlertDisabled = Template.bind({});
 export const InputWithHelpText = Template.bind({});
@@ -49,6 +50,12 @@ export const InputWithMask = Template.bind({});
 Default.args = {
     size: 'md',
     placeholder: 'Placeholder',
+}
+
+Secondary.args = {
+    size: 'md',
+    placeholder: 'Placeholder',
+    variant: 'secondary',
 }
 
 InputWithAlert.args = {
