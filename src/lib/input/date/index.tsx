@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDatepicker as useDatePicker, START_DATE, FocusedInput, OnDatesChangeProps } from '@datepicker-react/hooks';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,6 +17,8 @@ interface Props {
     label?: string;
     numberOfMonths?: number;
     range?: boolean;
+    minBookDate?: Date;
+    maxBookDate?: Date;
     onChange?: (dates: Date[]) => void;
 }
 
@@ -52,6 +54,8 @@ export const InputDate = (props: Props) => {
         onDatesChange: handleDateChange,
         initialVisibleMonth: initialDate,
         firstDayOfWeek: 0,
+        minBookingDate: props.minBookDate,
+        maxBookingDate: props.maxBookDate,
         numberOfMonths: props.numberOfMonths || 1
     });
 
