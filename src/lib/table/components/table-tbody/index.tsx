@@ -19,15 +19,18 @@ export const TableTBody = (props: Props): ReactElement => {
     const handleTdRender = (rawRow: TableRow, key: string) => {
         const column = props.columns.find((column) => column.accessor === key);
 
-        if (key === 'actions' && props.hasAction) {
-            const row = rawRow as TableColumnActions;
-            return <TableTd
-                key={key}
-                type='actions'
-                payload={{
-                    func: row
-                }}
-            />
+        if (key === 'actions') {
+            if (props.hasAction) {
+                const row = rawRow as TableColumnActions;
+                return <TableTd
+                    key={key}
+                    type='actions'
+                    payload={{
+                        func: row
+                    }}
+                />
+            }
+            return null
         }
 
         if (!column) return null;

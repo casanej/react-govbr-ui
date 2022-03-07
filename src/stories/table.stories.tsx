@@ -69,6 +69,7 @@ const tableColumns: TableColumn[] = [
     { title: 'Coluna 8', accessor: 'column8' },
     { title: 'Coluna 9', accessor: 'column9' },
     { title: 'Coluna Final Muito Muito Grande 10', accessor: 'column10' },
+    { title: 'Ações', accessor: 'actions' },
 ]
 
 const tableColumnsCustom: TableColumn[] = [

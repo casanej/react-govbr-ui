@@ -29,12 +29,15 @@ export const TableTHead = (props: Props): ReactElement => {
                         <Checkbox name='table-select-all' onChange={props.onSelectAll} />
                     </TableTh>
                 }
-                {props.columns.map((column: any) =>
-                    <TableTh key={column.accessor} width={props.width || `${100 / numColumns}%`}>{column.title}</TableTh>
-                )}
-                {
-                    props.hasAction && <TableTh key={'actions'} width={props.width || `${100 / numColumns}%`}>Actions</TableTh>
-                }
+                {props.columns.map((column: any) => {
+                    if (column.accessor === 'actions') {
+                        if (props.hasAction) return <TableTh key={column.accessor} width={props.width || `${100 / numColumns}%`}>{column.title}</TableTh>;
+
+                        return null;
+                    }
+
+                    return <TableTh key={column.accessor} width={props.width || `${100 / numColumns}%`}>{column.title}</TableTh>
+                })}
             </TableHeadTr>
         </TableTHeadStyled>
     );
