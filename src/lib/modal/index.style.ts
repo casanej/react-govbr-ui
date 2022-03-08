@@ -11,31 +11,25 @@ export const ModalStyled = styled.div <{ isOpen: boolean }>`
     display: ${props => props.isOpen ? 'block' : 'none'};
 `;
 
-export const ModalBox = styled.div`
+export const ModalBox = styled.div<{ loading?: boolean; centered?: boolean}>`
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
+    justify-content: ${props => props.loading ? 'space-around' : 'space-between'};
+    ${props => props.centered && 'align-items: center;'}
     gap: 10px;
-    min-width: 30vw;
-    max-width: 70vw;
-    min-height: 30vh;
+    min-width: ${props => props.loading || props.centered ? '10vw' : '30vw'};
+    max-width: 50vw;
+    min-height: ${props => props.loading ? '30vh' : '20vh'};
     max-height: 70vh;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    padding: 10px;
+    padding: 24px;
 `;
-
-export const ModalHeader = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-export const ModalTitle = styled.div``;
 
 export const ModalBody = styled.div``;
 

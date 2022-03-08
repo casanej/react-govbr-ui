@@ -18,23 +18,108 @@ const Template: LoadingStory = (args) => {
     return <ThemeProvider theme={theme}>
         <GlobalStyle theme={{ ...theme }} />
         <Button onClick={() => setIsOpen(true)}>Abrir Modal</Button>
-        <Modal
-            isOpen={isOpen}
-            cancelLabel={args.cancelLabel}
-            onClose={() => setIsOpen(false)}
-            onSuccess={() => {
-                args.onSuccess && args.onSuccess();
-                setIsOpen(false);
-            }}
-            successLabel={args.successLabel}
-        />
+        {
+            args.type === 'loading' && <Modal
+                type={'loading'}
+                isOpen={isOpen}
+                cancelLabel={args.cancelLabel}
+                cancelAction={() => setIsOpen(false)}
+            />
+        }
+        {
+            args.type === 'confirmation' && <Modal
+                type={args.type}
+                title={args.title}
+                isOpen={isOpen}
+                successLabel={args.successLabel}
+                successAction={() => setIsOpen(false)}
+                successDisabled={args.successDisabled}
+                noCloseButton={args.noCloseButton}
+            >
+                {args.children}
+            </Modal>
+        }
+        {
+            args.type === 'negation' && <Modal
+                type={args.type}
+                title={args.title}
+                isOpen={isOpen}
+                cancelLabel={args.cancelLabel}
+                cancelAction={() => setIsOpen(false)}
+                noCloseButton={args.noCloseButton}
+            >
+                {args.children}
+            </Modal>
+        }
+
+        {
+            args.type === 'default' && <Modal
+                type={args.type}
+                isOpen={isOpen}
+                title={args.title}
+                noCloseButton={args.noCloseButton}
+                cancelLabel={args.cancelLabel}
+                cancelAction={() => setIsOpen(false)}
+                successAction={() => {
+                    args.successAction && args.successAction();
+                    setIsOpen(false);
+                }}
+                successDisabled={args.successDisabled}
+                successLabel={args.successLabel}
+            >
+                {args.children}
+            </Modal>
+        }
     </ThemeProvider>
 }
 
 export const Default = Template.bind({});
+export const ModalConfirmation = Template.bind({});
+export const ModalLoading = Template.bind({});
+export const ModalNegation = Template.bind({});
+export const ModalNoCloseButton = Template.bind({});
 
 Default.args = {
+    type: 'default',
+    title: 'Default Modal',
     isOpen: true,
     cancelLabel: 'Cancelar',
-    onSuccess: () => alert('Salvo com sucesso'),
+    successAction: () => alert('Salvo com sucesso'),
+    successLabel: 'Confirmar',
+    successDisabled: false,
+    children: <div>Lorem Ipsum Dolor Asimet</div>
+}
+
+ModalConfirmation.args = {
+    type: 'confirmation',
+    isOpen: true,
+    successAction: () => alert('Visto com sucesso'),
+    successLabel: 'Visto',
+    successDisabled: false,
+    children: <div>[CONFIRMAR] Lorem Ipsum Dolor Asimet</div>
+}
+
+ModalNegation.args = {
+    type: 'negation',
+    isOpen: true,
+    cancelAction: () => alert('Negado com sucesso'),
+    cancelLabel: 'Negar',
+    children: <div>[NEGAR] Lorem Ipsum Dolor Asimet</div>
+}
+
+ModalNoCloseButton.args = {
+    noCloseButton: true,
+    type: 'default',
+    isOpen: true,
+    cancelLabel: 'Cancelar',
+    successAction: () => alert('Salvo com sucesso'),
+    successLabel: 'Confirmar',
+    successDisabled: false,
+    children: <div>Lorem Ipsum Dolor Asimet</div>
+}
+
+ModalLoading.args = {
+    type: 'loading',
+    isOpen: true,
+    cancelLabel: 'Cancelar',
 }
