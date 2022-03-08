@@ -49,6 +49,10 @@ export const TableTBody = (props: Props): ReactElement => {
 
         const row = rawRow as TableRowDefault;
 
+        if (!row) return <TableTd key={key} type={'text'} payload={{}} >
+            <div style={{textAlign: 'center'}}>{'-'}</div>
+        </TableTd>
+
         return <TableTd
             key={key}
             type={column.type || 'text'}

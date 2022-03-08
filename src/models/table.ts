@@ -31,7 +31,7 @@ export interface TableColumnActions {
 export type TableRow = TableRowDefault | TableRowAction;
 
 export interface TableRowDefault {
-    [key: string]: string | number;
+    [key: string]: string | number | null;
 }
 
 export interface TableRowAction {
