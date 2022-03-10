@@ -17,6 +17,8 @@ export const HeaderLogin = (props: Props): ReactElement => {
 
     useOnClickOutside(menuRef, () => setIsOpen(false));
 
+    const toggleMenu = () => setIsOpen(oldOpen => !oldOpen);
+
     if (!props.logged) return <Link to='/login'>
         <Button variant='quaternary'>
             <div style={{display: 'flex', flexDirection: 'row', gap: 10}}>
@@ -27,8 +29,8 @@ export const HeaderLogin = (props: Props): ReactElement => {
     </Link>
 
     return <HeaderLoginStyled>
-        <Avatar image={props.logged.avatar} />
-        <Button circle variant='tertiary' size='sm' onClick={() => setIsOpen(true)}><FontAwesomeIcon icon={faChevronDown} /></Button>
+        <Avatar image={props.logged.avatar} onClick={toggleMenu} />
+        <Button circle variant='tertiary' size='sm' onClick={toggleMenu}><FontAwesomeIcon icon={faChevronDown} /></Button>
         <HeaderMenuLoggedIn ref={menuRef} open={isOpen}>
             {props.logged.menuContent}
         </HeaderMenuLoggedIn>

@@ -3,13 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactElement } from 'react'
 import { AvatarImage, AvatarStyled } from './index.style';
 
-interface Props {
+export interface AvatarProps {
     image?: string;
+    onClick?: () => void;
 }
 
-export const Avatar = (props: Props): ReactElement => {
+export const Avatar = (props: AvatarProps): ReactElement => {
 
-    return <AvatarStyled>
+    return <AvatarStyled hasFunction={!!props.onClick} onClick={props.onClick}>
         {
             props.image
                 ? <AvatarImage src={props.image} />

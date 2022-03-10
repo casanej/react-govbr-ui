@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 export const HeaderStyled = styled.header`
     padding: 15px;
     box-shadow: 0 0 6px 3px rgba(0, 0, 0, 0.14), 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 12px 12px 0 rgba(0, 0, 0, 0.10);
+    z-index: 999;
 `;
 
 export const HeaderContent = styled.nav<{ compact: boolean }>`

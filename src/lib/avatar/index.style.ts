@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const AvatarStyled = styled.div``;
+export const AvatarStyled = styled.div<{ hasFunction: boolean; }>`
+    cursor: ${props => props.hasFunction ? 'pointer' : 'default'};
+`;
 
 export const AvatarImage = styled.img`
     width: 42px;

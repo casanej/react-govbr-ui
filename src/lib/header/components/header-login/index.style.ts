@@ -14,7 +14,6 @@ export const HeaderMenuLoggedIn = styled.div<{ ref: any; open: boolean; }>`
     background-color: #fff;
     border-radius: 4px;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.14), 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 12px 12px 0 rgba(0, 0, 0, 0.10);
-    padding: 15px;
     width: fit-content;
     min-width: 200px;
 `;
