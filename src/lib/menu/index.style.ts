@@ -39,6 +39,8 @@ export const MenuHeader = styled.div`
         display: flex;
         flex-direction: row;
         gap: 10px;
+
+        line-height: 2.5em;
     }
 `
 

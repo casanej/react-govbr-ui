@@ -62,7 +62,7 @@ export const CheckboxInputCustom = styled.label<CheckboxInputProps>`
     &:before {
         background: #ffffff;
         border-radius: 4px;
-        ${props => props.alert
+        ${props => props.alert === 'error' || props.alert === 'success'
         ? css`
             border: 2px solid ${alertColorTypes[props.alert].background};
         `

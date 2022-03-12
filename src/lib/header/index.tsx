@@ -1,11 +1,11 @@
-import React, { ReactElement, useEffect, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Menu, Button, Divider, InputText } from 'lib';
-import { HeaderLinkProps, HeaderLoginProps, HeaderLogoProps, MenuFooterProps, MenuFunctionalities, MenuHeaderProps, MenuItemsProps } from 'models';
-import { HeaderActionButtons, HeaderSearching, HeaderContent, HeaderSubTitle, HeaderTitle, HeaderTitleContent, HeaderTitleMenu, HeaderStyled } from './index.style';
-import { HeaderFunctionalities, HeaderLinks, HeaderLogin, HeaderLogo } from './components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useWindowSize } from 'hooks';
+import { Button, Divider, InputText, Menu } from 'lib';
+import { HeaderLinkProps, HeaderLoginProps, HeaderLogoProps, MenuFooterProps, MenuFunctionalities, MenuHeaderProps, MenuItemsProps } from 'models';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { HeaderFunctionalities, HeaderLinks, HeaderLogin, HeaderLogo } from './components';
+import { HeaderActionButtons, HeaderContent, HeaderSearching, HeaderStyled, HeaderSubTitle, HeaderTitle, HeaderTitleContent, HeaderTitleMenu } from './index.style';
 
 interface Props {
     title: string;
@@ -44,6 +44,8 @@ export const Header = (props: Props): ReactElement => {
 
         if (props.onSearch) props.onSearch(inputValue);
     }
+
+    console.log('[HMMMMM]', props)
 
     return <HeaderStyled>
         <HeaderContent compact={isCompact}>
@@ -103,7 +105,11 @@ export const Header = (props: Props): ReactElement => {
             }
         </HeaderContent>
         {
-            props.menuItems?.items && props.menuItems?.items.length > 0 && <Menu open={menuIsOpen} items={props.menuItems.items} onClose={() => setMenuIsOpen(false)} />
+            props.menuItems?.items && props.menuItems?.items.length > 0 && <Menu
+                open={menuIsOpen}
+                items={props.menuItems.items}
+                header={props.menuItems.header}
+                onClose={() => setMenuIsOpen(false)} />
         }
     </HeaderStyled>;
 };

@@ -1,10 +1,10 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Header } from 'lib'
-import { ThemeProvider } from 'styled-components';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
+import { Header } from 'lib';
 import { MenuFunctionalities, MenuItemsProps } from 'models';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
 interface LoadingExport extends ComponentMeta<typeof Header> {}
 interface LoadingStory extends ComponentStory<typeof Header> {}
@@ -96,6 +96,10 @@ const functionalities: MenuFunctionalities[] = [
 
 const menuObj = {
     menuItems: {
+        header: {
+            logo: <img src='http://xptoevents.com/img/logo-blue.png' alt='Logo' width={100} />,
+            title: 'Xpto Events',
+        },
         items
     },
     links: [

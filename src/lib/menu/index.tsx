@@ -1,11 +1,11 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { ReactElement, useCallback, useState } from 'react'
 import { Button, Divider } from 'lib';
-import { MenuContent, MenuFooter, MenuFooterInfo, MenuFooterLinks, MenuFooterLogos, MenuFooterSocial, MenuHeader, MenuItems, MenuStyled } from './index.style';
 import { MenuFooterProps, MenuHeaderProps, MenuItemGroup, MenuItemsProps } from 'models';
-import { MenuEvident, MenuExternalLink, MenuItem } from './components';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { MenuEvident, MenuExternalLink, MenuItem } from './components';
+import { MenuContent, MenuFooter, MenuFooterInfo, MenuFooterLinks, MenuFooterLogos, MenuFooterSocial, MenuHeader, MenuItems, MenuStyled } from './index.style';
 
 interface Props {
     open: boolean;
@@ -36,6 +36,8 @@ export const Menu = (props: Props): ReactElement => {
         const { id } = e.target as HTMLDivElement;
         if (id === 'menu-backdrop') props.onClose();
     }
+
+    console.log('[PROPS]', props);
 
     return <MenuStyled id='menu-backdrop' isOpen={props.open} onClick={handleClickOutside}>
         <MenuContent>

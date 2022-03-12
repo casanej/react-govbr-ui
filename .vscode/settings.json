@@ -4,6 +4,9 @@
         "*.lock": true,
     },
     "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "eslint.format.enable": true,
     "typescript.tsdk": "node_modules\\typescript\\lib"

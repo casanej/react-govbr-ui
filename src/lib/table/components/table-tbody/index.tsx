@@ -1,5 +1,5 @@
 import { TableColumn, TableColumnAction, TableColumnActions, TableColumnCustom, TableRow, TableRowDefault } from 'models';
-import React, { ReactElement, useMemo } from 'react'
+import React, { ReactElement, useMemo } from 'react';
 import { TableTd } from '..';
 import { TableBody, TableBodyTr } from './index.style';
 
@@ -64,7 +64,7 @@ export const TableTBody = (props: Props): ReactElement => {
 
     if (props.rows.length === 0) return <TableTd type={'text'} payload={{}} colSpan={props.columns.length} >
         <div style={{textAlign: 'center'}}>
-            <h3>Nenhum registro encontrado</h3>
+            <h3>Nenhum registro encontrado.</h3>
         </div>
     </TableTd>;
 

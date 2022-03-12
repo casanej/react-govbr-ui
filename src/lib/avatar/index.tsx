@@ -1,6 +1,6 @@
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { ReactElement } from 'react'
+import React, { ReactElement } from 'react';
 import { AvatarImage, AvatarStyled } from './index.style';
 
 export interface AvatarProps {
