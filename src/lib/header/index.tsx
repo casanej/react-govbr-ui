@@ -45,8 +45,6 @@ export const Header = (props: Props): ReactElement => {
         if (props.onSearch) props.onSearch(inputValue);
     }
 
-    console.log('[HMMMMM]', props)
-
     return <HeaderStyled>
         <HeaderContent compact={isCompact}>
             {

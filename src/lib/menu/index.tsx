@@ -37,8 +37,6 @@ export const Menu = (props: Props): ReactElement => {
         if (id === 'menu-backdrop') props.onClose();
     }
 
-    console.log('[PROPS]', props);
-
     return <MenuStyled id='menu-backdrop' isOpen={props.open} onClick={handleClickOutside}>
         <MenuContent>
             <MenuHeader>
