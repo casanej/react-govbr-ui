@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnyMaskedOptions } from 'imask';
 import { Alert, Button } from 'lib';
 import { AlertTypes, InputVariants, OnChangeValueParameter } from 'models';
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useIMask } from 'react-imask';
 import { InputLabel } from '../components/general.style';
 import { InputAction, InputContent, InputIcon, InputReset, inputSize, InputStyled, InputTextStyled } from './index.style';
@@ -35,6 +35,7 @@ export interface InputTextProps {
     onBlur?: () => void;
     onReset?: () => void;
     placeholder?: string;
+    readOnly?: boolean;
     type?: string;
     variant?: InputVariants;
 }
@@ -93,6 +94,7 @@ export const InputText = (props: InputTextProps): ReactElement => {
                     placeholder={props.placeholder}
                     onFocus={props.onFocus}
                     onBlur={props.onBlur}
+                    readOnly={props.readOnly}
                     variant={props.variant || 'primary'}
                     {...props.inputCustomProps}
                 />

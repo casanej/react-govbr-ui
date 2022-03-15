@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useDatepicker as useDatePicker, START_DATE, FocusedInput, OnDatesChangeProps } from '@datepicker-react/hooks';
+import { FocusedInput, OnDatesChangeProps, START_DATE, useDatepicker as useDatePicker } from '@datepicker-react/hooks';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { format, toDate, isValid } from 'date-fns'
-import { Button, InputSelect, InputText } from 'lib';
-import DatePickerContext from './datepicker.context';
-import { Month } from './components';
-import { InputDateActions, InputDateMenu, InputDatePickerMenu, InputDateStyled, InputDateYearSelect, InputLabel } from './index.style';
-import { InputDateInitialDates, OnChangeValueParameter } from 'models';
-import { MONTHS } from 'utils';
+import { format, isValid, toDate } from 'date-fns';
 import { useOnClickOutside } from 'hooks';
+import { Button, InputSelect, InputText } from 'lib';
+import { InputDateInitialDates, OnChangeValueParameter } from 'models';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { MONTHS } from 'utils';
+import { Month } from './components';
+import DatePickerContext from './datepicker.context';
+import { InputDateActions, InputDateMenu, InputDatePickerMenu, InputDateStyled, InputDateYearSelect, InputLabel } from './index.style';
 
 interface Props {
     initialDate?: InputDateInitialDates;
@@ -186,6 +186,7 @@ export const InputDate = (props: Props) => {
                     }}
                     hasReset={!!dateState.startDate}
                     onReset={handleOnReset}
+                    readOnly
                     placeholder={handlePlaceholder}
                     onChange={handleChangeDate}
                     onFocus={() => setDatePickerOpen(true)}
