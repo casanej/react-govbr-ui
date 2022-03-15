@@ -19,6 +19,16 @@ const handleVariant = (variant: InputVariants) => {
         }
     `
 
+    if (variant === 'tertiary') return css`
+        border: none;
+
+        &:not(:disabled) {
+            &:hover {
+                background-color: rgba(51, 51, 51, .16);
+            }
+        }
+    `
+
     return css`
         border: 1px solid ${props => props.theme.colors.appScheme.colors.secondary.secondary06};
 

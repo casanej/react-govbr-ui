@@ -1,8 +1,8 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { InputSelect } from 'lib'
-import { ThemeProvider } from 'styled-components';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
+import { InputSelect } from 'lib';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
 
 interface InputSelectExport extends ComponentMeta<typeof InputSelect> {}
 interface InputSelectStory extends ComponentStory<typeof InputSelect> {}
@@ -20,10 +20,12 @@ const Template: InputSelectStory = (args) => <ThemeProvider theme={theme}>
         label={args.label}
         multiple={args.multiple}
         placeholder={args.placeholder}
+        inputVariant={args.inputVariant}
     />
 </ThemeProvider>
 
 export const Default = Template.bind({});
+export const SelectVariantTertiary = Template.bind({});
 export const SelectWithLabel = Template.bind({});
 export const SelectWithPlaceholder = Template.bind({});
 
@@ -37,6 +39,11 @@ const items = [
 
 Default.args = {
     items
+}
+
+SelectVariantTertiary.args = {
+    items,
+    inputVariant: 'secondary'
 }
 
 SelectWithLabel.args = {

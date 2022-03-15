@@ -1,13 +1,14 @@
-import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react'
-import { InputText, Item } from 'lib';
-import { InputSelectContent, InputSelectLabel, InputSelectMenu, InputSelectStyled } from './index.style';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
-import { SelectItemProps } from 'models';
 import { useOnClickOutside } from 'hooks';
+import { InputText, Item } from 'lib';
+import { InputVariants, SelectItemProps } from 'models';
+import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import { InputSelectContent, InputSelectLabel, InputSelectMenu, InputSelectStyled } from './index.style';
 
 export interface InputSelectProps {
     items: SelectItemProps[];
     icon?: IconName;
+    inputVariant?: InputVariants;
     hasReset?: boolean;
     label?: string;
     multiple?: boolean;
@@ -96,9 +97,10 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                         onClick: () => setInputFocus(oldFocus => !oldFocus)
                     }}
                     autoComplete={false}
+                    variant={props.inputVariant}
                 />
             </InputSelectContent>
-            <InputSelectMenu isOpen={inputFocus} >
+            <InputSelectMenu isOpen={inputFocus}>
                 {
                     props.items.map((item, index) => <Item key={index} type='text' onClick={() => handleSelectChange(item)}>{item.label}</Item>)
                 }

@@ -3,4 +3,4 @@ export interface OnChangeValueParameter {
     masked: string;
 }
 
-export type InputVariants = 'default' | 'secondary';
+export type InputVariants = 'primary' | 'secondary' | 'tertiary';

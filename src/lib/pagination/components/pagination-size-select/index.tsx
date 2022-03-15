@@ -1,6 +1,6 @@
 import { InputSelect } from 'lib';
 import { SelectItemProps } from 'models';
-import React, { ReactElement } from 'react'
+import React, { ReactElement } from 'react';
 
 interface Props {
     selectedItem: SelectItemProps;
@@ -16,6 +16,7 @@ export const PaginationSizeSelect = (props: Props): ReactElement => {
     }
 
     return <InputSelect
+        inputVariant='tertiary'
         items={[
             { label: '10', value: '10' },
             { label: '20', value: '20' },

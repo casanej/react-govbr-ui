@@ -1,6 +1,6 @@
-import { PageObj, TableColumn, TablePaginationTypes, TableRow } from 'models';
-import React, { ReactElement, useState } from 'react'
 import { Loading, Pagination } from 'lib';
+import { PageObj, TableColumn, TablePaginationTypes, TableRow } from 'models';
+import React, { ReactElement, useState } from 'react';
 import { TableHeaderContent, TableTBody, TableTHead } from './components';
 import { TableBody, TableCustom, TableFooter, TableHeader, TableLoading, TableStyled } from './index.style';
 
@@ -61,11 +61,13 @@ export const Table = (props: Props): ReactElement => {
                             initialPage={props.paginated.initialPage}
                             totalItems={props.paginated.totalItems}
                             onChange={handlePaginationChange}
+                            variant={2}
                         />
                         : <Pagination
                             initialPage={1}
                             totalItems={props.rows.length}
                             onChange={handlePaginationChange}
+                            variant={2}
                         />
                 }
             </TableFooter>

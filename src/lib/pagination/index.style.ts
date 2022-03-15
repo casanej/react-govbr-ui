@@ -8,18 +8,20 @@ export const PaginationContentInput = styled.div`
     width: 70px;
 `;
 
+export const PaginationActionsButtons = styled.div``
+
 export const PaginationStyled = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 10px;
+    gap: 20px;
 
     padding: ${props => `${props.theme.properties.scale['2x']}`};
 
-    ${PaginationLeftSide}, ${PaginationRightSide} {
+    ${PaginationLeftSide}, ${PaginationRightSide}, ${PaginationActionsButtons} {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 10PX;
+        gap: 20px;
     }
 `;

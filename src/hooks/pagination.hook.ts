@@ -48,18 +48,16 @@ export const paginationReducer = (state: PaginationReduceState, action: Paginati
         }
     case 'nextPage':
         const nextPage = state.page + 1;
-        return {
-            ...state,
-            page: nextPage > state.maxPages ? state.maxPages : nextPage,
-            hasNext: nextPage < state.maxPages,
-        }
+
+        if (nextPage > state.maxPages) return state;
+
+        return paginationReducer(state, { type: 'setPage', payload: { page: nextPage } });
     case 'previousPage':
         const previousPage = state.page - 1;
-        return {
-            ...state,
-            page: previousPage < 1 ? 1 : previousPage,
-            hasPrev: previousPage > 1,
-        }
+
+        if (previousPage < 1) return state;
+
+        return paginationReducer(state, { type: 'setPage', payload: { page: previousPage } });
     case 'setPageSize':
         const newPageSize = action.payload.pageSize;
         return {
