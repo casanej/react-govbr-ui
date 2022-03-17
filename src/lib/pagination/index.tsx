@@ -45,6 +45,7 @@ export const Pagination = (props: Props): ReactElement => {
 
     if (props.variant === 2) return <PaginationStyled>
         <PaginationLeftSide>
+            <div>Exibir:</div>
             <PaginationContentInput>
                 <PaginationSizeSelect
                     selectedItem={{ label: state.pageSize.toString(), value: state.pageSize.toString() }}
@@ -75,6 +76,7 @@ export const Pagination = (props: Props): ReactElement => {
     return (
         <PaginationStyled>
             <PaginationLeftSide>
+                <div>Exibir:</div>
                 <PaginationContentInput>
                     <PaginationSizeSelect
                         selectedItem={{ label: state.pageSize.toString(), value: state.pageSize.toString() }}

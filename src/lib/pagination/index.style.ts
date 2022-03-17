@@ -14,7 +14,7 @@ export const PaginationStyled = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 20px;
+    gap: 10px;
 
     padding: ${props => `${props.theme.properties.scale['2x']}`};
 
@@ -22,6 +22,6 @@ export const PaginationStyled = styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 20px;
+        gap: 10px;
     }
 `;
