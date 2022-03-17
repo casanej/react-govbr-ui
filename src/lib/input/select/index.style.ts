@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { inputSize } from '../text/index.style';
 
 export const InputSelectStyled = styled.div<{ ref: any }>`
     position: relative;
@@ -15,9 +14,9 @@ export const InputSelectLabel = styled.div`
     font-weight: bold;
 `;
 
-export const InputSelectMenu = styled.div<{ density: keyof typeof inputSize; }>`
+export const InputSelectMenu = styled.div<{ gapTop: number }>`
     position: absolute;
-    top: ${props => inputSize[props.density]};
+    top: ${props => `${props.gapTop}px`};
     left: 0;
     background-color: #fff;
     width: 100%;

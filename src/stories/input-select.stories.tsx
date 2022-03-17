@@ -50,6 +50,7 @@ SelectComplete.args = {
         message: 'This is an alert message',
         type: 'error'
     },
+    label: 'Select',
     helpText: 'Texto de ajuda',
     placeholder: 'Selecione',
 }

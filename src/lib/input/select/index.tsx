@@ -23,10 +23,19 @@ export interface InputSelectProps {
 }
 
 export const InputSelect = (props: InputSelectProps): ReactElement => {
+    const name = useMemo(() => props.name || Math.random(), [props.name]);
     const inputSelectRef = useRef<HTMLDivElement>()
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [inputFocus, setInputFocus] = useState<boolean>(false);
     const [itemsSelected, setItemsSelected] = useState<SelectItemProps[]>(props.selectedItems || []);
+    const [menuGapTop, setMenuGapTop] = useState<number>(0);
+
+    useEffect(() => {
+        setInputFocus(false);
+        const inputEl = inputSelectRef.current?.lastChild?.lastChild?.firstChild as HTMLDivElement;
+
+        if (inputEl) setMenuGapTop(inputEl.offsetTop + inputEl.offsetHeight);
+    }, [props.label, inputSelectRef])
 
     useEffect(() => {
         if (props.selectedItems) {
@@ -96,6 +105,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                     onReset={handleOnReset}
                     hasReset={false}
                     helpText={props.helpText}
+                    name={`input-text-${name}`}
                     action={{
                         icon: menuOpen ? 'angle-up' : 'angle-down',
                         onClick: () => setInputFocus(oldFocus => !oldFocus)
@@ -107,7 +117,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                 />
             </InputSelectContent>
             {
-                inputFocus && <InputSelectMenu density='md'>
+                inputFocus && <InputSelectMenu gapTop={menuGapTop}>
                     {
                         props.items.map((item, index) => <Item key={index} type='text' onClick={() => handleSelectChange(item)}>{item.label}</Item>)
                     }
