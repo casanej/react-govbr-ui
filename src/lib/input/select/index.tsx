@@ -12,6 +12,7 @@ export interface InputSelectProps {
     hasReset?: boolean;
     label?: string;
     multiple?: boolean;
+    name?: string;
     placeholder?: string;
     selectedItems?: SelectItemProps[];
     onChange?: (item: SelectItemProps[]) => void;
@@ -98,13 +99,16 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                     }}
                     autoComplete={false}
                     variant={props.inputVariant}
+                    readOnly
                 />
             </InputSelectContent>
-            <InputSelectMenu isOpen={inputFocus}>
-                {
-                    props.items.map((item, index) => <Item key={index} type='text' onClick={() => handleSelectChange(item)}>{item.label}</Item>)
-                }
-            </InputSelectMenu>
+            {
+                inputFocus && <InputSelectMenu>
+                    {
+                        props.items.map((item, index) => <Item key={index} type='text' onClick={() => handleSelectChange(item)}>{item.label}</Item>)
+                    }
+                </InputSelectMenu>
+            }
         </InputSelectStyled>
     );
 };
