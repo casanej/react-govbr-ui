@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { inputSize } from '../text/index.style';
 
 export const InputSelectStyled = styled.div<{ ref: any }>`
     position: relative;
@@ -14,9 +15,9 @@ export const InputSelectLabel = styled.div`
     font-weight: bold;
 `;
 
-export const InputSelectMenu = styled.div`
+export const InputSelectMenu = styled.div<{ density: keyof typeof inputSize; }>`
     position: absolute;
-    top: 100%;
+    top: ${props => inputSize[props.density]};
     left: 0;
     background-color: #fff;
     width: 100%;

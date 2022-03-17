@@ -107,7 +107,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                 />
             </InputSelectContent>
             {
-                inputFocus && <InputSelectMenu>
+                inputFocus && <InputSelectMenu density='md'>
                     {
                         props.items.map((item, index) => <Item key={index} type='text' onClick={() => handleSelectChange(item)}>{item.label}</Item>)
                     }

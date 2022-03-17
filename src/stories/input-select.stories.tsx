@@ -15,8 +15,10 @@ export default {
 const Template: InputSelectStory = (args) => <ThemeProvider theme={theme}>
     <GlobalStyle theme={{ ...theme }} />
     <InputSelect
+        alert={args.alert}
         icon={args.icon}
         items={args.items}
+        helpText={args.helpText}
         label={args.label}
         multiple={args.multiple}
         placeholder={args.placeholder}
@@ -25,6 +27,7 @@ const Template: InputSelectStory = (args) => <ThemeProvider theme={theme}>
 </ThemeProvider>
 
 export const Default = Template.bind({});
+export const SelectComplete = Template.bind({});
 export const SelectVariantTertiary = Template.bind({});
 export const SelectWithLabel = Template.bind({});
 export const SelectWithPlaceholder = Template.bind({});
@@ -39,6 +42,16 @@ const items = [
 
 Default.args = {
     items
+}
+
+SelectComplete.args = {
+    items,
+    alert: {
+        message: 'This is an alert message',
+        type: 'error'
+    },
+    helpText: 'Texto de ajuda',
+    placeholder: 'Selecione',
 }
 
 SelectVariantTertiary.args = {
