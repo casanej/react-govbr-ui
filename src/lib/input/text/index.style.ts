@@ -79,6 +79,11 @@ export const InputAction = styled.div`
     right: 3.5px;
 `
 
+export const InputHelpText = styled.div`
+    font-size: 0.835rem;
+    font-weight: 500;
+`;
+
 export const InputStyled = styled.input<InputStyledProps>`
     height: ${props => inputSize[props.density]};
     width: 100%;

@@ -2,21 +2,18 @@ import { faTimes, IconName } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnyMaskedOptions } from 'imask';
 import { Alert, Button } from 'lib';
-import { AlertTypes, InputVariants, OnChangeValueParameter } from 'models';
+import { InputAlertObj, InputVariants, OnChangeValueParameter } from 'models';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useIMask } from 'react-imask';
 import { InputLabel } from '../components/general.style';
-import { InputAction, InputContent, InputIcon, InputReset, inputSize, InputStyled, InputTextStyled } from './index.style';
+import { InputAction, InputContent, InputHelpText, InputIcon, InputReset, inputSize, InputStyled, InputTextStyled } from './index.style';
 
 export interface InputTextProps {
     action?: {
         icon: IconName;
         onClick: () => void;
     };
-    alert?: {
-        message: string;
-        type: AlertTypes;
-    };
+    alert?: InputAlertObj;
     autoComplete?: boolean;
     inputCustomProps?: any;
     direction?: 'row' | 'column';
@@ -116,7 +113,7 @@ export const InputText = (props: InputTextProps): ReactElement => {
             }
 
             {
-                props.helpText && <div>{props.helpText}</div>
+                props.helpText && <InputHelpText>{props.helpText}</InputHelpText>
             }
         </InputTextStyled>
     );

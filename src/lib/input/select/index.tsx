@@ -1,15 +1,17 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { useOnClickOutside } from 'hooks';
 import { InputText, Item } from 'lib';
-import { InputVariants, SelectItemProps } from 'models';
+import { InputAlertObj, InputVariants, SelectItemProps } from 'models';
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { InputSelectContent, InputSelectLabel, InputSelectMenu, InputSelectStyled } from './index.style';
 
 export interface InputSelectProps {
     items: SelectItemProps[];
+    alert?: InputAlertObj;
     icon?: IconName;
     inputVariant?: InputVariants;
     hasReset?: boolean;
+    helpText?: React.ReactNode;
     label?: string;
     multiple?: boolean;
     name?: string;
@@ -93,10 +95,12 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                     onFocus={ () => setInputFocus(true) }
                     onReset={handleOnReset}
                     hasReset={false}
+                    helpText={props.helpText}
                     action={{
                         icon: menuOpen ? 'angle-up' : 'angle-down',
                         onClick: () => setInputFocus(oldFocus => !oldFocus)
                     }}
+                    alert={props.alert}
                     autoComplete={false}
                     variant={props.inputVariant}
                     readOnly
