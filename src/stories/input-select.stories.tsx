@@ -16,6 +16,7 @@ const Template: InputSelectStory = (args) => <ThemeProvider theme={theme}>
     <GlobalStyle theme={{ ...theme }} />
     <InputSelect
         alert={args.alert}
+        disabled={args.disabled}
         icon={args.icon}
         items={args.items}
         helpText={args.helpText}
@@ -28,6 +29,7 @@ const Template: InputSelectStory = (args) => <ThemeProvider theme={theme}>
 
 export const Default = Template.bind({});
 export const SelectComplete = Template.bind({});
+export const SelectDisabled = Template.bind({});
 export const SelectVariantTertiary = Template.bind({});
 export const SelectWithLabel = Template.bind({});
 export const SelectWithPlaceholder = Template.bind({});
@@ -50,6 +52,18 @@ SelectComplete.args = {
         message: 'This is an alert message',
         type: 'error'
     },
+    label: 'Select',
+    helpText: 'Texto de ajuda',
+    placeholder: 'Selecione',
+}
+
+SelectDisabled.args = {
+    items,
+    alert: {
+        message: 'This is an alert message',
+        type: 'error'
+    },
+    disabled: true,
     label: 'Select',
     helpText: 'Texto de ajuda',
     placeholder: 'Selecione',

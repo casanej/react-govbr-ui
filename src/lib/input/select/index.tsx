@@ -8,6 +8,7 @@ import { InputSelectContent, InputSelectLabel, InputSelectMenu, InputSelectStyle
 export interface InputSelectProps {
     items: SelectItemProps[];
     alert?: InputAlertObj;
+    disabled?: boolean;
     icon?: IconName;
     inputVariant?: InputVariants;
     hasReset?: boolean;
@@ -108,11 +109,13 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                     name={`input-text-${name}`}
                     action={{
                         icon: menuOpen ? 'angle-up' : 'angle-down',
-                        onClick: () => setInputFocus(oldFocus => !oldFocus)
+                        onClick: () => setInputFocus(oldFocus => !oldFocus),
+                        disabled: props.disabled
                     }}
                     alert={props.alert}
                     autoComplete={false}
                     variant={props.inputVariant}
+                    disabled={props.disabled}
                     readOnly
                 />
             </InputSelectContent>

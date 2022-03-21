@@ -1,9 +1,9 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { InputText } from 'lib'
-import { ThemeProvider } from 'styled-components';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
+import { InputText } from 'lib';
 import { OnChangeValueParameter } from 'models';
+import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 
 interface LoadingExport extends ComponentMeta<typeof InputText> {}
 interface LoadingStory extends ComponentStory<typeof InputText> {}
@@ -17,6 +17,9 @@ const Template: LoadingStory = (args) => {
     const handleChange = (value:OnChangeValueParameter, name:string) => {
         console.log('[HANDLE CHANGE]', value, name);
     }
+    const [inputValue, setInputValue] = useState('');
+
+    console.log('[INPUT VALUE]', inputValue);
 
     return <ThemeProvider theme={theme}>
         <GlobalStyle theme={{ ...theme }} />
@@ -32,7 +35,7 @@ const Template: LoadingStory = (args) => {
             maskObj={args.maskObj}
             size={args.size}
             placeholder={args.placeholder}
-            value={args.value}
+            value={inputValue}
             type={args.type}
             onChange={handleChange}
             variant={args.variant}

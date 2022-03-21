@@ -2,19 +2,17 @@ import { faTimes, IconName } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnyMaskedOptions } from 'imask';
 import { Alert, Button } from 'lib';
-import { InputAlertObj, InputVariants, OnChangeValueParameter } from 'models';
+import { InputAlertObj, InputTextButtonAction, InputVariants, OnChangeValueParameter } from 'models';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useIMask } from 'react-imask';
 import { InputLabel } from '../components/general.style';
 import { InputAction, InputContent, InputHelpText, InputIcon, InputReset, inputSize, InputStyled, InputTextStyled } from './index.style';
 
 export interface InputTextProps {
-    action?: {
-        icon: IconName;
-        onClick: () => void;
-    };
+    action?: InputTextButtonAction;
     alert?: InputAlertObj;
     autoComplete?: boolean;
+    initialValue?: string;
     inputCustomProps?: any;
     direction?: 'row' | 'column';
     disabled?: boolean;
@@ -43,11 +41,18 @@ export const InputText = (props: InputTextProps): ReactElement => {
 
     useEffect(() => {
         if (props.name) setName(props.name);
-        if (typeof props.value === 'string') {
+        if (props.initialValue) {
+            setUnmaskedValue(props.initialValue);
+            setValue(props.initialValue);
+        }
+    }, [])
+
+    useEffect(() => {
+        if (props.value) {
             setUnmaskedValue(props.value);
             setValue(props.value);
         }
-    }, [props.name, props.value]);
+    }, [props.value]);
 
     useEffect(() => {
         const finalValue = {
@@ -104,7 +109,7 @@ export const InputText = (props: InputTextProps): ReactElement => {
 
                 {
                     props.action && <InputAction>
-                        <Button circle variant='tertiary' size='sm' onClick={props.action.onClick}><FontAwesomeIcon icon={props.action.icon} color='#1351b4' /></Button>
+                        <Button circle variant='tertiary' size='sm' disabled={props.action.disabled} onClick={props.action.onClick}><FontAwesomeIcon icon={props.action.icon} color='#1351b4' /></Button>
                     </InputAction>
                 }
             </InputContent>
