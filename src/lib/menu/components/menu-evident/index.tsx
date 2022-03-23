@@ -1,7 +1,7 @@
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MenuItemGroup } from 'models';
-import React, { ReactElement } from 'react'
+import React, { ReactElement } from 'react';
 import { MenuItem } from '..';
 import { MenuEvidentHeader, MenuEvidentLabel, MenuEvidentStyled } from './index.style';
 
@@ -9,6 +9,7 @@ interface Props {
     item: MenuItemGroup;
     handleEvidentMenu: (item: MenuItemGroup) => void;
     handleRemoveEvidentMenu: () => void;
+    onClick?: () => void;
 }
 
 export const MenuEvident = (props: Props): ReactElement => {
@@ -29,6 +30,7 @@ export const MenuEvident = (props: Props): ReactElement => {
                     item={item}
                     variant='secondary'
                     handleEvidentMenu={(subItem) => props.handleEvidentMenu(subItem)}
+                    onClick={props.onClick}
                 />)
             }
         </MenuEvidentStyled>

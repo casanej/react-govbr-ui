@@ -54,7 +54,7 @@ export const Menu = (props: Props): ReactElement => {
             <MenuItems>
                 <div style={{ display: evidentSubMenu.length === 0 ? 'block' : 'none' }}>
                     {
-                        props.items.map((item, itemIndex) => <MenuItem key={itemIndex} item={item} handleEvidentMenu={handleAddEvidentMenu} />)
+                        props.items.map((item, itemIndex) => <MenuItem key={itemIndex} item={item} handleEvidentMenu={handleAddEvidentMenu} onClick={props.onClose}/>)
                     }
                 </div>
                 {
@@ -62,6 +62,7 @@ export const Menu = (props: Props): ReactElement => {
                         item={evidentSubMenu.at(-1)!}
                         handleEvidentMenu={handleAddEvidentMenu}
                         handleRemoveEvidentMenu={handleRemoveEvidentMenu}
+                        onClick={props.onClose}
                     />
                 }
             </MenuItems>

@@ -1,8 +1,7 @@
 import { faAngleDown, faAngleRight, faAngleUp, faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { ReactElement, useState } from 'react'
-import { Link } from 'react-router-dom';
 import { MenuItemGroup, MenuItemsProps } from 'models';
+import React, { ReactElement, useState } from 'react';
 import { MenuItemList } from '..';
 import { MenuItemContent, menuItemDensity, MenuItemLabel, MenuItemStyled, MenuItemVariant } from './index.style';
 import { MenuItemRedirect } from './menu-item-redirect';
@@ -11,6 +10,7 @@ interface Props {
     item: MenuItemsProps;
     density?: keyof typeof menuItemDensity;
     handleEvidentMenu?: (item: MenuItemGroup) => void;
+    onClick?: () => void;
     variant?: MenuItemVariant;
 }
 
@@ -19,7 +19,9 @@ export const MenuItem = (props: Props): ReactElement => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggleOpen = () => {
-        if (item.groupType !== 'item' && props.variant === 'secondary') {
+        if (item.groupType === 'item' && props.onClick) {
+            props.onClick();
+        } else if (item.groupType !== 'item' && props.variant === 'secondary') {
             const handleItem = props.item as MenuItemGroup;
 
             if (props.handleEvidentMenu) {
@@ -60,7 +62,7 @@ export const MenuItem = (props: Props): ReactElement => {
             || item.groupType === 'evident'
             || item.groupType === 'expand' && <>
                 {
-                    item.subItems && <MenuItemList isOpen={isOpen} items={item.subItems} handleEvidentMenu={props.handleEvidentMenu} />
+                    item.subItems && <MenuItemList isOpen={isOpen} items={item.subItems} handleEvidentMenu={props.handleEvidentMenu} onClick={props.onClick} />
                 }
             </>
         }

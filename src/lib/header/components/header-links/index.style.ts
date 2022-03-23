@@ -18,10 +18,6 @@ export const HeaderLink = styled.div`
         background-color: ${props => hexColorApplyAlpha('#1351b4', props.theme.properties.opacity.xs)}
     }
 
-    &:active {
-        background-color: ${props => hexColorApplyAlpha('#1351b4', props.theme.properties.opacity.md)}
-    }
-
     &:focus-visible {
         outline-color: #c2850c;
         outline-style: dashed;
