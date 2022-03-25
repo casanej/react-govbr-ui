@@ -11,7 +11,8 @@ export const InputSelectContent = styled.div`
 `
 
 export const InputSelectLabel = styled.div`
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 14px;
 `;
 
 export const InputSelectMenu = styled.div<{ gapTop: number }>`

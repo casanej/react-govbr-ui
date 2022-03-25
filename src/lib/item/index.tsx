@@ -1,7 +1,7 @@
-import React, { ReactElement, useCallback, useState } from 'react'
 import { Checkbox } from 'lib';
-import { ItemStyled } from './index.style';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { CheckTypes } from '../checkbox/index.style';
+import { ItemStyled } from './index.style';
 
 interface Props {
     children: React.ReactNode;

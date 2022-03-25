@@ -56,7 +56,7 @@ export const InputTextStyled = styled.div<{ direction: 'row' | 'column' }>`
     width: 100%;
 `;
 
-export const InputContent = styled.div`
+export const InputContent = styled.div<{ ref: any}>`
     position: relative;
     width: 100%;
 `
@@ -112,6 +112,21 @@ export const InputStyled = styled.input<InputStyledProps>`
             border: 3px solid #c2850c;
         }
     }
+`;
 
+export const InputListMenu = styled.div`
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-radius: ${props => props.theme.properties.surface.rounder.sm};
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+`;
 
+export const InputListItem = styled.div`
+    padding: ${props => props.theme.properties.scale['2x']} ${props => props.theme.properties.scale['4x']};
+    cursor: pointer; 
 `;

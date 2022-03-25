@@ -1,8 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
 import { InputText } from 'lib';
-import { OnChangeValueParameter } from 'models';
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 interface LoadingExport extends ComponentMeta<typeof InputText> {}
@@ -11,16 +10,12 @@ interface LoadingStory extends ComponentStory<typeof InputText> {}
 export default {
     title: 'Input/Text',
     component: InputText,
+    argTypes: {
+        onChange: { action: 'onChange(value, name)' },
+    }
 } as LoadingExport;
 
 const Template: LoadingStory = (args) => {
-    const handleChange = (value:OnChangeValueParameter, name:string) => {
-        console.log('[HANDLE CHANGE]', value, name);
-    }
-    const [inputValue, setInputValue] = useState('');
-
-    console.log('[INPUT VALUE]', inputValue);
-
     return <ThemeProvider theme={theme}>
         <GlobalStyle theme={{ ...theme }} />
         <InputText
@@ -32,12 +27,12 @@ const Template: LoadingStory = (args) => {
             helpText={args.helpText}
             icon={args.icon}
             label={args.label}
+            list={args.list}
             maskObj={args.maskObj}
             size={args.size}
             placeholder={args.placeholder}
-            value={inputValue}
             type={args.type}
-            onChange={handleChange}
+            onChange={args.onChange}
             variant={args.variant}
         />
     </ThemeProvider>
@@ -45,6 +40,8 @@ const Template: LoadingStory = (args) => {
 
 export const Default = Template.bind({});
 export const Secondary = Template.bind({});
+export const InputListArrayString = Template.bind({});
+export const InputListArrayObj = Template.bind({});
 export const InputWithAlert = Template.bind({});
 export const InputWithAlertDisabled = Template.bind({});
 export const InputWithHelpText = Template.bind({});
@@ -59,6 +56,23 @@ Secondary.args = {
     size: 'md',
     placeholder: 'Placeholder',
     variant: 'secondary',
+}
+
+InputListArrayString.args = {
+    size: 'md',
+    placeholder: 'Placeholder',
+    list: ['Rafael', 'Casanje', 'Bertolino'],
+    helpText: 'Start typing to filter the list',
+}
+
+InputListArrayObj.args = {
+    size: 'md',
+    placeholder: 'Placeholder',
+    list: [
+        { label: 'Rafael Casanje', year: '1998' },
+        { label: 'Casanje', year: '2001' },
+        { label: 'Costa', year: '1971' },
+    ]
 }
 
 InputWithAlert.args = {
