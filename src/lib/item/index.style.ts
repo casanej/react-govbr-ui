@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { hexColorApplyAlpha } from 'utils';
 
 export const ItemStyled = styled.div < { disabled?: boolean; isActive?: boolean }>`
-    padding: ${props => props.theme.properties.scale.base} ${props => props.theme.properties.scale['2x']};
+    padding: 16px;
     cursor: pointer;
 
     ${props => props.disabled
