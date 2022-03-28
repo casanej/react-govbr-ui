@@ -103,6 +103,7 @@ InputWithHelpText.args = {
 }
 
 InputWithMask.args = {
+    initialValue: '6133971818',
     size: 'md',
     placeholder: 'Placeholder',
     maskObj: {

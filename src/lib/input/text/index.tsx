@@ -48,14 +48,6 @@ export const InputText = (props: InputTextProps): ReactElement => {
     useOnClickOutside(inputContentRef, () => setListOpen(false));
 
     useEffect(() => {
-        if (props.name) setName(props.name);
-        if (props.initialValue) {
-            setUnmaskedValue(props.initialValue);
-            setValue(props.initialValue);
-        }
-    }, [])
-
-    useEffect(() => {
         if (typeof props.value === 'string') {
             setUnmaskedValue(props.value);
             setValue(props.value);
@@ -64,6 +56,14 @@ export const InputText = (props: InputTextProps): ReactElement => {
             setValue('');
         }
     }, [props.value]);
+
+    useEffect(() => {
+        if (props.name) setName(props.name);
+        if (props.initialValue) {
+            setUnmaskedValue(props.initialValue);
+            setValue(props.initialValue);
+        }
+    }, [])
 
     useEffect(() => {
         const finalValue = {
