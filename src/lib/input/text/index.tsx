@@ -56,9 +56,12 @@ export const InputText = (props: InputTextProps): ReactElement => {
     }, [])
 
     useEffect(() => {
-        if (props.value) {
+        if (typeof props.value === 'string') {
             setUnmaskedValue(props.value);
             setValue(props.value);
+        } else {
+            setUnmaskedValue('');
+            setValue('');
         }
     }, [props.value]);
 

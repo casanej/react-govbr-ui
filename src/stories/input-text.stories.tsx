@@ -21,19 +21,21 @@ const Template: LoadingStory = (args) => {
         <InputText
             alert={args.alert}
             action={args.action}
-            name={args.name}
             direction={args.direction}
             disabled={args.disabled}
             helpText={args.helpText}
             icon={args.icon}
+            initialValue={args.initialValue}
             label={args.label}
             list={args.list}
             maskObj={args.maskObj}
-            size={args.size}
-            placeholder={args.placeholder}
-            type={args.type}
+            name={args.name}
             onChange={args.onChange}
+            placeholder={args.placeholder}
+            size={args.size}
+            type={args.type}
             variant={args.variant}
+            value={args.value}
         />
     </ThemeProvider>
 }
