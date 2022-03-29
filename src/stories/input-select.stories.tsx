@@ -10,6 +10,9 @@ interface InputSelectStory extends ComponentStory<typeof InputSelect> {}
 export default {
     title: 'Input/Select',
     component: InputSelect,
+    argTypes: {
+        onChange: { action: 'onChange(item)' },
+    }
 } as InputSelectExport;
 
 const Template: InputSelectStory = (args) => <ThemeProvider theme={theme}>
@@ -22,6 +25,7 @@ const Template: InputSelectStory = (args) => <ThemeProvider theme={theme}>
         helpText={args.helpText}
         label={args.label}
         multiple={args.multiple}
+        onChange={args.onChange}
         placeholder={args.placeholder}
         inputVariant={args.inputVariant}
     />

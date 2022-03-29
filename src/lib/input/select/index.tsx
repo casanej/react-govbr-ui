@@ -26,6 +26,7 @@ export interface InputSelectProps {
 export const InputSelect = (props: InputSelectProps): ReactElement => {
     const name = useMemo(() => props.name || Math.random(), [props.name]);
     const inputSelectRef = useRef<HTMLDivElement>()
+    const [firstRun, setFirstRun] = useState<boolean>(true);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [inputFocus, setInputFocus] = useState<boolean>(false);
     const [itemsSelected, setItemsSelected] = useState<SelectItemProps[]>(props.selectedItems || []);
@@ -53,12 +54,16 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
     useOnClickOutside(inputSelectRef, () => setInputFocus(false));
 
     useEffect(() => {
-        if (props.onChange) props.onChange(itemsSelected);
+        if (props.onChange && !firstRun) props.onChange(itemsSelected);
     }, [itemsSelected])
 
     useEffect(() => {
         setMenuOpen(inputFocus);
     }, [inputFocus]);
+
+    useEffect(() => {
+        if (firstRun) setFirstRun(false);
+    }, []);
 
     const handleInputValue = useMemo((): string => {
         if (itemsSelected.length === 1) return itemsSelected[0].label;

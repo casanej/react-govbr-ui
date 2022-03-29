@@ -40,6 +40,7 @@ export interface InputTextProps {
 
 export const InputText = (props: InputTextProps): ReactElement => {
     const inputContentRef = useRef();
+    const [firstRender, setFirstRender] = useState<boolean>(true);
     const [name, setName] = useState<string>('input-text');
     const [listOpen, setListOpen] = useState<boolean>(false);
     const [listSelected, setListSelected] = useState<unknown>();
@@ -58,22 +59,25 @@ export const InputText = (props: InputTextProps): ReactElement => {
     }, [props.value]);
 
     useEffect(() => {
+        if (!firstRender) {
+            const finalValue = {
+                normal: unmaskedValue,
+                masked: value,
+                item: listSelected
+            };
+
+            if (props.onChange) props.onChange(finalValue, name);
+        }
+    }, [value]);
+
+    useEffect(() => {
         if (props.name) setName(props.name);
         if (props.initialValue) {
             setUnmaskedValue(props.initialValue);
             setValue(props.initialValue);
         }
+        if (firstRender) setFirstRender(false);
     }, [])
-
-    useEffect(() => {
-        const finalValue = {
-            normal: unmaskedValue,
-            masked: value,
-            item: listSelected
-        };
-
-        if (props.onChange) props.onChange(finalValue, name);
-    }, [value]);
 
     const handleListSelectItem = (item: InputListParams) => {
         setListSelected(item);
