@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react'
 import { Button, Loading } from 'lib';
-import { ModalBody, ModalBox, ModalFooter, ModalStyled } from './index.style';
 import { ModalTypes } from 'models';
+import React, { ReactElement } from 'react';
 import { ModalHeader } from './components';
+import { ModalBody, ModalBox, ModalFooter, ModalStyled } from './index.style';
 
 type Props = ModalTypes;
 
@@ -44,7 +44,7 @@ export const Modal = (props: Props): ReactElement => {
             <ModalHeader title={props.title} noCloseButton={props.noCloseButton} onClose={props.cancelAction} />
             <ModalBody>{props.children}</ModalBody>
             <ModalFooter>
-                <Button variant='tertiary' onClick={props.cancelAction}>{props.cancelLabel || 'Cancelar'}</Button>
+                <Button variant='secondary' onClick={props.cancelAction}>{props.cancelLabel || 'Cancelar'}</Button>
                 <Button variant='primary' onClick={props.successAction} disabled={props.successDisabled}>{props.successLabel || 'Confirmar'}</Button>
             </ModalFooter>
         </ModalBox>
