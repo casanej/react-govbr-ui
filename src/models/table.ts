@@ -1,5 +1,5 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 // ======================= /* TABLE COLUMN */ ======================= //
 export type TableColumn = TableColumnCustom | TableColumnActions | TableColumnDefault;
@@ -78,7 +78,7 @@ export interface TableTdTypesDefault {
 // ======================= /* OTHERS MODELS */ ======================= //
 
 export interface TableColumnAction {
-    icon: IconName;
+    icon: IconName | ReactElement;
     label: string;
     fn: <IData = any>(payload?: IData) => void;
 }

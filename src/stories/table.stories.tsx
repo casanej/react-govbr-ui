@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
-import React, { useMemo, useState } from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Table } from 'lib'
-import { ThemeProvider } from 'styled-components';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
+import { Table } from 'lib';
 import { PageObj, TableColumn, TableColumnAction, TableRow } from 'models';
+import React, { useMemo, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 
 interface LoadingExport extends ComponentMeta<typeof Table> {}
 interface LoadingStory extends ComponentStory<typeof Table> {}
@@ -45,7 +45,7 @@ const Template: LoadingStory = (args) => {
 
 const actions: TableColumnAction[] = [
     { fn: () => console.log('action 1'), label: 'Action 1', icon: 'cog' },
-    { fn: () => console.log('action 2'), label: 'Action 2', icon: 'wrench' },
+    { fn: () => console.log('action 2'), label: 'Action 2', icon: <div>W</div> },
     { fn: () => console.log('action 3'), label: 'Action 3', icon: 'cog' },
 ]
 

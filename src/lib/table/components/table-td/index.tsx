@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { ReactElement } from 'react'
 import { format } from 'date-fns';
 import { Button, Checkbox } from 'lib';
 import { TableTdTypeActions, TableTdTypeCheckBox, TableTdTypeCustom, TableTdTypes } from 'models';
+import React, { ReactElement } from 'react';
 import { formatNumber } from 'utils';
 import { TableTdStyled } from './index.style';
 
@@ -37,7 +37,11 @@ export const TableTd = (props: Props): ReactElement => {
 
         return <TableTdStyled>
             {customProps.func.map((action) => <Button key={action.label} variant='tertiary' circle onClick={action.fn}>
-                <FontAwesomeIcon icon={action.icon} />
+                {
+                    typeof action.icon === 'string'
+                        ? <FontAwesomeIcon icon={action.icon} />
+                        : action.icon
+                }
             </Button>)}
         </TableTdStyled>
     }
