@@ -5,7 +5,7 @@ export const InputSelectStyled = styled.div<{ ref: any }>`
     position: relative;
 `
 
-export const InputSelectContent = styled.div`
+export const InputSelectContent = styled.div<{ ref: any }>`
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -16,7 +16,7 @@ export const InputSelectLabel = styled.div`
     font-size: 14px;
 `;
 
-export const InputSelectMenu = styled.div<{ gapTop: number }>`
+export const InputSelectMenu = styled.div<{ ref: any; gapTop: number }>`
     position: absolute;
     top: ${props => `${props.gapTop}px`};
     left: 0;

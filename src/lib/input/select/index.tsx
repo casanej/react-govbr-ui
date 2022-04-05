@@ -3,6 +3,7 @@ import { useOnClickOutside } from 'hooks';
 import { InputText, Item } from 'lib';
 import { InputAlertObj, InputVariants, SelectItemProps } from 'models';
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import { usePopper } from 'react-popper';
 import { InputSelectContent, InputSelectLabel, InputSelectMenu, InputSelectStyled } from './index.style';
 
 export interface InputSelectProps {
@@ -26,11 +27,16 @@ export interface InputSelectProps {
 export const InputSelect = (props: InputSelectProps): ReactElement => {
     const name = useMemo(() => props.name || Math.random(), [props.name]);
     const inputSelectRef = useRef<HTMLDivElement>()
+    const [referenceElement, setReferenceElement] = useState(null);
+    const [popperElement, setPopperElement] = useState(null);
     const [firstRun, setFirstRun] = useState<boolean>(true);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [inputFocus, setInputFocus] = useState<boolean>(false);
     const [itemsSelected, setItemsSelected] = useState<SelectItemProps[]>(props.selectedItems || []);
     const [menuGapTop, setMenuGapTop] = useState<number>(0);
+    const { styles, attributes } = usePopper(referenceElement, popperElement, {
+        modifiers: [{ name: 'arrow' }],
+    });
 
     useEffect(() => {
         setInputFocus(false);
@@ -99,7 +105,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
 
     return (
         <InputSelectStyled ref={inputSelectRef}>
-            <InputSelectContent>
+            <InputSelectContent ref={setReferenceElement}>
                 {
                     props.label && <InputSelectLabel>{props.label}</InputSelectLabel>
                 }
@@ -125,7 +131,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                 />
             </InputSelectContent>
             {
-                inputFocus && <InputSelectMenu gapTop={menuGapTop}>
+                inputFocus && <InputSelectMenu ref={setPopperElement} gapTop={menuGapTop} style={styles.popper} { ...attributes.popper }>
                     {
                         props.items.map((item, index) => <Item key={index} type='text' onClick={() => handleSelectChange(item)}>{item.label}</Item>)
                     }
