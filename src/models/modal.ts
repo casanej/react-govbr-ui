@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+export type ModalScrollPosition = 'none' | 'start' | 'middle' | 'end';
+
 interface ModalButtonCancelAction {
     cancelAction: () => void;
     cancelLabel?: string;

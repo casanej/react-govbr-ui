@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import { ModalScrollPosition } from 'models';
+import styled, { css } from 'styled-components';
+
+const handleScrollPosition = (position?: ModalScrollPosition) => {
+
+    if (position === 'start') return css`box-shadow: inset 0 -10px 10px -10px grey;`;
+    if (position === 'middle') return css`box-shadow: inset -5px 0px 10px 0px grey;`;
+    if (position === 'end') return css`box-shadow: inset 0 10px 10px -10px grey;`;
+
+    return css``;
+}
 
 export const ModalStyled = styled.div <{ isOpen: boolean }>`
     position: fixed;
@@ -28,14 +38,43 @@ export const ModalBox = styled.div<{ loading?: boolean; centered?: boolean}>`
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    padding: 24px;
+    
+
 `;
 
-export const ModalBody = styled.div``;
+export const ModalBody = styled.div<{ ref?: any; scrollPosition?: ModalScrollPosition }>`
+    overflow-y: auto;
+    padding: 10px 15px;
+
+    scrollbar-color: #9E9D9D #EDEDED;
+    scrollbar-width: thin;
+
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #EDEDED; 
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #9E9D9D; 
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #888; 
+    }
+
+    ${props => handleScrollPosition(props.scrollPosition)}
+`;
 
 export const ModalFooter = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 10px;
+    padding: 10px;
 `;

@@ -1,8 +1,8 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Button, Modal } from 'lib'
-import { ThemeProvider } from 'styled-components';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
+import { Button, Modal } from 'lib';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
 
 interface LoadingExport extends ComponentMeta<typeof Modal> {}
 interface LoadingStory extends ComponentStory<typeof Modal> {}
@@ -87,7 +87,16 @@ Default.args = {
     successAction: () => alert('Salvo com sucesso'),
     successLabel: 'Confirmar',
     successDisabled: false,
-    children: <div>Lorem Ipsum Dolor Asimet</div>
+    children: <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div>Lorem Ipsum Dolor Asimet</div>
+        <div>Lorem Ipsum Dolor Asimet</div>
+        <div>Lorem Ipsum Dolor Asimet</div>
+        <div>Lorem Ipsum Dolor Asimet</div>
+        <div>Lorem Ipsum Dolor Asimet</div>
+        <div>Lorem Ipsum Dolor Asimet</div>
+        <div>Lorem Ipsum Dolor Asimet</div>
+        <div>Lorem Ipsum Dolor Asimet</div>
+    </div>
 }
 
 ModalConfirmation.args = {
