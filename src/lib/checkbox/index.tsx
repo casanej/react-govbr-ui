@@ -1,12 +1,12 @@
-import { AlertTypes } from 'models';
-import React, { ReactElement, useEffect, useRef, useState, useContext } from 'react'
-import { Alert } from 'lib';
-import { CheckboxStyled, CheckboxContent, CheckboxInput, CheckboxInputCustom, CheckboxRotulo, CheckTypes } from './index.style';
 import { CheckboxContext } from 'context';
+import { Alert } from 'lib';
+import { AlertTypes } from 'models';
+import React, { ReactElement, useContext, useEffect, useRef, useState } from 'react';
+import { CheckboxContent, CheckboxInput, CheckboxInputCustom, CheckboxRotulo, CheckboxStyled, CheckTypes } from './index.style';
 
 interface Props {
     alert?: {
-        message: string;
+        message?: string;
         type: AlertTypes;
     }
     checked?: CheckTypes;
@@ -73,7 +73,7 @@ export const Checkbox = (props: Props): ReactElement => {
             </CheckboxContent>
 
             {
-                props.alert && <Alert type={props.alert.type}>{props.alert.message}</Alert>
+                props.alert?.message && <Alert type={props.alert.type}>{props.alert.message}</Alert>
             }
         </CheckboxStyled>
     );

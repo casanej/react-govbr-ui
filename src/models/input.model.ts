@@ -1,6 +1,6 @@
 import { AlertTypes } from './alert';
 
 export interface InputAlertObj {
-    message: string;
+    message?: string;
     type: AlertTypes;
 }
