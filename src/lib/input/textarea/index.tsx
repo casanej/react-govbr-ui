@@ -7,7 +7,7 @@ import { InputTextAreaContent, InputTextAreaStyled, InputTextAuxiliary, TextArea
 
 interface Props {
     alert?: {
-        message: string;
+        message?: string;
         type: AlertTypes;
     }
     auxiliary?: string;

@@ -66,7 +66,7 @@ export const Checkbox = (props: Props): ReactElement => {
             <CheckboxContent>
                 <CheckboxInput ref={inputRef} id={name} type='checkbox' onChange={handleCheck} />
                 <CheckboxInputCustom
-                    alert={props.alert?.type}
+                    alert={props.alert?.type && !props.alert?.message ? props.alert?.type : undefined}
                     htmlFor={name}
                     checked={checked}
                 >{props.label}</CheckboxInputCustom>
