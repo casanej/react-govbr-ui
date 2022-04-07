@@ -1,6 +1,6 @@
 {
   "name": "react-govbr-ui",
-  "version": "0.16.4",
+  "version": "0.16.6",
   "main": "dist/src/index.js",
   "module": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -21,7 +21,7 @@
     "build": "webpack --config webpack.prod.config.js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "publish": "tsc -p . && node scripts/prepare.js && npm publish --registry https://registry.npmjs.org/"
+    "npm:publish": "tsc -p . && node scripts/prepare.js && npm publish --registry https://registry.npmjs.org/"
   },
   "dependencies": {
     "@datepicker-react/hooks": "^2.8.4",

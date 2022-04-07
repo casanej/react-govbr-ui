@@ -1,6 +1,6 @@
 import { Alert } from 'lib';
 import { AlertTypes } from 'models';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { InputLabel } from '../components/general.style';
 import { TextAreaCounter } from './components';
 import { InputTextAreaContent, InputTextAreaStyled, InputTextAuxiliary, TextAreaStyled } from './index.style';
@@ -21,6 +21,7 @@ interface Props {
     onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>, value: string, name: string) => void;
     placeholder?: string;
     rows?: number;
+    value?: string;
 }
 
 export const InputTextArea = (props: Props): ReactElement => {
@@ -28,10 +29,19 @@ export const InputTextArea = (props: Props): ReactElement => {
     const rows = props.rows || 8;
     const cols = props.cols || 100;
     const [charsLen, setCharsLen] = useState<number>(0);
+    const [value, setValue] = useState<string>(props.value || '');
+
+    useEffect(() => {
+        if (typeof props.value === 'string') {
+            setValue(props.value);
+            setCharsLen(props.value.length);
+        }
+    }, [props.value]);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const { value } = event.target;
 
+        setValue(value);
         setCharsLen(value.length);
 
         if (props.onChange) props.onChange(event, value, name);
@@ -53,6 +63,7 @@ export const InputTextArea = (props: Props): ReactElement => {
                     rows={rows}
                     onBlur={props.onBlur}
                     onChange={handleChange}
+                    value={value}
                 />
             </InputTextAreaContent>
             {

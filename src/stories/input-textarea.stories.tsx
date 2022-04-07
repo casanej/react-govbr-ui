@@ -1,8 +1,8 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { InputTextArea } from 'lib'
-import { ThemeProvider } from 'styled-components';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
+import { InputTextArea } from 'lib';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
 
 interface LoadingExport extends ComponentMeta<typeof InputTextArea> {}
 interface LoadingStory extends ComponentStory<typeof InputTextArea> {}
@@ -22,6 +22,7 @@ const Template: LoadingStory = (args) => <ThemeProvider theme={theme}>
         labelDirection={args.labelDirection}
         maxLength={args.maxLength}
         placeholder={args.placeholder}
+        value={args.value}
     />
 </ThemeProvider>
 
