@@ -35,6 +35,9 @@ export const InputTextArea = (props: Props): ReactElement => {
         if (typeof props.value === 'string') {
             setValue(props.value);
             setCharsLen(props.value.length);
+        } else {
+            setValue('');
+            setCharsLen(0);
         }
     }, [props.value]);
 
