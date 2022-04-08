@@ -36,8 +36,9 @@ const Template: LoadingStory = (args) => {
                 isLoading={args.isLoading}
                 hasActions={args.hasActions}
                 hasSelect={args.hasSelect}
-                paginated={args.paginated}
                 onPaginationChange={(pageObj: PageObj) => setPageObj(pageObj)}
+                paginated={args.paginated}
+                title={args.title}
             />
         </div>
     </ThemeProvider>

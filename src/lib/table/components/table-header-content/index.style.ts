@@ -23,5 +23,7 @@ export const TableHeaderContentStyled = styled.div`
 `
 
 export const TableTitle = styled.div`
-
+    color: #333;
+    font-size: 16.8px;
+    font-weight: 600;
 `

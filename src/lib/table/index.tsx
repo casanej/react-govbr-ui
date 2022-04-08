@@ -2,6 +2,7 @@ import { Loading, Pagination } from 'lib';
 import { PageObj, TableColumn, TablePaginationTypes, TableRow } from 'models';
 import React, { ReactElement, useState } from 'react';
 import { TableHeaderContent, TableTBody, TableTHead } from './components';
+import { TableTitle } from './components/table-header-content/index.style';
 import { TableBody, TableCustom, TableFooter, TableHeader, TableLoading, TableStyled } from './index.style';
 
 interface Props {
@@ -11,8 +12,9 @@ interface Props {
     hasActions?: boolean;
     hasSearch?: boolean;
     hasSelect?: boolean;
-    paginated?: TablePaginationTypes;
     onPaginationChange?: (pageObj: PageObj) => void
+    paginated?: TablePaginationTypes;
+    title?: string;
 }
 
 export const Table = (props: Props): ReactElement => {
@@ -28,6 +30,9 @@ export const Table = (props: Props): ReactElement => {
     return (
         <TableStyled>
             <TableHeader>
+                {
+                    props.title && <TableTitle>{props.title}</TableTitle>
+                }
                 <TableHeaderContent hasSearch={props.hasSearch} />
             </TableHeader>
             <TableBody>

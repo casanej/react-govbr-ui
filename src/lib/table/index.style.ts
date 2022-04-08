@@ -8,7 +8,9 @@ export const TableStyled = styled.div`
     font-size: 14px;
 `;
 
-export const TableHeader = styled.div``;
+export const TableHeader = styled.div`
+    padding: 8px 16px 8px 24px;
+`;
 
 export const TableBody = styled.div`
     overflow-x: auto;
