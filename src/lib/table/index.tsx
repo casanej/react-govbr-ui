@@ -29,12 +29,16 @@ export const Table = (props: Props): ReactElement => {
 
     return (
         <TableStyled>
-            <TableHeader>
-                {
-                    props.title && <TableTitle>{props.title}</TableTitle>
-                }
-                <TableHeaderContent hasSearch={props.hasSearch} />
-            </TableHeader>
+            {
+                props.hasSearch || props.title && <TableHeader>
+                    {
+                        props.title && <TableTitle>{props.title}</TableTitle>
+                    }
+                    <TableHeaderContent hasSearch={props.hasSearch} />
+                </TableHeader>
+            }
+
+            <TableHeaderContent hasSearch={props.hasSearch} />
             <TableBody>
                 <TableCustom>
                     <TableTHead hasAction={props.hasActions} hasSelect={props.hasSelect} columns={props.columns} />

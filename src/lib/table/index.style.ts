@@ -3,9 +3,9 @@ import styled from 'styled-components';
 export const TableStyled = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 10px;
     min-width: 378px;
     font-size: 14px;
+    background-color: #fff;
 `;
 
 export const TableHeader = styled.div`
