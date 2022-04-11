@@ -47,7 +47,7 @@ export const Modal = (props: Props): ReactElement => {
     }, []);
 
     if (props.type === 'loading') return <ModalStyled isOpen={props.isOpen}>
-        <ModalBox loading centered>
+        <ModalBox loading centered={props.centered}>
             <ModalBody>
                 <Loading infinity='md' />
             </ModalBody>
@@ -58,7 +58,7 @@ export const Modal = (props: Props): ReactElement => {
     </ModalStyled>;
 
     if (props.type === 'confirmation') return <ModalStyled isOpen={props.isOpen}>
-        <ModalBox centered>
+        <ModalBox centered={props.centered}>
             <ModalHeader title={props.title} noCloseButton />
             <ModalBody>{props.children}</ModalBody>
             <ModalFooter>
@@ -68,7 +68,7 @@ export const Modal = (props: Props): ReactElement => {
     </ModalStyled>;
 
     if (props.type === 'negation') return <ModalStyled isOpen={props.isOpen}>
-        <ModalBox centered>
+        <ModalBox centered={props.centered}>
             <ModalHeader title={props.title} noCloseButton />
             <ModalBody>{props.children}</ModalBody>
             <ModalFooter>
@@ -78,7 +78,7 @@ export const Modal = (props: Props): ReactElement => {
     </ModalStyled>;
 
     return <ModalStyled isOpen={props.isOpen}>
-        <ModalBox>
+        <ModalBox centered={props.centered}>
             <ModalHeader title={props.title} noCloseButton={props.noCloseButton} onClose={props.cancelAction} />
             <ModalBody ref={modalBodyRef} scrollPosition={modalScrollPosition}>{props.children}</ModalBody>
             <ModalFooter>

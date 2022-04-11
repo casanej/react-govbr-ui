@@ -20,6 +20,7 @@ const Template: LoadingStory = (args) => {
         <Button onClick={() => setIsOpen(true)}>Abrir Modal</Button>
         {
             args.type === 'loading' && <Modal
+                centered={args.centered}
                 type={'loading'}
                 isOpen={isOpen}
                 cancelLabel={args.cancelLabel}
@@ -28,6 +29,7 @@ const Template: LoadingStory = (args) => {
         }
         {
             args.type === 'confirmation' && <Modal
+                centered={args.centered}
                 type={args.type}
                 title={args.title}
                 isOpen={isOpen}
@@ -41,6 +43,7 @@ const Template: LoadingStory = (args) => {
         }
         {
             args.type === 'negation' && <Modal
+                centered={args.centered}
                 type={args.type}
                 title={args.title}
                 isOpen={isOpen}
@@ -54,6 +57,7 @@ const Template: LoadingStory = (args) => {
 
         {
             args.type === 'default' && <Modal
+                centered={args.centered}
                 type={args.type}
                 isOpen={isOpen}
                 title={args.title}

@@ -31,7 +31,7 @@ export const ModalBox = styled.div<{ loading?: boolean; centered?: boolean}>`
     justify-content: ${props => props.loading ? 'space-around' : 'space-between'};
     ${props => props.centered && 'align-items: center;'}
     gap: 10px;
-    min-width: ${props => props.loading || props.centered ? '10vw' : '30vw'};
+    min-width: ${props => props.loading && props.centered ? '10vw' : '30vw'};
     max-width: 50vw;
     min-height: ${props => props.loading ? '30vh' : '20vh'};
     max-height: 70vh;
