@@ -16,13 +16,13 @@ export const InputSelectLabel = styled.div`
     font-size: 14px;
 `;
 
-export const InputSelectMenu = styled.div<{ ref: any; gapTop: number }>`
+export const InputSelectMenu = styled.div<{ ref: any; gapTop: number; visibleRows: number; }>`
     position: absolute;
     top: ${props => `${props.gapTop}px`};
     left: 0;
     background-color: #fff;
     width: 100%;
-    max-height: 250px;
+    max-height: ${props => `${props.visibleRows * 50}px`};
     overflow-y: auto;
     z-index: 10;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);

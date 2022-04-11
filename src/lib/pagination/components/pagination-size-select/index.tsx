@@ -1,10 +1,11 @@
 import { InputSelect } from 'lib';
 import { SelectItemProps } from 'models';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 
 interface Props {
     selectedItem: SelectItemProps;
     onChange: (item: SelectItemProps) => void;
+    totalItems: number;
 }
 
 export const PaginationSizeSelect = (props: Props): ReactElement => {
@@ -14,6 +15,13 @@ export const PaginationSizeSelect = (props: Props): ReactElement => {
 
         props.onChange(itemSelected);
     }
+
+    const totalVisibleRows = useMemo(() => {
+
+        if (props.totalItems >= 2) return 5;
+
+        return 4
+    }, [props.totalItems])
 
     return <InputSelect
         inputVariant='tertiary'
@@ -26,5 +34,6 @@ export const PaginationSizeSelect = (props: Props): ReactElement => {
         ]}
         selectedItems={[props.selectedItem]}
         onChange={handleChange}
+        visibleRows={totalVisibleRows}
     />;
 };

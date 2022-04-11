@@ -22,6 +22,7 @@ export interface InputSelectProps {
     onChange?: (item: SelectItemProps[]) => void;
     onFocus?: () => void;
     onReset?: () => void;
+    visibleRows?: number;
 }
 
 export const InputSelect = (props: InputSelectProps): ReactElement => {
@@ -131,7 +132,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                 />
             </InputSelectContent>
             {
-                inputFocus && <InputSelectMenu ref={setPopperElement} gapTop={menuGapTop} style={styles.popper} { ...attributes.popper }>
+                inputFocus && <InputSelectMenu ref={setPopperElement} gapTop={menuGapTop} style={styles.popper} visibleRows={props.visibleRows || 5} { ...attributes.popper }>
                     {
                         props.items.map((item, index) => <Item key={index} type='text' onClick={() => handleSelectChange(item)}>{item.label}</Item>)
                     }

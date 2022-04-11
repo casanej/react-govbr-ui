@@ -50,6 +50,7 @@ export const Pagination = (props: Props): ReactElement => {
                 <PaginationSizeSelect
                     selectedItem={{ label: state.pageSize.toString(), value: state.pageSize.toString() }}
                     onChange={(item) => dispatch({ type: 'setPageSize', payload: { pageSize: parseInt(item.value || '10') } })}
+                    totalItems={props.totalItems}
                 />
             </PaginationContentInput>
             <Divider direction='vertical' />
@@ -81,6 +82,7 @@ export const Pagination = (props: Props): ReactElement => {
                     <PaginationSizeSelect
                         selectedItem={{ label: state.pageSize.toString(), value: state.pageSize.toString() }}
                         onChange={(item) => dispatch({ type: 'setPageSize', payload: { pageSize: parseInt(item.value || '10') } })}
+                        totalItems={props.totalItems}
                     />
                 </PaginationContentInput>
                 <Divider direction='vertical' />
