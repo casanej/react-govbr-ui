@@ -14,6 +14,7 @@ interface Props {
     hasSelect?: boolean;
     onPaginationChange?: (pageObj: PageObj) => void
     paginated?: TablePaginationTypes;
+    tableWidth?: number;
     title?: string;
 }
 
@@ -40,7 +41,7 @@ export const Table = (props: Props): ReactElement => {
 
             <TableHeaderContent hasSearch={props.hasSearch} />
             <TableBody>
-                <TableCustom>
+                <TableCustom tableWidth={props.tableWidth}>
                     <TableTHead hasAction={props.hasActions} hasSelect={props.hasSelect} columns={props.columns} />
                     {
                         props.isLoading

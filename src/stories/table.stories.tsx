@@ -18,7 +18,7 @@ export default {
 const Template: LoadingStory = (args) => {
     const isSmall = useMemo((): boolean => {
         const { search } = window.location;
-        if (search.indexOf('table-small') > -1) return true;
+        if (search.indexOf('table-small') > -1 || search.indexOf('table-with-select')) return true;
 
         return false;
     }, [window.location.search])
@@ -58,6 +58,7 @@ export const TablePaginatedUncontrolled = Template.bind({});
 export const TableSmall = Template.bind({});
 export const TableCustom = Template.bind({});
 export const TableWithActions = Template.bind({});
+export const TableWithSelect = Template.bind({});
 
 const tableColumns: TableColumn[] = [
     { title: 'Coluna 1', accessor: 'column1' },
@@ -170,4 +171,10 @@ TableSmall.args = {
     paginated: {
         type: 'uncontrolled',
     }
+}
+
+TableWithSelect.args = {
+    columns: tableColumns,
+    rows: tableRows,
+    hasSelect: true,
 }

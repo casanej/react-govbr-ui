@@ -16,8 +16,8 @@ export const TableBody = styled.div`
     overflow-x: auto;
 `;
 
-export const TableCustom = styled.table`
-    width: 100%;
+export const TableCustom = styled.table<{ tableWidth?: number;}>`
+    width: ${props => props.tableWidth ? props.tableWidth : '100%'};
     border-collapse: collapse;
     border-spacing: 0;
     min-width: 1000px;
