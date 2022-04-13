@@ -18,9 +18,10 @@ export const PaginationSizeSelect = (props: Props): ReactElement => {
 
     const totalVisibleRows = useMemo(() => {
 
-        if (props.totalItems >= 2) return 5;
+        if (props.totalItems === 0) return 3;
+        if (props.totalItems <= 2) return 4;
 
-        return 4
+        return 5;
     }, [props.totalItems])
 
     return <InputSelect

@@ -60,17 +60,9 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
 
     useOnClickOutside(inputSelectRef, () => setInputFocus(false));
 
-    useEffect(() => {
-        if (props.onChange && !firstRun) props.onChange(itemsSelected);
-    }, [itemsSelected])
-
-    useEffect(() => {
-        setMenuOpen(inputFocus);
-    }, [inputFocus]);
-
-    useEffect(() => {
-        if (firstRun) setFirstRun(false);
-    }, []);
+    useEffect(() => { if (props.onChange && !firstRun) props.onChange(itemsSelected); }, [itemsSelected])
+    useEffect(() => { setMenuOpen(inputFocus); }, [inputFocus]);
+    useEffect(() => { if (firstRun) setFirstRun(false); }, []);
 
     const handleInputValue = useMemo((): string => {
         if (itemsSelected.length === 1) return itemsSelected[0].label;

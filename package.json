@@ -1,6 +1,6 @@
 {
   "name": "react-govbr-ui",
-  "version": "0.16.12",
+  "version": "0.16.13",
   "main": "dist/src/index.js",
   "module": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -80,7 +80,7 @@
     "query-string": "^7.1.0",
     "react-dom": "^17.0.2",
     "react-svg-loader": "^3.0.3",
-    "storybook": "^6.4.14",
+    "storybook": "^6.4.21",
     "style-loader": "^3.3.0",
     "ts-declaration-webpack-plugin": "^1.2.3",
     "ts-loader": "^9.2.6",
