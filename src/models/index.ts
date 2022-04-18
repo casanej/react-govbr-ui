@@ -9,3 +9,5 @@ export * from './menu-context';
 export * from './modal';
 export * from './pagination.model';
 export * from './table';
+export * from './table-actions';
+

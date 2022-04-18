@@ -1,5 +1,31 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { ReactElement, ReactNode } from 'react';
+import { PageObj, TablePaginationTypes } from './pagination.model';
+
+// ======================= /* TABLE CONTEXT */ ======================= //
+export interface TableContextProps {
+    columns: TableColumn[];
+    rows: TableRow[];
+    selectedRows: TableRow[];
+    numRowsSelected: number;
+    isLoading?: boolean;
+    hasActions?: boolean;
+    hasSearch?: boolean;
+    hasSelect?: boolean;
+    onPaginationChange?: (pageObj: PageObj) => void;
+    onSelectAll?: (value: boolean) => void;
+    onSelectRow?: (payload: { checked: boolean, index:string, row: TableRow }) => void;
+    paginated?: TablePaginationTypes;
+    tableWidth?: number;
+    title?: string;
+}
+
+export const tableContextInitialValues:TableContextProps = {
+    columns: [],
+    numRowsSelected: 0,
+    selectedRows: [],
+    rows: [],
+};
 
 // ======================= /* TABLE COLUMN */ ======================= //
 export type TableColumn = TableColumnCustom | TableColumnActions | TableColumnDefault;

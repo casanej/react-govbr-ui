@@ -1,57 +1,59 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { format } from 'date-fns';
-import { Button, Checkbox } from 'lib';
-import { TableTdTypeActions, TableTdTypeCheckBox, TableTdTypeCustom, TableTdTypes } from 'models';
-import React, { ReactElement } from 'react';
-import { formatNumber } from 'utils';
-import { TableTdStyled } from './index.style';
+import { TableColumnActions, TableColumnCustom, TableRowDefault } from 'models';
+import React, { FC, useContext } from 'react';
+import { TableTdValue } from '..';
+import { TableContext } from '../..';
 
 interface Props {
-    children?: React.ReactNode;
-    payload: TableTdTypes['payload'];
-    type: TableTdTypes['type'];
-    colSpan?: number;
-    width?: string;
+    rowKey: string;
+    row: any;
 }
 
-export const TableTd = (props: Props): ReactElement => {
+export const TableTd:FC<Props> = (props) => {
+    const { rowKey: key, row: rawRow } = props;
+    const { columns, hasActions } = useContext(TableContext);
 
-    if (props.type === 'checkbox') {
-        const customProps = props.payload as TableTdTypeCheckBox['payload'];
+    const column = columns.find((column) => column.accessor === key);
 
-        return <TableTdStyled width='50px'>
-            <Checkbox name={`table-row-${customProps.name}`} onChange={customProps.onSelectRow} />
-        </TableTdStyled>
+    if (key === 'actions') {
+        if (hasActions) {
+            const row = rawRow as TableColumnActions;
+
+            return <TableTdValue
+                key={key}
+                type='actions'
+                payload={{
+                    func: row
+                }}
+            />
+        }
+        return null
     }
 
-    if (props.type === 'custom') {
-        const customProps = props.payload as TableTdTypeCustom['payload'];
+    if (!column) return null;
 
-        return <TableTdStyled>
-            {customProps.renderer(customProps.value.toString())}
-        </TableTdStyled>
+    if (column.type === 'custom' && key !== 'actions') {
+        const columnRender = column as TableColumnCustom;
+        return <TableTdValue
+            key={key}
+            type='custom'
+            payload={{
+                renderer: columnRender.renderer,
+                value: rawRow
+            }}
+        />
     }
 
-    if (props.type === 'actions') {
-        const customProps = props.payload as TableTdTypeActions['payload'];
+    const row = rawRow as TableRowDefault;
 
-        return <TableTdStyled>
-            {customProps.func.map((action) => <Button key={action.label} variant='tertiary' circle onClick={action.fn}>
-                {
-                    typeof action.icon === 'string'
-                        ? <FontAwesomeIcon icon={action.icon} />
-                        : action.icon
-                }
-            </Button>)}
-        </TableTdStyled>
-    }
+    if (!row) return <TableTdValue key={key} type={'text'} payload={{}} >
+        <div>{''}</div>
+    </TableTdValue>
 
-    if (['number', 'number_min', 'money', 'money_min'].includes(props.type)) return <TableTdStyled width={props.width}>{formatNumber(props.children as string | number, props.type)}</TableTdStyled>;
-
-    if ( props.type === 'date') return <TableTdStyled width={props.width}>{new Date(props.children as string).toLocaleDateString()}</TableTdStyled>;
-    if ( props.type === 'date_time') return <TableTdStyled width={props.width}>
-        {format(new Date(props.children as string), 'dd/MM/yyyy HH:mm')}
-    </TableTdStyled>;
-
-    return <TableTdStyled width={props.width} colSpan={props.colSpan} >{props.children}</TableTdStyled>;
+    return <TableTdValue
+        key={key}
+        type={column.type || 'text'}
+        payload={{}}
+    >
+        {row.toString()}
+    </TableTdValue>
 };

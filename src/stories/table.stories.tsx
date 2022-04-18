@@ -18,7 +18,7 @@ export default {
 const Template: LoadingStory = (args) => {
     const isSmall = useMemo((): boolean => {
         const { search } = window.location;
-        if (search.indexOf('table-small') > -1 || search.indexOf('table-with-select')) return true;
+        if (search.indexOf('table-small') > -1 || search.indexOf('table-with-select') > -1) return true;
 
         return false;
     }, [window.location.search])
@@ -177,4 +177,9 @@ TableWithSelect.args = {
     columns: tableColumns,
     rows: tableRows,
     hasSelect: true,
+    paginated: {
+        type: 'controlled',
+        initialPage: 1,
+        totalItems: tableRows.length
+    }
 }

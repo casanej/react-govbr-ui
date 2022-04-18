@@ -7,32 +7,3 @@ export const TableStyled = styled.div`
     font-size: 14px;
     background-color: #fff;
 `;
-
-export const TableHeader = styled.div`
-    padding: 8px 16px 8px 24px;
-`;
-
-export const TableBody = styled.div`
-    overflow-x: auto;
-`;
-
-export const TableCustom = styled.table<{ tableWidth?: number;}>`
-    width: ${props => props.tableWidth ? props.tableWidth : '100%'};
-    border-collapse: collapse;
-    border-spacing: 0;
-    min-width: 1000px;
-`;
-
-export const TableLoading = styled.tbody`
-    > tr td {
-        padding: 10px;
-
-        > div {
-            margin: 0 auto;
-        }
-    }
-`;
-
-export const TableFooter = styled.div``;
-
-export const TableTitle = styled.div``;

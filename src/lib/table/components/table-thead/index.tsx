@@ -1,45 +1,40 @@
 import { Checkbox } from 'lib';
-import { TableColumn } from 'models';
-import React, { ReactElement, useMemo } from 'react';
+import React, { ReactElement, useContext, useMemo } from 'react';
+import { TableContext } from '../..';
 import { TableHeadTr, TableTh, TableTHeadStyled } from './index.style';
 
-interface Props {
-    columns: TableColumn[];
-    hasAction?: boolean;
-    hasSelect?: boolean;
-    onSelectAll?: (e: any) => void;
-}
+export const TableTHead = (): ReactElement => {
+    const { columns, hasActions, hasSelect, onSelectAll } = useContext(TableContext);
 
-export const TableTHead = (props: Props): ReactElement => {
     const numColumns = useMemo(() => {
-        let totalColumns = props.columns.filter(column => column.accessor !== 'actions').length;
+        let totalColumns = columns.filter(column => column.accessor !== 'actions').length;
 
-        if (props.hasAction) totalColumns++;
+        if (hasActions) totalColumns++;
 
         return totalColumns;
-    }, [props.columns, props.hasAction, props.hasSelect]);
+    }, [columns, hasActions, hasSelect]);
 
     const columnWidth = useMemo(() => {
 
         let width: string | number = 100 / numColumns;
 
-        if (props.hasSelect) width = `calc(${width}% - 50px)`;
+        if (hasSelect) width = `calc(${width}% - 50px)`;
 
         if (typeof width === 'number') return `${width}%`;
         return width;
-    }, [props.hasSelect]);
+    }, [hasSelect]);
 
     return (
         <TableTHeadStyled>
             <TableHeadTr>
                 {
-                    props.hasSelect && <TableTh columWidth={'50px'}>
-                        <Checkbox name='table-select-all' onChange={props.onSelectAll} />
+                    hasSelect && <TableTh columWidth={'50px'}>
+                        <Checkbox name='table-select-all' onChange={(_, value) => onSelectAll && onSelectAll(Boolean(value))} />
                     </TableTh>
                 }
-                {props.columns.map((column: any) => {
+                {columns.map((column: any) => {
                     if (column.accessor === 'actions') {
-                        if (props.hasAction) return <TableTh key={column.accessor} columWidth={columnWidth}>{column.title}</TableTh>;
+                        if (hasActions) return <TableTh key={column.accessor} columWidth={columnWidth}>{column.title}</TableTh>;
 
                         return null;
                     }

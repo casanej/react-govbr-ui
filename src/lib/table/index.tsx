@@ -1,9 +1,8 @@
-import { Loading, Pagination } from 'lib';
-import { PageObj, TableColumn, TablePaginationTypes, TableRow } from 'models';
-import React, { ReactElement, useState } from 'react';
-import { TableHeaderContent, TableTBody, TableTHead } from './components';
-import { TableTitle } from './components/table-header-content/index.style';
-import { TableBody, TableCustom, TableFooter, TableHeader, TableLoading, TableStyled } from './index.style';
+import { tableReducer, tableStateInitialValue } from 'hooks';
+import { PageObj, TableColumn, tableContextInitialValues, TableContextProps, TablePaginationTypes, TableRow } from 'models';
+import React, { createContext, ReactElement, useReducer } from 'react';
+import { TableContent } from './components';
+import { TableStyled } from './index.style';
 
 interface Props {
     columns: TableColumn[];
@@ -18,69 +17,31 @@ interface Props {
     title?: string;
 }
 
+export const TableContext = createContext<TableContextProps>(tableContextInitialValues);
+
 export const Table = (props: Props): ReactElement => {
-    const [pageObj, setPageObj] = useState<PageObj>({ page: 1, pageSize: 10, initialItem: 1, finalItem: 10 });
-    const handlePaginationChange = (pageObj: PageObj) => {
-        if (props.paginated && props.paginated.type === 'controlled') {
-            if (props.onPaginationChange) props.onPaginationChange(pageObj)
-        } else {
-            setPageObj(pageObj);
-        }
-    }
+    const [tableState, tableDispatch] = useReducer(tableReducer, tableStateInitialValue)
 
-    return (
-        <TableStyled>
-            {
-                props.hasSearch || props.title && <TableHeader>
-                    {
-                        props.title && <TableTitle>{props.title}</TableTitle>
-                    }
-                    <TableHeaderContent hasSearch={props.hasSearch} />
-                </TableHeader>
-            }
-
-            <TableHeaderContent hasSearch={props.hasSearch} />
-            <TableBody>
-                <TableCustom tableWidth={props.tableWidth}>
-                    <TableTHead hasAction={props.hasActions} hasSelect={props.hasSelect} columns={props.columns} />
-                    {
-                        props.isLoading
-                            ? <TableLoading>
-                                <tr>
-                                    <td colSpan={props.columns.length }>
-                                        <Loading infinity='md' />
-                                    </td>
-                                </tr>
-                            </TableLoading>
-                            : <TableTBody
-                                hasAction={props.hasActions}
-                                hasSelect={props.hasSelect}
-                                rows={props.paginated && props.paginated.type === 'uncontrolled'
-                                    ? props.rows.slice(pageObj.initialItem - 1, pageObj.finalItem)
-                                    : props.rows
-                                }
-                                columns={props.columns}
-                            />
-                    }
-                </TableCustom>
-            </TableBody>
-            <TableFooter>
-                {
-                    props.paginated?.type === 'controlled'
-                        ? <Pagination
-                            initialPage={props.paginated.initialPage}
-                            totalItems={props.paginated.totalItems}
-                            onChange={handlePaginationChange}
-                            variant={2}
-                        />
-                        : <Pagination
-                            initialPage={1}
-                            totalItems={props.rows.length}
-                            onChange={handlePaginationChange}
-                            variant={2}
-                        />
-                }
-            </TableFooter>
-        </TableStyled>
-    );
+    return <TableStyled>
+        <TableContext.Provider value={{
+            columns: props.columns,
+            rows: props.rows,
+            numRowsSelected: tableState.numRowsSelected,
+            selectedRows: tableState.selectedRows,
+            isLoading: props.isLoading,
+            hasActions: props.hasActions,
+            hasSearch: props.hasSearch,
+            hasSelect: props.hasSelect,
+            onPaginationChange: props.onPaginationChange,
+            onSelectAll: () => tableDispatch({ type: 'select-all'}),
+            onSelectRow: (payload) => tableDispatch({ type: 'select-row', payload}),
+            paginated: props.paginated,
+            tableWidth: props.tableWidth,
+            title: props.title,
+        }}>
+            <TableContent
+                tableWidth={props.tableWidth}
+            />
+        </TableContext.Provider>
+    </TableStyled>;
 };

@@ -1,3 +1,4 @@
 export * from './pagination.hook';
-export * from './useWindowResize';
+export * from './table.reducer';
 export * from './useOnClickOutside';
+export * from './useWindowResize';
