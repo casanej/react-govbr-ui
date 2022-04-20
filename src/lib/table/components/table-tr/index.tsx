@@ -27,7 +27,7 @@ export const TableTr:FC<Props> = (props) => {
         const boolValue = Boolean(value);
 
         setIsActive(boolValue);
-        if (onSelectRow) onSelectRow({ checked: boolValue, index: trName, row });
+        if (onSelectRow) onSelectRow({ selected: boolValue, index: trName, row });
     }
 
     return <TableTrStyled active={rowActive} >

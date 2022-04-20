@@ -1,12 +1,13 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { ReactElement, ReactNode } from 'react';
 import { PageObj, TablePaginationTypes } from './pagination.model';
+import { TableStateAction, TableStateActionSelectRowProps } from './table-actions';
 
 // ======================= /* TABLE CONTEXT */ ======================= //
 export interface TableContextProps {
     columns: TableColumn[];
     rows: TableRow[];
-    selectedRows: TableRow[];
+    selectedRows: TableStateActionSelectRowProps[];
     numRowsSelected: number;
     isLoading?: boolean;
     hasActions?: boolean;
@@ -14,8 +15,9 @@ export interface TableContextProps {
     hasSelect?: boolean;
     onPaginationChange?: (pageObj: PageObj) => void;
     onSelectAll?: (value: boolean) => void;
-    onSelectRow?: (payload: { checked: boolean, index:string, row: TableRow }) => void;
+    onSelectRow?: (payload: TableStateActionSelectRowProps) => void;
     paginated?: TablePaginationTypes;
+    tableDispatch?: (value: TableStateAction) => void
     tableWidth?: number;
     title?: string;
 }

@@ -13,6 +13,9 @@ interface LoadingStory extends ComponentStory<typeof Table> {}
 export default {
     title: 'Exibição de Dados/Table',
     component: Table,
+    argTypes: {
+        onSelectChange: { action: 'onSelectChange(rows)' },
+    }
 } as LoadingExport;
 
 const Template: LoadingStory = (args) => {
@@ -37,6 +40,7 @@ const Template: LoadingStory = (args) => {
                 hasActions={args.hasActions}
                 hasSelect={args.hasSelect}
                 onPaginationChange={(pageObj: PageObj) => setPageObj(pageObj)}
+                onSelectChange={args.onSelectChange}
                 paginated={args.paginated}
                 title={args.title}
             />
