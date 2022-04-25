@@ -1,4 +1,4 @@
-import { Loading } from 'lib';
+import { CheckboxManager, Loading } from 'lib';
 import React, { FC, useContext } from 'react';
 import { TableHeader, TablePagination, TableSelect, TableTBody, TableTHead } from '..';
 import { TableContext } from '../..';
@@ -16,18 +16,20 @@ export const TableContent:FC<Props> = (props) => {
         <TableSelect />
         <TableBody>
             <TableCustom tableWidth={props.tableWidth}>
-                <TableTHead />
-                {
-                    isLoading
-                        ? <TableLoading>
-                            <tr>
-                                <td colSpan={columns.length }>
-                                    <Loading infinity='md' />
-                                </td>
-                            </tr>
-                        </TableLoading>
-                        : <TableTBody />
-                }
+                <CheckboxManager master={['table-select-all']} blackList={['table-select-all']}>
+                    <TableTHead />
+                    {
+                        isLoading
+                            ? <TableLoading>
+                                <tr>
+                                    <td colSpan={columns.length }>
+                                        <Loading infinity='md' />
+                                    </td>
+                                </tr>
+                            </TableLoading>
+                            : <TableTBody />
+                    }
+                </CheckboxManager>
             </TableCustom>
         </TableBody>
         <TableFooter>

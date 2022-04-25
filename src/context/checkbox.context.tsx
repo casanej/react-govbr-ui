@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { createContext, ReactElement, useEffect, useState } from 'react';
+import React, { createContext, ReactElement } from 'react';
 
 interface ICheckboxContext {
     handleCheckboxUpdate?: () => void;
+    handleSelectAll?: (prefix?: string) => void;
     registerField?: (ref: HTMLInputElement) => void;
 }
 

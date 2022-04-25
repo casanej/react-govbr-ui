@@ -1,10 +1,17 @@
+import { CheckboxContext } from 'context';
 import { Checkbox } from 'lib';
-import React, { ReactElement, useContext, useMemo } from 'react';
+import React, { ReactElement, useCallback, useContext, useEffect, useMemo } from 'react';
+import { CheckTypes } from 'src/lib/checkbox/index.style';
 import { TableContext } from '../..';
 import { TableHeadTr, TableTh, TableTHeadStyled } from './index.style';
 
 export const TableTHead = (): ReactElement => {
-    const { columns, hasActions, hasSelect, onSelectAll } = useContext(TableContext);
+    const { columns, hasActions, hasSelect, onSelectAll, numRowsSelected } = useContext(TableContext);
+    const { handleSelectAll } = useContext(CheckboxContext);
+
+    useEffect(() => {
+        console.log('[numRowsSelected]', numRowsSelected);
+    }, [numRowsSelected]);
 
     const numColumns = useMemo(() => {
         let totalColumns = columns.filter(column => column.accessor !== 'actions').length;
@@ -24,12 +31,17 @@ export const TableTHead = (): ReactElement => {
         return width;
     }, [hasSelect]);
 
+    const tableSelectAll = useCallback((_:string, value: CheckTypes) => {
+        onSelectAll && onSelectAll(Boolean(value))
+        handleSelectAll && handleSelectAll();
+    }, [onSelectAll, handleSelectAll, numRowsSelected]);
+
     return (
         <TableTHeadStyled>
             <TableHeadTr>
                 {
-                    hasSelect && <TableTh columWidth={'50px'}>
-                        <Checkbox name='table-select-all' onChange={(_, value) => onSelectAll && onSelectAll(Boolean(value))} />
+                    hasSelect && <TableTh columWidth={'50px'} >
+                        <Checkbox name='table-select-all' checked={ undefined} onChange={tableSelectAll} />
                     </TableTh>
                 }
                 {columns.map((column: any) => {
