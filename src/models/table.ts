@@ -1,7 +1,7 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { ReactElement, ReactNode } from 'react';
 import { PageObj, TablePaginationTypes } from './pagination.model';
-import { TableStateAction, TableStateActionSelectRowProps } from './table-actions';
+import { TableOrderType, TableStateAction, TableStateActionSelectRowProps } from './table-actions';
 
 // ======================= /* TABLE CONTEXT */ ======================= //
 export interface TableContextProps {
@@ -36,9 +36,21 @@ export type TableColumn = TableColumnCustom | TableColumnActions | TableColumnDe
 
 export type TableColumnTypes = 'text' | 'number' | 'number_min' | 'date' | 'date_time' | 'boolean' | 'money' | 'money_min' | 'action';
 
+export type TableOrdering = TableOrderingInternal | TableOrderingExternal;
+
+export interface TableOrderingInternal {
+    type: 'internal';
+}
+
+export interface TableOrderingExternal {
+    type: 'external';
+    onOrder: (name: string, order: TableOrderType) => void;
+}
+
 export interface TableColumnDefault {
     title: string;
     accessor: string;
+    order?: TableOrdering;
     type?: TableColumnTypes;
 }
 
@@ -47,6 +59,7 @@ export interface TableColumnCustom {
     title: string;
     accessor: string;
     renderer: (value: string | number) => ReactNode;
+    order?: TableOrdering;
 }
 
 export interface TableColumnActions {
@@ -62,6 +75,7 @@ export type TableRow = TableRowDefault | TableRowAction;
 
 export interface TableRowTreated {
     id: string;
+    index: number;
     row: TableRow;
     selected: boolean;
 }

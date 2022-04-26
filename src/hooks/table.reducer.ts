@@ -47,12 +47,12 @@ export const tableReducer = (state: TableState, action: TableStateAction) => {
     if (action.type === 'new-rows') {
         const treatedRows: TableRowTreated[] = [];
 
-        action.payload.rows.forEach(row => {
+        action.payload.rows.forEach((row, index) => {
             const rawRow = row as TableRowDefault;
             const rowId = rawRow['id'];
 
             const id = rowId?.toString() || Math.random().toString();
-            treatedRows.push({ id, row, selected: false });
+            treatedRows.push({ id, index, row, selected: false });
         });
 
         return {
@@ -60,6 +60,53 @@ export const tableReducer = (state: TableState, action: TableStateAction) => {
             treatedRows,
             loading: false,
         }
+    }
+
+    if (action.type === 'ordering') {
+        const sortedRows = state.treatedRows;
+
+        const sortByNone = (a:TableRowTreated, b:TableRowTreated) => {
+            if (a.index < b.index) return -1;
+            if (a.index > b.index) return 1;
+
+            return 0;
+        }
+
+        const sortByAsc = (a:TableRowTreated, b:TableRowTreated) => {
+            const aRow = a.row as TableRowDefault;
+            const bRow = b.row as TableRowDefault;
+
+            const aValue = aRow[action.payload.orderBy] || '';
+            const bValue = bRow[action.payload.orderBy] || '';
+
+            if (aValue < bValue) return -1;
+            if (aValue > bValue) return 1;
+
+            return 0;
+        }
+
+        const sortByDesc = (a:TableRowTreated, b:TableRowTreated) => {
+            const aRow = a.row as TableRowDefault;
+            const bRow = b.row as TableRowDefault;
+
+            const aValue = aRow[action.payload.orderBy] || '';
+            const bValue = bRow[action.payload.orderBy] || '';
+
+            if (aValue < bValue) return 1;
+            if (aValue > bValue) return -1;
+
+            return 0;
+        }
+
+        if (action.payload.order === 'none') sortedRows.sort(sortByNone);
+        if (action.payload.order === 'asc') sortedRows.sort(sortByAsc);
+        if (action.payload.order === 'desc') sortedRows.sort(sortByDesc);
+
+        return {
+            ...state,
+            loading: false,
+            treatedRows: sortedRows,
+        };
     }
 
     if (action.type === 'select-row') {

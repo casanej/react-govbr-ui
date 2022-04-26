@@ -1,9 +1,11 @@
 import { CheckboxContext } from 'context';
 import { Checkbox } from 'lib';
+import { TableColumn } from 'models';
 import React, { ReactElement, useCallback, useContext, useMemo } from 'react';
 import { CheckTypes } from 'src/lib/checkbox/index.style';
+import { TableTh } from '..';
 import { TableContext } from '../..';
-import { TableHeadTr, TableTh, TableTHeadStyled } from './index.style';
+import { TableHeadTr, TableTHeadStyled } from './index.style';
 
 export const TableTHead = (): ReactElement => {
     const { columns, hasActions, hasSelect, onSelectAll, numRowsSelected } = useContext(TableContext);
@@ -40,14 +42,18 @@ export const TableTHead = (): ReactElement => {
                         <Checkbox name='table-select-all' checked={ undefined} onChange={tableSelectAll} />
                     </TableTh>
                 }
-                {columns.map((column: any) => {
+                {columns.map((column: TableColumn) => {
                     if (column.accessor === 'actions') {
                         if (hasActions) return <TableTh key={column.accessor} columWidth={columnWidth}>{column.title}</TableTh>;
 
                         return null;
                     }
 
-                    return <TableTh key={column.accessor} columWidth={columnWidth}>{column.title}</TableTh>
+                    let ordering = undefined;
+
+                    if (column.type !== 'actions' && column.type !== 'custom') ordering = column.order;
+
+                    return <TableTh key={column.accessor} accessor={column.accessor} columWidth={columnWidth} ordering={ordering}>{column.title}</TableTh>
                 })}
             </TableHeadTr>
         </TableTHeadStyled>

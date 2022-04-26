@@ -62,6 +62,7 @@ export const TablePaginatedUncontrolled = Template.bind({});
 export const TableSmall = Template.bind({});
 export const TableCustom = Template.bind({});
 export const TableWithActions = Template.bind({});
+export const TableWithOrder = Template.bind({});
 export const TableWithSelect = Template.bind({});
 
 const tableColumns: TableColumn[] = [
@@ -78,6 +79,19 @@ const tableColumns: TableColumn[] = [
     { title: 'Ações', accessor: 'actions' },
 ]
 
+const tableColumnsWithOrder: TableColumn[] = [
+    { title: 'Coluna 1', accessor: 'column1' },
+    { title: 'Coluna 2', accessor: 'column2' },
+    { title: 'Coluna 3 IN', accessor: 'column3', order: { type: 'internal' } },
+    { title: 'Coluna 4 EX', accessor: 'column4', order: { type: 'external', onOrder: (name, order) => console.log('[ORDERING INTERNAL]', name, order) } },
+    { title: 'Coluna 5', accessor: 'column5' },
+    { title: 'Coluna 6', accessor: 'column6' },
+    { title: 'Coluna 7', accessor: 'column7' },
+    { title: 'Coluna 8', accessor: 'column8' },
+    { title: 'Coluna 9', accessor: 'column9' },
+    { title: 'Coluna 10', accessor: 'column10' },
+]
+
 const tableColumnsCustom: TableColumn[] = [
     { title: 'COLUNA 1', accessor: 'coluna1' },
     { title: 'COLUNA 2', accessor: 'coluna2', type: 'date' },
@@ -88,16 +102,16 @@ const tableColumnsCustom: TableColumn[] = [
 ]
 
 const tableRows: TableRow[] = [
-    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
-    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
-    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
-    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
-    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
-    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
-    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
-    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
-    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
-    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
+    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3 A', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
+    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3 D', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
+    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3 C', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
+    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3 W', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
+    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3 Z', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
+    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3 J', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
+    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3 L', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
+    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3 F', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
+    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3 Y', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
+    { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3 U', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
     { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
     { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
     { column1: 'Valor 1', column2: 'Valor 2', column3: 'Valor 3', column4: 'Valor 4', column5: 'Valor 5', column6: 'Valor 6', column7: 'Valor 7', column8: 'Valor 8', column9: 'Valor 9', column10: 'Valor 10', actions },
@@ -172,6 +186,11 @@ TableSmall.args = {
     paginated: {
         type: 'uncontrolled',
     }
+}
+
+TableWithOrder.args = {
+    columns: tableColumnsWithOrder,
+    rows: tableRows,
 }
 
 TableWithSelect.args = {

@@ -1,6 +1,6 @@
 import { tableReducer, tableStateInitialValue } from 'hooks';
 import { PageObj, TableColumn, tableContextInitialValues, TableContextProps, TablePaginationTypes, TableRow } from 'models';
-import React, { createContext, ReactElement, useEffect, useReducer } from 'react';
+import React, { createContext, ReactElement, useContext, useEffect, useReducer } from 'react';
 import { TableContent } from './components';
 import { TableStyled } from './index.style';
 
@@ -19,6 +19,8 @@ interface Props {
 }
 
 export const TableContext = createContext<TableContextProps>(tableContextInitialValues);
+
+export const useTableContext = () => useContext(TableContext);
 
 export const Table = (props: Props): ReactElement => {
     const [tableState, tableDispatch] = useReducer(tableReducer, tableStateInitialValue)
