@@ -1,6 +1,6 @@
 import { CheckboxContext } from 'context';
 import { Checkbox } from 'lib';
-import React, { ReactElement, useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { ReactElement, useCallback, useContext, useMemo } from 'react';
 import { CheckTypes } from 'src/lib/checkbox/index.style';
 import { TableContext } from '../..';
 import { TableHeadTr, TableTh, TableTHeadStyled } from './index.style';
@@ -8,10 +8,6 @@ import { TableHeadTr, TableTh, TableTHeadStyled } from './index.style';
 export const TableTHead = (): ReactElement => {
     const { columns, hasActions, hasSelect, onSelectAll, numRowsSelected } = useContext(TableContext);
     const { handleSelectAll } = useContext(CheckboxContext);
-
-    useEffect(() => {
-        console.log('[numRowsSelected]', numRowsSelected);
-    }, [numRowsSelected]);
 
     const numColumns = useMemo(() => {
         let totalColumns = columns.filter(column => column.accessor !== 'actions').length;

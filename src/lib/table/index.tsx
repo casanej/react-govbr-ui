@@ -28,22 +28,35 @@ export const Table = (props: Props): ReactElement => {
     }, [tableState.selectedRows])
 
     useEffect(() => {
-        tableDispatch({ type: 'first-render'})
+        tableDispatch({ type: 'first-render', payload: {
+            rows: props.rows,
+            paginated: props.paginated,
+        }})
     }, [])
+
+    useEffect(() => {
+        tableDispatch({ type: 'new-rows', payload: { rows: props.rows } });
+    }, [props.rows])
+
+    const handlePaginationChange = (pageObj: PageObj): void => {
+        tableDispatch({ type: 'new-page', payload: pageObj });
+        props.onPaginationChange && props.onPaginationChange(pageObj);
+    }
 
     return <TableStyled>
         <TableContext.Provider value={{
             columns: props.columns,
-            rows: props.rows,
+            rows: tableState.treatedRows,
             numRowsSelected: tableState.numRowsSelected,
             selectedRows: tableState.selectedRows,
             isLoading: props.isLoading || tableState.loading,
             hasActions: props.hasActions,
             hasSearch: props.hasSearch,
             hasSelect: props.hasSelect,
-            onPaginationChange: props.onPaginationChange,
+            onPaginationChange: handlePaginationChange,
             onSelectAll: () => tableDispatch({ type: 'select-all'}),
             onSelectRow: (payload) => tableDispatch({ type: 'select-row', payload}),
+            paging: tableState.paging,
             paginated: props.paginated,
             tableDispatch,
             tableWidth: props.tableWidth,

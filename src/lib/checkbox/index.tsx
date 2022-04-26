@@ -13,6 +13,7 @@ interface Props {
     label?: React.ReactNode;
     name?: string;
     onChange?: (name:string, value: CheckTypes) => void;
+    onClick?: (name:string, value: CheckTypes) => void;
     rotulo?: {
         texto: string;
         subTexto?: string;
@@ -28,39 +29,32 @@ export const Checkbox = (props: Props): ReactElement => {
     const [checked, setChecked] = useState<CheckTypes>(props.checked || 0);
 
     useEffect(() => {
-        console.log('[ENTROU AQUI 1]', props.checked, checked);
         if (registerField && inputRef.current) {
             registerField(inputRef.current);
         }
     }, [registerField, inputRef.current])
 
     useEffect(() => {
-        console.log('[ENTROU AQUI 2]', props.checked, checked);
         setChecked(props.checked || 0);
     }, [props.checked])
 
     useEffect(() => {
-        console.log('[ENTROU AQUI 3]', props.checked, checked);
         if (inputRef.current) setChecked(+inputRef.current.checked || 0);
     }, [inputRef.current?.checked])
 
     useEffect(() => {
-        console.log('[ENTROU AQUI 4]', props.checked, checked);
         if (props.onChange) props.onChange(name, checked);
 
         if (handleCheckboxUpdate && noUpdateCheckbox.includes(name) === false) handleCheckboxUpdate();
     }, [checked])
 
     const handleCheck = () => {
-        console.log('[ENTROU AQUI 5]', props.checked, checked);
         if (checked === 0) {
             setChecked(1);
         } else {
             setChecked(0);
         }
     }
-
-    console.log('[CHECKED]', props.checked, checked)
 
     return (
         <CheckboxStyled>

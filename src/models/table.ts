@@ -6,7 +6,7 @@ import { TableStateAction, TableStateActionSelectRowProps } from './table-action
 // ======================= /* TABLE CONTEXT */ ======================= //
 export interface TableContextProps {
     columns: TableColumn[];
-    rows: TableRow[];
+    rows: TableRowTreated[];
     selectedRows: TableStateActionSelectRowProps[];
     numRowsSelected: number;
     isLoading?: boolean;
@@ -16,8 +16,9 @@ export interface TableContextProps {
     onPaginationChange?: (pageObj: PageObj) => void;
     onSelectAll?: (value: boolean) => void;
     onSelectRow?: (payload: TableStateActionSelectRowProps) => void;
+    paging?: PageObj;
     paginated?: TablePaginationTypes;
-    tableDispatch?: (value: TableStateAction) => void
+    tableDispatch: (value: TableStateAction) => void
     tableWidth?: number;
     title?: string;
 }
@@ -27,6 +28,7 @@ export const tableContextInitialValues:TableContextProps = {
     numRowsSelected: 0,
     selectedRows: [],
     rows: [],
+    tableDispatch: (value) => { return value },
 };
 
 // ======================= /* TABLE COLUMN */ ======================= //
@@ -57,6 +59,12 @@ export interface TableColumnActions {
 // ======================= /* TABLE ROW */ ======================= //
 
 export type TableRow = TableRowDefault | TableRowAction;
+
+export interface TableRowTreated {
+    id: string;
+    row: TableRow;
+    selected: boolean;
+}
 
 export interface TableRowDefault {
     [key: string]: string | number | null;

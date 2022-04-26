@@ -123,9 +123,6 @@ TableCustom.args = {
     columns: tableColumnsCustom,
     rows: tableRowsTypes,
     hasSelect: false,
-    paginated: {
-        type: 'uncontrolled',
-    }
 }
 
 TableEmpty.args = {
