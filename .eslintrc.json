@@ -64,7 +64,7 @@
         "no-multi-spaces": "error",
         "no-return-assign": "error",
         "no-self-assign": "error",
-        "no-unused-vars": "off",
+        "no-unused-vars": ["error", { "args": "none" , "argsIgnorePattern": "^_" }],
         "no-self-compare": "error",
         "require-await": "error",
 
@@ -100,6 +100,6 @@
         "no-const-assign": "error",
         "prefer-const": "error",
 
-        "@typescript-eslint/no-unused-vars": "warn"
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
     }
 }

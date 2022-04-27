@@ -11,7 +11,7 @@ export default {
     title: 'Input/Select',
     component: InputSelect,
     argTypes: {
-        onChange: { action: 'onChange(item)' },
+        onChange: { action: 'onChange(item, name)' },
     }
 } as InputSelectExport;
 

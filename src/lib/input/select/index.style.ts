@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { hexColorApplyAlpha } from 'utils';
 
-export const InputSelectStyled = styled.div<{ ref: any }>`
+export const InputSelectStyled = styled.div<{ ref: any; fullWidth?: boolean; }>`
     position: relative;
+
+    ${props => props.fullWidth && 'width: 100%'}
 `
 
 export const InputSelectContent = styled.div<{ ref: any }>`
@@ -10,11 +12,6 @@ export const InputSelectContent = styled.div<{ ref: any }>`
     flex-direction: column;
     gap: 5px;
 `
-
-export const InputSelectLabel = styled.div`
-    font-weight: 600;
-    font-size: 14px;
-`;
 
 export const InputSelectMenu = styled.div<{ ref: any; gapTop: number; visibleRows: number; }>`
     position: absolute;

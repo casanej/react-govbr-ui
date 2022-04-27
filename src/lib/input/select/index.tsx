@@ -4,7 +4,8 @@ import { InputText, Item } from 'lib';
 import { InputAlertObj, InputVariants, SelectItemProps } from 'models';
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
-import { InputSelectContent, InputSelectLabel, InputSelectMenu, InputSelectStyled } from './index.style';
+import { InputLabel } from '../components/general.style';
+import { InputSelectContent, InputSelectMenu, InputSelectStyled } from './index.style';
 
 export interface InputSelectProps {
     items: SelectItemProps[];
@@ -12,6 +13,7 @@ export interface InputSelectProps {
     disabled?: boolean;
     icon?: IconName;
     inputVariant?: InputVariants;
+    fullWidth?: boolean;
     hasReset?: boolean;
     helpText?: React.ReactNode;
     label?: string;
@@ -19,14 +21,14 @@ export interface InputSelectProps {
     name?: string;
     placeholder?: string;
     selectedItems?: SelectItemProps[];
-    onChange?: (item: SelectItemProps[]) => void;
+    onChange?: (item: SelectItemProps[], name: string) => void;
     onFocus?: () => void;
     onReset?: () => void;
     visibleRows?: number;
 }
 
 export const InputSelect = (props: InputSelectProps): ReactElement => {
-    const name = useMemo(() => props.name || Math.random(), [props.name]);
+    const name = useMemo(() => props.name || Math.random().toString(), [props.name]);
     const inputSelectRef = useRef<HTMLDivElement>()
     const [referenceElement, setReferenceElement] = useState(null);
     const [popperElement, setPopperElement] = useState(null);
@@ -60,7 +62,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
 
     useOnClickOutside(inputSelectRef, () => setInputFocus(false));
 
-    useEffect(() => { if (props.onChange && !firstRun) props.onChange(itemsSelected); }, [itemsSelected])
+    useEffect(() => { if (props.onChange && !firstRun) props.onChange(itemsSelected, name); }, [itemsSelected])
     useEffect(() => { setMenuOpen(inputFocus); }, [inputFocus]);
     useEffect(() => { if (firstRun) setFirstRun(false); }, []);
 
@@ -97,10 +99,10 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
     }
 
     return (
-        <InputSelectStyled ref={inputSelectRef}>
+        <InputSelectStyled ref={inputSelectRef} fullWidth={props.fullWidth} >
             <InputSelectContent ref={setReferenceElement}>
                 {
-                    props.label && <InputSelectLabel>{props.label}</InputSelectLabel>
+                    props.label && <InputLabel direction='column'>{props.label}</InputLabel>
                 }
                 <InputText
                     icon={props.icon}
