@@ -10,7 +10,7 @@ const config = {
   output: {
     publicPath: "/",
   },
-  entry: path.resolve(__dirname, 'src/index.tsx'),
+  entry: path.resolve(__dirname, 'src/app/index.tsx'),
   module: {
     rules: [
       {
@@ -59,12 +59,13 @@ const config = {
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".jsx"],
     alias: {
-      libs: path.resolve(__dirname, 'src/libs/'),
-      assets: path.resolve(__dirname, 'src/assets/'),
-      utils: path.resolve(__dirname, 'src/utils/'),
-      models: path.resolve(__dirname, 'src/models/'),
-      hooks: path.resolve(__dirname, 'src/hooks/'),
-      components: path.resolve(__dirname, 'src/components/'),
+      lib: path.resolve(__dirname, 'src/lib'),
+      assets: path.resolve(__dirname, 'src/assets'),
+      context: path.resolve(__dirname, 'src/context'),
+      utils: path.resolve(__dirname, 'src/utils'),
+      models: path.resolve(__dirname, 'src/models'),
+      hooks: path.resolve(__dirname, 'src/hooks'),
+      components: path.resolve(__dirname, 'src/components'),
     },
     fallback: {
       fs: false,
@@ -85,7 +86,7 @@ const config = {
     }),
     new ESLintPlugin({
         fix: true,
-        emitError: true,
+      emitError: false,
         emitWarning: false,
         extensions: ["js", "jsx", "ts", "tsx"],
     }),
@@ -94,7 +95,7 @@ const config = {
   devServer: {
     static: path.join(__dirname, "build"),
     historyApiFallback: true,
-    port: 3000,
+    port: 3003,
     open: false,
     hot: true
   },
