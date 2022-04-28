@@ -7,7 +7,7 @@ import { TableContext } from '../..';
 import { TableHeadTr, TableTHeadStyled } from './index.style';
 
 export const TableTHead = (): ReactElement => {
-    const { columns, hasActions, hasSelect, onSelectAll, numRowsSelected } = useContext(TableContext);
+    const { columns, hasActions, hasSelect, onSelectAll, numRowsSelected, selectAllStatus, tableDispatch } = useContext(TableContext);
     const { handleSelectAll } = useContext(CheckboxContext);
 
     const numColumns = useMemo(() => {
@@ -30,15 +30,20 @@ export const TableTHead = (): ReactElement => {
 
     const tableSelectAll = useCallback((_:string, value: CheckTypes) => {
         onSelectAll && onSelectAll(Boolean(value))
-        handleSelectAll && handleSelectAll();
+        if (handleSelectAll) {
+            tableDispatch({ type: 'select-all' })
+            handleSelectAll();
+        }
     }, [onSelectAll, handleSelectAll, numRowsSelected]);
+
+    console.log('[SELECT ALL STATUS]', selectAllStatus)
 
     return (
         <TableTHeadStyled>
             <TableHeadTr>
                 {
                     hasSelect && <TableTh columWidth={'50px'} >
-                        <Checkbox name='table-select-all' checked={ undefined} onChange={tableSelectAll} />
+                        <Checkbox name='table-select-all' checked={selectAllStatus} onChange={tableSelectAll} />
                     </TableTh>
                 }
                 {columns.map((column: TableColumn) => {

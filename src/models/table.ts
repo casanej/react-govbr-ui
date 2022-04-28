@@ -1,5 +1,6 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { ReactElement, ReactNode } from 'react';
+import { CheckTypes } from './input-checkbox.model';
 import { PageObj, TablePaginationTypes } from './pagination.model';
 import { TableOrderType, TableStateAction, TableStateActionSelectRowProps } from './table-actions';
 
@@ -7,6 +8,7 @@ import { TableOrderType, TableStateAction, TableStateActionSelectRowProps } from
 export interface TableContextProps {
     columns: TableColumn[];
     rows: TableRowTreated[];
+    selectAllStatus: CheckTypes;
     selectedRows: TableStateActionSelectRowProps[];
     numRowsSelected: number;
     isLoading?: boolean;
@@ -26,6 +28,7 @@ export interface TableContextProps {
 export const tableContextInitialValues:TableContextProps = {
     columns: [],
     numRowsSelected: 0,
+    selectAllStatus: 0,
     selectedRows: [],
     rows: [],
     tableDispatch: (value) => { return value },

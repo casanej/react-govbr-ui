@@ -78,6 +78,8 @@ export const CheckboxManager = (props: Props): ReactElement => {
         return true;
     }
 
+    console.log('[BOEXES]', boxes);
+
     return (
         <CheckboxContext.Provider value={{ registerField, handleCheckboxUpdate, handleSelectAll }}>
             {

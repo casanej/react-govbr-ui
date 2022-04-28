@@ -1,4 +1,4 @@
-import { PageObj, TablePaginationTypes, TableRowDefault, TableRowTreated, TableStateAction, TableStateActionSelectRowProps } from 'models';
+import { CheckTypes, PageObj, TablePaginationTypes, TableRowDefault, TableRowTreated, TableStateAction, TableStateActionSelectRowProps } from 'models';
 
 export const TableReducerInitialState = {};
 
@@ -11,6 +11,7 @@ export interface TableState {
     firstRender: boolean;
     loading: boolean;
     numRowsSelected: number;
+    selectAllStatus: CheckTypes;
     selectedRows: TableStateActionSelectRowProps[];
     treatedRows: TableRowTreated[];
     paging?: PageObj;
@@ -22,6 +23,7 @@ export const tableStateInitialValue: TableState = {
     firstRender: true,
     loading: false,
     numRowsSelected: 0,
+    selectAllStatus: 0,
     selectedRows: [],
     treatedRows: [],
 }
@@ -111,19 +113,26 @@ export const tableReducer = (state: TableState, action: TableStateAction) => {
 
     if (action.type === 'select-row') {
         const selectedRow = state.treatedRows.find(row => row.id === action.payload.id);
+        // let selectAllCkbxState = state.selectAllStatus;
 
         if (selectedRow) selectedRow.selected = action.payload.selected;
+
+        // if (selectAllCkbxState !== 0 && !action.payload.selected) selectAllCkbxState = 2;
 
         const selectedRows = state.treatedRows.filter(row => row.selected === true);
         return {
             ...state,
-            selectedRows,
             numRowsSelected: selectedRows.length,
+            // selectAllStatus: selectAllCkbxState,
+            selectedRows,
         }
     }
 
     if (action.type === 'select-all') {
-        return state;
+        return {
+            ...state,
+            selectAllStatus: 1,
+        };
     }
 
     if (action.type === 'set-loading') {

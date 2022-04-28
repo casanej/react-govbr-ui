@@ -63,7 +63,8 @@ export const TableSmall = Template.bind({});
 export const TableCustom = Template.bind({});
 export const TableWithActions = Template.bind({});
 export const TableWithOrder = Template.bind({});
-export const TableWithSelect = Template.bind({});
+export const TableWithSelectPaginatedControlled = Template.bind({});
+export const TableWithSelectPaginatedUncontrolled = Template.bind({});
 
 const tableColumns: TableColumn[] = [
     { title: 'Coluna 1', accessor: 'column1' },
@@ -193,7 +194,18 @@ TableWithOrder.args = {
     rows: tableRows,
 }
 
-TableWithSelect.args = {
+TableWithSelectPaginatedControlled.args = {
+    columns: tableColumns,
+    rows: tableRows,
+    hasSelect: true,
+    paginated: {
+        type: 'controlled',
+        initialPage: 1,
+        totalItems: tableRows.length
+    }
+}
+
+TableWithSelectPaginatedUncontrolled.args = {
     columns: tableColumns,
     rows: tableRows,
     hasSelect: true,

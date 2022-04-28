@@ -60,6 +60,7 @@ export const Table = (props: Props): ReactElement => {
             onSelectRow: (payload) => tableDispatch({ type: 'select-row', payload}),
             paging: tableState.paging,
             paginated: props.paginated,
+            selectAllStatus: tableState.selectAllStatus,
             tableDispatch,
             tableWidth: props.tableWidth,
             title: props.title,
