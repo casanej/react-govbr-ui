@@ -1,6 +1,6 @@
 import { Checkbox } from 'lib';
+import { CheckTypes } from 'models';
 import React, { ReactElement, useCallback, useState } from 'react';
-import { CheckTypes } from '../checkbox/index.style';
 import { ItemStyled } from './index.style';
 
 interface Props {

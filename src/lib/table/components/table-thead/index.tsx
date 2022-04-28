@@ -1,8 +1,7 @@
 import { CheckboxContext } from 'context';
 import { Checkbox } from 'lib';
-import { TableColumn } from 'models';
+import { CheckTypes, TableColumn } from 'models';
 import React, { ReactElement, useCallback, useContext, useMemo } from 'react';
-import { CheckTypes } from 'src/lib/checkbox/index.style';
 import { TableTh } from '..';
 import { TableContext } from '../..';
 import { TableHeadTr, TableTHeadStyled } from './index.style';

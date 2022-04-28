@@ -1,5 +1,6 @@
 export * from './alert';
 export * from './header';
+export * from './input-checkbox.model';
 export * from './input-date.model';
 export * from './input-select.model';
 export * from './input-text';

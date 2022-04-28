@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { CheckboxRegisterObject } from 'models';
 import React, { createContext, ReactElement } from 'react';
 
 interface ICheckboxContext {
     handleCheckboxUpdate?: () => void;
     handleSelectAll?: (prefix?: string) => void;
-    registerField?: (ref: HTMLInputElement) => void;
+    registerField?: (ref: CheckboxRegisterObject) => void;
 }
 
 const defaultState: ICheckboxContext = {}

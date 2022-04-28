@@ -1,7 +1,7 @@
 import { CheckboxContext } from 'context';
 import { Checkbox } from 'lib';
+import { CheckboxRegisterObject, CheckTypes } from 'models';
 import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
-import { CheckTypes } from '../checkbox/index.style';
 
 interface Props {
     children: React.ReactNode;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const CheckboxManager = (props: Props): ReactElement => {
-    const [boxes, setBoxes] = useState<HTMLInputElement[]>([]);
+    const [boxes, setBoxes] = useState<CheckboxRegisterObject[]>([]);
     const [selectAllValue, setSelectAllValue] = useState<CheckTypes>(0);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
@@ -34,8 +34,8 @@ export const CheckboxManager = (props: Props): ReactElement => {
         return old;
     }, [props.blackList]);
 
-    const registerField = useCallback((ref:HTMLInputElement) => {
-        if (!blackListBoxes.includes(ref.id)) {
+    const registerField = useCallback((ref: CheckboxRegisterObject) => {
+        if (!blackListBoxes.includes(ref.name)) {
             setBoxes(oldBoxes => {
                 if (!oldBoxes.includes(ref)) return [...oldBoxes, ref]
 
@@ -60,9 +60,9 @@ export const CheckboxManager = (props: Props): ReactElement => {
 
         boxes.forEach(box => {
             if (prefix) {
-                if (box.id.includes(prefix)) box.checked = setActive;
+                if (box.name.includes(prefix)) box.setValue(+setActive as CheckTypes);
             } else {
-                box.checked = setActive;
+                box.setValue(+setActive as CheckTypes);
             }
         });
     }, [boxes, selectAllValue])

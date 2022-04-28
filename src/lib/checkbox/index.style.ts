@@ -1,16 +1,10 @@
-import { alertColorTypes, AlertTypes } from 'models';
+import { alertColorTypes, AlertTypes, CheckTypes } from 'models';
 import styled, { css } from 'styled-components';
 import { hexColorApplyAlpha } from 'utils';
 
-export enum CheckTypes {
-    noChecked = 0,
-    checked = 1,
-    indeterminate = 2
-}
-
 interface CheckboxInputProps {
+    checked: CheckTypes;
     alert?: AlertTypes;
-    checked?: CheckTypes;
 }
 
 export const CheckboxStyled = styled.div`

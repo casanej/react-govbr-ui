@@ -1,8 +1,8 @@
 import { CheckboxContext } from 'context';
 import { Alert } from 'lib';
-import { AlertTypes } from 'models';
-import React, { ReactElement, useContext, useEffect, useRef, useState } from 'react';
-import { CheckboxContent, CheckboxInput, CheckboxInputCustom, CheckboxRotulo, CheckboxStyled, CheckTypes } from './index.style';
+import { AlertTypes, CheckTypes } from 'models';
+import React, { ReactElement, useContext, useEffect, useState } from 'react';
+import { CheckboxContent, CheckboxInputCustom, CheckboxRotulo, CheckboxStyled } from './index.style';
 
 interface Props {
     alert?: {
@@ -23,24 +23,20 @@ interface Props {
 const noUpdateCheckbox = ['select-all']
 
 export const Checkbox = (props: Props): ReactElement => {
-    const inputRef = useRef<HTMLInputElement>();
     const name = props.name || 'default-checkbox';
     const { handleCheckboxUpdate, registerField } = useContext(CheckboxContext);
     const [checked, setChecked] = useState<CheckTypes>(props.checked || 0);
 
     useEffect(() => {
-        if (registerField && inputRef.current) {
-            registerField(inputRef.current);
+        if (registerField) {
+            registerField({ name, setValue: setChecked, checked })
         }
-    }, [registerField, inputRef.current])
+    }, [registerField])
 
     useEffect(() => {
-        setChecked(props.checked || 0);
+        const newChecked = props.checked ? parseInt(props.checked.toString()) as CheckTypes : checked;
+        setChecked(newChecked);
     }, [props.checked])
-
-    useEffect(() => {
-        if (inputRef.current) setChecked(+inputRef.current.checked || 0);
-    }, [inputRef.current?.checked])
 
     useEffect(() => {
         if (props.onChange) props.onChange(name, checked);
@@ -65,11 +61,10 @@ export const Checkbox = (props: Props): ReactElement => {
                 </CheckboxRotulo>
             }
             <CheckboxContent>
-                <CheckboxInput ref={inputRef} id={name} type='checkbox' onChange={handleCheck} />
                 <CheckboxInputCustom
                     alert={props.alert?.type && !props.alert?.message ? props.alert?.type : undefined}
-                    htmlFor={name}
                     checked={checked}
+                    onClick={handleCheck}
                 >{props.label}</CheckboxInputCustom>
             </CheckboxContent>
 
