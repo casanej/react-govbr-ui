@@ -26,7 +26,7 @@ export const Table = (props: Props): ReactElement => {
     const [tableState, tableDispatch] = useReducer(tableReducer, tableStateInitialValue)
 
     useEffect(() => {
-        if (!tableState.firstRender && props.onSelectChange) props.onSelectChange(tableState.selectedRows.map(row => row.row));
+        // if (!tableState.firstRender && props.onSelectChange) props.onSelectChange(tableState.selectedRows.map(row => row.row));
     }, [tableState.selectedRows])
 
     useEffect(() => {
@@ -48,6 +48,7 @@ export const Table = (props: Props): ReactElement => {
     return <TableStyled>
         <TableContext.Provider value={{
             columns: props.columns,
+            firstRender: tableState.firstRender,
             rows: tableState.treatedRows,
             numRowsSelected: tableState.numRowsSelected,
             selectedRows: tableState.selectedRows,

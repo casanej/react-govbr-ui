@@ -1,4 +1,4 @@
-import { CheckTypes, PageObj, TablePaginationTypes, TableRowDefault, TableRowTreated, TableStateAction, TableStateActionSelectRowProps } from 'models';
+import { CheckTypes, PageObj, TablePaginationTypes, TableRowDefault, TableRowTreated, TableStateAction } from 'models';
 
 export const TableReducerInitialState = {};
 
@@ -12,7 +12,7 @@ export interface TableState {
     loading: boolean;
     numRowsSelected: number;
     selectAllStatus: CheckTypes;
-    selectedRows: TableStateActionSelectRowProps[];
+    selectedRows: string[];
     treatedRows: TableRowTreated[];
     paging?: PageObj;
     paginated?: TablePaginationTypes;
@@ -112,19 +112,32 @@ export const tableReducer = (state: TableState, action: TableStateAction) => {
     }
 
     if (action.type === 'select-row') {
-        const selectedRow = state.treatedRows.find(row => row.id === action.payload.id);
-        // let selectAllCkbxState = state.selectAllStatus;
+        const newSelectedRows = state.selectedRows;
+        const newTreatedRows = state.treatedRows;
+        let newNumRowsSelected = newSelectedRows.length;
 
-        if (selectedRow) selectedRow.selected = action.payload.selected;
+        const rowIndex = newSelectedRows.indexOf(action.payload.id)
 
-        // if (selectAllCkbxState !== 0 && !action.payload.selected) selectAllCkbxState = 2;
+        const isRowsSelected = newSelectedRows.includes(action.payload.id);
 
-        const selectedRows = state.treatedRows.filter(row => row.selected === true);
+        console.log('[ADDING ROW]', isRowsSelected)
+
+        if (isRowsSelected) {
+            if (newNumRowsSelected > 0) {
+                newSelectedRows.splice(rowIndex, 1);
+
+                newNumRowsSelected--;
+            }
+        } else {
+            newSelectedRows.push(action.payload.id);
+            newNumRowsSelected++;
+        }
+
         return {
             ...state,
-            numRowsSelected: selectedRows.length,
-            // selectAllStatus: selectAllCkbxState,
-            selectedRows,
+            selectedRows: newSelectedRows,
+            numRowsSelected: newNumRowsSelected,
+            treatedRows: newTreatedRows
         }
     }
 

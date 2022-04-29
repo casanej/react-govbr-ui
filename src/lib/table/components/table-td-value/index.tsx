@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
 import { Button, Checkbox } from 'lib';
-import { TableTdTypeActions, TableTdTypeCheckBox, TableTdTypeCustom, TableTdTypes } from 'models';
+import { CheckTypes, TableTdTypeActions, TableTdTypeCheckBox, TableTdTypeCustom, TableTdTypes } from 'models';
 import React, { ReactElement } from 'react';
 import { formatNumber } from 'utils';
 import { TableTdStyled } from './index.style';
@@ -20,7 +20,7 @@ export const TableTdValue = (props: Props): ReactElement => {
         const customProps = props.payload as TableTdTypeCheckBox['payload'];
 
         return <TableTdStyled width='50px'>
-            <Checkbox name={`table-row-${customProps.name}`} onChange={customProps.onSelectRow} />
+            <Checkbox name={`table-row-${customProps.name}`} checked={+customProps.checked as CheckTypes} onChange={customProps.onSelectRow} />
         </TableTdStyled>
     }
 

@@ -36,8 +36,6 @@ export const TableTHead = (): ReactElement => {
         }
     }, [onSelectAll, handleSelectAll, numRowsSelected]);
 
-    console.log('[SELECT ALL STATUS]', selectAllStatus)
-
     return (
         <TableTHeadStyled>
             <TableHeadTr>

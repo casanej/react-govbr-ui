@@ -1,5 +1,5 @@
 import { TableRowTreated } from 'models';
-import React, { FC, useContext, useMemo } from 'react';
+import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { TableTd, TableTdValue } from '..';
 import { TableContext } from '../..';
 import { TableTrStyled } from './index.style';
@@ -11,19 +11,30 @@ interface Props {
 export const TableTr:FC<Props> = (props) => {
     const { row } = props;
 
-    const { columns, hasSelect, onSelectRow } = useContext(TableContext);
+    const { columns, hasSelect, onSelectRow, selectedRows } = useContext(TableContext);
+
+    const [firstRender, setFirstRender] = useState(true);
+
+    useEffect(() => {
+        setFirstRender(false);
+    }, [])
+
+    const isSelected = useMemo(() => {
+        return selectedRows.includes(row.id);
+    }, [selectedRows.length])
 
     const columnsOrder = useMemo(() => columns.map(column => column.accessor), [columns]);
 
     const handleSelectRow = (id: string) => (_: string, value: any) => {
         const boolValue = Boolean(value);
 
-        if (onSelectRow) onSelectRow({ selected: boolValue, id: id, row: row.row });
+        if (onSelectRow && !firstRender) onSelectRow({ selected: boolValue, id: id, row: row.row });
     }
 
-    return <TableTrStyled active={row.selected} >
+    return <TableTrStyled active={isSelected} >
         {
             hasSelect && <TableTdValue type='checkbox' payload={{
+                checked: isSelected,
                 name: row.id,
                 onSelectRow: handleSelectRow(row.id)
             }}/>

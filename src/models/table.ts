@@ -7,9 +7,10 @@ import { TableOrderType, TableStateAction, TableStateActionSelectRowProps } from
 // ======================= /* TABLE CONTEXT */ ======================= //
 export interface TableContextProps {
     columns: TableColumn[];
+    firstRender: boolean;
     rows: TableRowTreated[];
     selectAllStatus: CheckTypes;
-    selectedRows: TableStateActionSelectRowProps[];
+    selectedRows: string[];
     numRowsSelected: number;
     isLoading?: boolean;
     hasActions?: boolean;
@@ -27,6 +28,7 @@ export interface TableContextProps {
 
 export const tableContextInitialValues:TableContextProps = {
     columns: [],
+    firstRender: true,
     numRowsSelected: 0,
     selectAllStatus: 0,
     selectedRows: [],
@@ -99,6 +101,7 @@ export interface TableTdTypeCheckBox extends TableTdTypesDefault {
     type: 'checkbox';
     payload: {
         name: string;
+        checked: boolean;
         onSelectRow?: (e: any) => void;
     }
 }

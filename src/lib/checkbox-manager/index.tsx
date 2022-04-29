@@ -37,7 +37,11 @@ export const CheckboxManager = (props: Props): ReactElement => {
     const registerField = useCallback((ref: CheckboxRegisterObject) => {
         if (!blackListBoxes.includes(ref.name)) {
             setBoxes(oldBoxes => {
-                if (!oldBoxes.includes(ref)) return [...oldBoxes, ref]
+                const index = oldBoxes.findIndex(box => box.name === ref.name);
+
+                if (index === -1) {
+                    return [...oldBoxes, ref]
+                }
 
                 return oldBoxes
             });
@@ -77,8 +81,6 @@ export const CheckboxManager = (props: Props): ReactElement => {
 
         return true;
     }
-
-    console.log('[BOEXES]', boxes);
 
     return (
         <CheckboxContext.Provider value={{ registerField, handleCheckboxUpdate, handleSelectAll }}>
