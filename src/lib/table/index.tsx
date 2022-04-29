@@ -26,8 +26,10 @@ export const Table = (props: Props): ReactElement => {
     const [tableState, tableDispatch] = useReducer(tableReducer, tableStateInitialValue)
 
     useEffect(() => {
-        // if (!tableState.firstRender && props.onSelectChange) props.onSelectChange(tableState.selectedRows.map(row => row.row));
-    }, [tableState.selectedRows])
+        if (!tableState.firstRender && props.onSelectChange) {
+            props.onSelectChange(tableState.selectedRows);
+        }
+    }, [tableState.selectedRows.length])
 
     useEffect(() => {
         tableDispatch({ type: 'first-render', payload: {

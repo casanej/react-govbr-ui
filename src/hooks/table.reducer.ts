@@ -120,8 +120,6 @@ export const tableReducer = (state: TableState, action: TableStateAction) => {
 
         const isRowsSelected = newSelectedRows.includes(action.payload.id);
 
-        console.log('[ADDING ROW]', isRowsSelected)
-
         if (isRowsSelected) {
             if (newNumRowsSelected > 0) {
                 newSelectedRows.splice(rowIndex, 1);
@@ -141,12 +139,25 @@ export const tableReducer = (state: TableState, action: TableStateAction) => {
         }
     }
 
-    /*  if (action.type === 'select-all') {
+    if (action.type === 'select-all') {
+        const allRows = state.treatedRows;
+
+        if (allRows.length === 0) return state;
+
+        const response: any = allRows.map(row => tableReducer(state, {
+            type: 'select-row',
+            payload: {
+                id: row.id,
+                row: row.row,
+                selected: true,
+            }
+        }))
+
         return {
             ...state,
-            selectAllStatus: 1,
-        };
-    } */
+            ...response
+        }
+    }
 
     if (action.type === 'set-loading') {
         return {
