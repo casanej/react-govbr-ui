@@ -98,6 +98,11 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
         if (props.onReset) props.onReset();
     }
 
+    const handleFocus = () => {
+        console.log('[FOCUS TRIGGERED]')
+        setInputFocus(true)
+    }
+
     return (
         <InputSelectStyled ref={inputSelectRef} fullWidth={props.fullWidth} >
             <InputSelectContent ref={setReferenceElement}>
@@ -108,7 +113,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                     icon={props.icon}
                     value={inputFocus ? '' : handleInputValue}
                     placeholder={inputPlaceholder}
-                    onFocus={ () => setInputFocus(true) }
+                    onFocus={handleFocus}
                     onReset={handleOnReset}
                     hasReset={false}
                     helpText={props.helpText}

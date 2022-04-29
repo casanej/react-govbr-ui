@@ -128,12 +128,12 @@ export const tableReducer = (state: TableState, action: TableStateAction) => {
         }
     }
 
-    if (action.type === 'select-all') {
+    /*  if (action.type === 'select-all') {
         return {
             ...state,
             selectAllStatus: 1,
         };
-    }
+    } */
 
     if (action.type === 'set-loading') {
         return {

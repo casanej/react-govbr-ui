@@ -43,7 +43,7 @@ export const CheckboxLabel = styled.label`
     left: 30px;
 `
 
-export const CheckboxInputCustom = styled.label<CheckboxInputProps>`
+export const CheckboxInputCustom = styled.div<CheckboxInputProps>`
     position: relative;
     align-items: flex-start;
     cursor: pointer;
