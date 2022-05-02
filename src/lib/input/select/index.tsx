@@ -99,7 +99,6 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
     }
 
     const handleFocus = () => {
-        console.log('[FOCUS TRIGGERED]')
         setInputFocus(true)
     }
 
