@@ -34,12 +34,14 @@ export const Checkbox = (props: Props): ReactElement => {
     }, [registerField])
 
     useEffect(() => {
-        let newChecked: CheckTypes = 0;
+        let checkedParsed: CheckTypes = 0;
 
-        if (typeof props.checked === 'number') {
-            newChecked = props.checked;
+        if (props.checked) {
+            const newChecked = `${props.checked}`;
+            checkedParsed = parseInt(newChecked) as CheckTypes;
         }
-        setChecked(newChecked);
+
+        setChecked(checkedParsed);
     }, [props.checked])
 
     useEffect(() => {
@@ -50,13 +52,9 @@ export const Checkbox = (props: Props): ReactElement => {
 
     const handleCheck = () => {
         const newChecked = checked === 0 ? 1 : 0;
+
         if (props.onClick) props.onClick(name, newChecked);
-        setChecked(newChecked)
-        /* if (checked === 0) {
-            setChecked(1);
-        } else {
-            setChecked(0);
-        } */
+        setChecked(newChecked);
     }
 
     return (
