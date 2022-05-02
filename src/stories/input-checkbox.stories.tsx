@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import qs from 'query-string';
-import { Checkbox, CheckboxManager } from 'lib'
-import { ThemeProvider } from 'styled-components';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
+import { Checkbox, CheckboxManager } from 'lib';
+import qs from 'query-string';
+import React, { useEffect, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 
 interface LoadingExport extends ComponentMeta<typeof Checkbox> {}
 interface LoadingStory extends ComponentStory<typeof Checkbox> {}
@@ -69,7 +69,9 @@ export const CheckboxWithLabel = Template.bind({});
 export const CheckboxWithRotulo = Template.bind({});
 export const MultipleCheckboxes = Template.bind({});
 
-Default.args = {}
+Default.args = {
+    checked: 0
+}
 
 CheckboxWithLabel.args = {
     label: 'Checkbox 1'
