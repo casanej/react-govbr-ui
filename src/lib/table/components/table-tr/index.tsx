@@ -34,7 +34,7 @@ export const TableTr:FC<Props> = (props) => {
     return <TableTrStyled active={isSelected} >
         {
             hasSelect && <TableTdValue type='checkbox' payload={{
-                checked: isSelected,
+                checked: +isSelected,
                 name: row.id,
                 onSelectRow: handleSelectRow(row.id)
             }}/>

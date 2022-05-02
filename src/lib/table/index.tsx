@@ -12,7 +12,7 @@ interface Props {
     hasSearch?: boolean;
     hasSelect?: boolean;
     onPaginationChange?: (pageObj: PageObj) => void;
-    onSelectChange?: (selectedRows: TableRow[]) => void;
+    onSelectChange?: (selectedRows: string[]) => void;
     paginated?: TablePaginationTypes;
     tableWidth?: number;
     title?: string;
@@ -59,7 +59,6 @@ export const Table = (props: Props): ReactElement => {
             hasSearch: props.hasSearch,
             hasSelect: props.hasSelect,
             onPaginationChange: handlePaginationChange,
-            onSelectAll: () => tableDispatch({ type: 'select-all'}),
             onSelectRow: (payload) => tableDispatch({ type: 'select-row', payload}),
             paging: tableState.paging,
             paginated: props.paginated,

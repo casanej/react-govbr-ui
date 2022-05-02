@@ -40,6 +40,9 @@ interface TableStateActionOrdering {
 /* ============== INTERFACE SELECT ALL ============== */
 interface TableStateActionSelectAll {
     type: 'select-all';
+    payload: {
+        checked: boolean;
+    }
 }
 
 /* ============== INTERFACE SELECT ROW ============== */

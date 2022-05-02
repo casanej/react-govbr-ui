@@ -17,7 +17,6 @@ export interface TableContextProps {
     hasSearch?: boolean;
     hasSelect?: boolean;
     onPaginationChange?: (pageObj: PageObj) => void;
-    onSelectAll?: (value: boolean) => void;
     onSelectRow?: (payload: TableStateActionSelectRowProps) => void;
     paging?: PageObj;
     paginated?: TablePaginationTypes;
@@ -101,7 +100,7 @@ export interface TableTdTypeCheckBox extends TableTdTypesDefault {
     type: 'checkbox';
     payload: {
         name: string;
-        checked: boolean;
+        checked: CheckTypes;
         onSelectRow?: (e: any) => void;
     }
 }
