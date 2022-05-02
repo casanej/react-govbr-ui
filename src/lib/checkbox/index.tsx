@@ -36,10 +36,6 @@ export const Checkbox = (props: Props): ReactElement => {
     useEffect(() => {
         let checkedParsed: CheckTypes = 0;
 
-        if (name === 'table-select-all') {
-            console.log('[CHECKBOX]', props.checked, checked)
-        }
-
         if (typeof props.checked !== 'undefined') {
             const newChecked = `${props.checked}`;
             checkedParsed = parseInt(newChecked) as CheckTypes;

@@ -8,12 +8,12 @@ import { TableHeadTr, TableTHeadStyled } from './index.style';
 export const TableTHead = (): ReactElement => {
     const { columns, hasActions, hasSelect, paginated, paging, tableDispatch, numRowsSelected } = useContext(TableContext);
 
-    const [hasClicked, setHasClicked] = useState(false);
+    const [hasClicked, setHasClicked] = useState<boolean[]>([false]);
     const [pageRowsCount, setPageRowsCount] = useState<number[]>([]);
 
     useEffect(()=> {
         if (paging) {
-            setHasClicked(!!pageRowsCount[paging.page - 1]);
+            if (hasClicked[paging.page - 1] === false) handleClickSelectAll(false);
         }
     }, [paging])
 
@@ -35,6 +35,17 @@ export const TableTHead = (): ReactElement => {
         return width;
     }, [hasSelect]);
 
+    const handleClickSelectAll = useCallback((newStatus)=> {
+        if (paging) {
+
+            const pageIndex = paging.page - 1;
+            const newClicked = [...hasClicked];
+            newClicked[pageIndex] = newStatus;
+
+            setHasClicked(newClicked);
+        }
+    }, [paging, hasClicked]);
+
     const checkboxSelectStatus = useMemo(():CheckTypes => {
         const newCount = pageRowsCount;
         let pageIndex = 0;
@@ -49,27 +60,30 @@ export const TableTHead = (): ReactElement => {
             setPageRowsCount(newCount);
         }
 
-        if (!hasClicked) return 0;
-        if (numRowsSelected === 0) {
-            setHasClicked(false);
+        if (hasClicked[pageIndex] !== true) return 0;
+        if (pageRowsCount[pageIndex] === 0) {
+            handleClickSelectAll(false);
             return 0;
         }
 
         if (paginated && paginated.type === 'controlled' && paging) {
             const currentPageRowsCount = pageRowsCount[pageIndex];
 
+            const pageSizeLastItem = Math.min(paging.pageSize, paging.page * paging.pageSize - paging.finalItem)
+            const pageSize = pageSizeLastItem === 0 ? paging.pageSize : pageSizeLastItem;
+
             if (currentPageRowsCount === 0) return 0;
-            if (paging.pageSize === currentPageRowsCount) return 1;
+            if (pageSize === currentPageRowsCount) return 1;
             return 2;
         }
 
         return 0;
-    }, [hasClicked, numRowsSelected, pageRowsCount, paging, paginated]);
+    }, [hasClicked, handleClickSelectAll, numRowsSelected, pageRowsCount, paging, paginated]);
 
     const tableSelectAll = useCallback((_:string, value: CheckTypes) => {
-        setHasClicked(true);
+        handleClickSelectAll(true);
         tableDispatch({ type: 'select-all', payload: { checked: Boolean(value) } })
-    }, [tableDispatch]);
+    }, [tableDispatch, handleClickSelectAll]);
 
     return (
         <TableTHeadStyled>
