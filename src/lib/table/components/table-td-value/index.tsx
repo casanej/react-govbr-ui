@@ -36,13 +36,14 @@ export const TableTdValue = (props: Props): ReactElement => {
         const customProps = props.payload as TableTdTypeActions['payload'];
 
         return <TableTdStyled>
-            {customProps.func.map((action) => <Button key={action.label} variant='tertiary' circle onClick={action.fn}>
-                {
-                    typeof action.icon === 'string'
-                        ? <FontAwesomeIcon icon={action.icon} />
-                        : action.icon
-                }
-            </Button>)}
+            {customProps.func.map((action) => {
+
+                if (typeof action.icon === 'string') return <Button key={action.label} variant='tertiary' circle onClick={action.fn}>
+                    <FontAwesomeIcon icon={action.icon} />
+                </Button>
+
+                return action.icon;
+            })}
         </TableTdStyled>
     }
 
