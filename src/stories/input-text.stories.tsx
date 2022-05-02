@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
 import { InputText } from 'lib';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 interface LoadingExport extends ComponentMeta<typeof InputText> {}
@@ -16,9 +16,18 @@ export default {
 } as LoadingExport;
 
 const Template: LoadingStory = (args) => {
+    const [inputRef, setInputRef] = useState<HTMLInputElement>();
+
+    useEffect(() => {
+        if (inputRef) {
+            inputRef.focus()
+        }
+    }, [inputRef]);
+
     return <ThemeProvider theme={theme}>
         <GlobalStyle theme={{ ...theme }} />
         <InputText
+            rawRef={setInputRef}
             alert={args.alert}
             action={args.action}
             direction={args.direction}

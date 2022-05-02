@@ -33,6 +33,7 @@ export interface InputTextProps {
     onBlur?: () => void;
     onReset?: () => void;
     placeholder?: string;
+    rawRef?: (ref: any) => void;
     readOnly?: boolean;
     type?: string;
     variant?: InputVariants;
@@ -47,6 +48,15 @@ export const InputText = (props: InputTextProps): ReactElement => {
     const { ref, value, setValue, unmaskedValue, setUnmaskedValue } = useIMask(props.maskObj || { mask: String });
 
     useOnClickOutside(inputContentRef, () => setListOpen(false));
+
+    useEffect(() => {
+
+        if (ref.current) {
+            const inputRef = ref.current as HTMLInputElement;
+
+            if (props.rawRef) props.rawRef(inputRef);
+        }
+    }, [ref]),
 
     useEffect(() => {
         if (typeof props.value === 'string') {
