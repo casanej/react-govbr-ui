@@ -1,15 +1,10 @@
 import styled from 'styled-components';
-import { InputText } from 'lib';
 
 export const InputDateStyled = styled.div<{ ref: any }>`
     display: flex;
     flex-direction: column;
     gap: 5px;
     position: relative;
-`;
-
-export const InputLabel = styled.div`
-    font-weight: bold;
 `;
 
 export const InputDatePickerMenu = styled.div<{ activeMonths: number; isOpen: boolean; }>`

@@ -7,9 +7,10 @@ import { Button, InputSelect, InputText } from 'lib';
 import { InputDateInitialDates, OnChangeValueParameter } from 'models';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { MONTHS } from 'utils';
+import { InputLabel } from '../components/general.style';
 import { Month } from './components';
 import DatePickerContext from './datepicker.context';
-import { InputDateActions, InputDateMenu, InputDatePickerMenu, InputDateStyled, InputDateYearSelect, InputLabel } from './index.style';
+import { InputDateActions, InputDateMenu, InputDatePickerMenu, InputDateStyled, InputDateYearSelect } from './index.style';
 
 interface Props {
     initialDate?: InputDateInitialDates;
@@ -173,7 +174,7 @@ export const InputDate = (props: Props) => {
         >
             <InputDateStyled ref={pickerRef}>
                 {
-                    props.label && <InputLabel>{props.label}</InputLabel>
+                    props.label && <InputLabel direction='column'>{props.label}</InputLabel>
                 }
                 <InputText
                     value={handleDateLabel}
