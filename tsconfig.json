@@ -57,6 +57,7 @@
         "models": ["./src/models/index.ts"],
         "hooks": ["./src/hooks/index.ts"],
         "components": ["./src/components/index.ts"],
+        "structure": ["./src/structure/index.ts"],
         "@fortawesome/fontawesome-common-types": [
           "./node_modules/@fortawesome/fontawesome-common-types/index"
         ]

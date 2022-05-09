@@ -7,7 +7,7 @@ export const InputDateStyled = styled.div<{ ref: any }>`
     position: relative;
 `;
 
-export const InputDatePickerMenu = styled.div<{ activeMonths: number; isOpen: boolean; }>`
+export const InputDatePickerMenu = styled.div<{ activeMonths: number; isOpen: boolean; ref?:any }>`
     display: ${props => props.isOpen ? 'flex' : 'none'};
     flex-direction: column;
     position: absolute;

@@ -5,7 +5,8 @@ import { format, isValid, toDate } from 'date-fns';
 import { useOnClickOutside } from 'hooks';
 import { Button, InputSelect, InputText } from 'lib';
 import { InputDateInitialDates, OnChangeValueParameter } from 'models';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { usePopper } from 'react-popper';
 import { MONTHS } from 'utils';
 import { InputLabel } from '../components/general.style';
 import { Month } from './components';
@@ -24,12 +25,22 @@ interface Props {
 }
 
 export const InputDate = (props: Props) => {
-    const pickerRef = useRef<HTMLDivElement>()
+    const pickerRef = useRef<HTMLDivElement>();
+    const refMenuDatePicker = useRef<HTMLDivElement>();
     const [datePickerOpen, setDatePickerOpen] = useState(false);
     const initialDate = useMemo(():Date => toDate(props.initialDate?.start || new Date()), [props.initialDate]);
     const [year, setYear] = useState(initialDate.getFullYear());
     const [month, setMonth] = useState(initialDate.getMonth());
+    const { styles, attributes, forceUpdate } = usePopper(pickerRef.current, refMenuDatePicker.current, {
+        modifiers: [{ name: 'arrow' }],
+        placement: 'auto-start'
+    });
+
     useOnClickOutside(pickerRef, () => setDatePickerOpen(false));
+
+    useEffect(() => {
+        forceUpdate && forceUpdate();
+    }, [datePickerOpen])
 
     const rangeDate = useCallback((isEdge?: boolean): Date | null => {
         if (!props.range) return initialDate;
@@ -64,7 +75,7 @@ export const InputDate = (props: Props) => {
         if (props.range) return '00/00/0000 até 00/00/0000';
         if (props.hasTime) return '00/00/0000 00:00';
 
-        return '00/00/00'
+        return '00/00/0000'
     }, [props.range, props.hasTime]);
 
     const setDateAndGo = (date: Date, startDate: Date, endDate: Date): void => {
@@ -193,9 +204,12 @@ export const InputDate = (props: Props) => {
                     onFocus={() => setDatePickerOpen(true)}
                 />
                 <InputDatePickerMenu
+                    ref={refMenuDatePicker}
                     id='datePickerMenu'
                     isOpen={datePickerOpen}
                     activeMonths={activeMonths.length}
+                    style={{ ...styles.popper}}
+                    { ...attributes.popper }
                 >
                     <InputDateActions>
                         <Button variant='tertiary' circle onClick={() => handleChangeMonth(false)}><FontAwesomeIcon icon={faChevronLeft} /></Button>
