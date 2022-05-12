@@ -1,8 +1,8 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { InputDate } from 'lib'
-import { ThemeProvider } from 'styled-components';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
+import { InputDate } from 'lib';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
 
 interface InputDateExport extends ComponentMeta<typeof InputDate> {}
 interface InputDateStory extends ComponentStory<typeof InputDate> {}
@@ -10,19 +10,24 @@ interface InputDateStory extends ComponentStory<typeof InputDate> {}
 export default {
     title: 'Input/Date',
     component: InputDate,
+    argTypes: {
+        onChange: { action: 'onChange(date)' },
+    }
 } as InputDateExport;
 
 const Template: InputDateStory = (args) => <ThemeProvider theme={theme}>
     <GlobalStyle theme={{ ...theme }} />
-    <InputDate
-        initialDate={args.initialDate}
-        label={args.label}
-        numberOfMonths={args.numberOfMonths}
-        range={args.range}
-        minBookDate={args.minBookDate}
-        maxBookDate={args.maxBookDate}
-        onChange={args.onChange}
-    />
+    <div style={{ height: 50, width: 320, marginTop: 0, marginLeft: 600 }} >
+        <InputDate
+            initialDate={args.initialDate}
+            label={args.label}
+            numberOfMonths={args.numberOfMonths}
+            range={args.range}
+            minBookDate={args.minBookDate}
+            maxBookDate={args.maxBookDate}
+            onChange={args.onChange}
+        />
+    </div>
 </ThemeProvider>
 
 export const Default = Template.bind({});
@@ -33,7 +38,6 @@ Default.args = {
     numberOfMonths: 1,
     range: false,
     label: 'Período',
-    onChange: (dates) => console.log('[DATES]', dates)
 }
 
 InputDateRange.args = {
@@ -42,7 +46,6 @@ InputDateRange.args = {
         start: new Date(2022, 7, 19),
         end: new Date(2022, 7, 27)
     },
-    onChange: (dates) => console.log('[DATES]', dates)
 }
 
 InputDateLimit.args = {

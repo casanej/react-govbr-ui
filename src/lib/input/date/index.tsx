@@ -33,7 +33,7 @@ export const InputDate = (props: Props) => {
     const [month, setMonth] = useState(initialDate.getMonth());
     const { styles, attributes, forceUpdate } = usePopper(pickerRef.current, refMenuDatePicker.current, {
         modifiers: [{ name: 'arrow' }],
-        placement: 'auto-start'
+        placement: 'bottom-start'
     });
 
     useOnClickOutside(pickerRef, () => setDatePickerOpen(false));

@@ -8,7 +8,9 @@ interface InputStyledProps {
     highlight?: boolean;
 }
 
-export const InputTextAreaStyled = styled.div``;
+export const InputTextAreaStyled = styled.div`
+    width: 100%;
+`;
 
 export const InputTextAreaContent = styled.div<{ direction: InputTextLabelDirection }>`
     width: 100%;
