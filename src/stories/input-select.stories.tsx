@@ -12,6 +12,7 @@ export default {
     component: InputSelect,
     argTypes: {
         onChange: { action: 'onChange(item, name)' },
+        onSearchChange: { action: 'onSearchChange(value)' },
     }
 } as InputSelectExport;
 
@@ -23,9 +24,11 @@ const Template: InputSelectStory = (args) => <ThemeProvider theme={theme}>
         icon={args.icon}
         items={args.items}
         helpText={args.helpText}
+        isSearchable={args.isSearchable}
         label={args.label}
         multiple={args.multiple}
         onChange={args.onChange}
+        onSearchChange={args.onSearchChange}
         placeholder={args.placeholder}
         inputVariant={args.inputVariant}
     />
@@ -35,6 +38,7 @@ export const Default = Template.bind({});
 export const SelectComplete = Template.bind({});
 export const SelectDisabled = Template.bind({});
 export const SelectMultiple = Template.bind({});
+export const SelectSearchable = Template.bind({});
 export const SelectVariantTertiary = Template.bind({});
 export const SelectWithLabel = Template.bind({});
 export const SelectWithPlaceholder = Template.bind({});
@@ -78,6 +82,11 @@ SelectMultiple.args = {
     items,
     label: 'Select Multiple',
     multiple: true
+}
+
+SelectSearchable.args = {
+    items,
+    isSearchable: 'internal',
 }
 
 SelectVariantTertiary.args = {

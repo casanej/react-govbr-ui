@@ -45,7 +45,7 @@ export const InputText = (props: InputTextProps): ReactElement => {
     const [name, setName] = useState<string>('input-text');
     const [listOpen, setListOpen] = useState<boolean>(false);
     const [listSelected, setListSelected] = useState<unknown>();
-    const { ref, value, setValue, unmaskedValue, setUnmaskedValue } = useIMask(props.maskObj || { mask: String });
+    const { ref, value, setValue, unmaskedValue, setUnmaskedValue, setTypedValue } = useIMask(props.maskObj || { mask: String });
 
     useOnClickOutside(inputContentRef, () => setListOpen(false));
 
@@ -60,11 +60,9 @@ export const InputText = (props: InputTextProps): ReactElement => {
 
     useEffect(() => {
         if (typeof props.value === 'string') {
-            setUnmaskedValue(props.value);
-            setValue(props.value);
+            setTypedValue(props.value);
         } else {
-            setUnmaskedValue('');
-            setValue('');
+            setTypedValue('');
         }
     }, [props.value]);
 
@@ -123,7 +121,7 @@ export const InputText = (props: InputTextProps): ReactElement => {
 
         if (!itemLabel.toLowerCase().includes(value.toLowerCase())) return null;
 
-        return <Item key={itemLabel} type='text' onClick={() => handleListSelectItem(item)} >{itemLabel}</Item>;
+        return <Item key={itemLabel} name={name} type='text' onClick={() => handleListSelectItem(item)} >{itemLabel}</Item>;
     }, [value])
 
     return (

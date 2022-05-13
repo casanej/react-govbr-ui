@@ -16,15 +16,22 @@ interface Props {
 export const Item = (props: Props): ReactElement => {
     const { handleSelectAll } = useContext(CheckboxContext);
     const [isActive, setIsActive] = useState<CheckTypes>(0);
+    const [firstRun, setFirstRun] = useState<boolean>(true);
 
     useEffect(() => {
-        props.onChange && props.onChange(isActive);
+        if (!firstRun && props.onChange) props.onChange(isActive);
     }, [isActive])
+
+    useEffect(() => {
+        if (firstRun) setFirstRun(false);
+    }, [])
 
     const handleClickItem = useCallback(() => {
         if (props.type === 'checkbox') {
             if (isActive === 1) setIsActive(0);
             else setIsActive(1);
+        } else {
+            setIsActive(1);
         }
     }, [props.type, isActive]);
 

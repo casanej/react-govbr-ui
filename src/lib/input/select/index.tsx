@@ -1,10 +1,10 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { useOnClickOutside } from 'hooks';
-import { InputText } from 'lib';
-import { InputAlertObj, InputVariants, SelectItemProps } from 'models';
+import { InputAlertObj, InputVariants, SelectItemProps, SelectSearchableProps } from 'models';
 import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { InputLabel } from '../components/general.style';
 import { SelectMenu } from './components';
+import { SelectInputText } from './components/select-input-text';
 import { InputSelectContent, InputSelectStyled } from './index.style';
 
 export interface InputSelectProps {
@@ -16,6 +16,7 @@ export interface InputSelectProps {
     fullWidth?: boolean;
     hasReset?: boolean;
     helpText?: React.ReactNode;
+    isSearchable?: SelectSearchableProps;
     label?: string;
     multiple?: boolean;
     name?: string;
@@ -24,17 +25,19 @@ export interface InputSelectProps {
     onChange?: (item: SelectItemProps[], name: string) => void;
     onFocus?: () => void;
     onReset?: () => void;
+    onSearchChange?: (value: string) => void;
     visibleRows?: number;
 }
 
 export const InputSelect = (props: InputSelectProps): ReactElement => {
     const name = useMemo(() => props.name || Math.random().toString(), [props.name]);
     const inputSelectRef = useRef<HTMLDivElement>()
-    const [referenceElement, setReferenceElement] = useState(null);
     const [firstRun, setFirstRun] = useState<boolean>(true);
-    const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [inputFocus, setInputFocus] = useState<boolean>(false);
     const [itemsSelected, setItemsSelected] = useState<SelectItemProps[]>(props.selectedItems || []);
+    const [menuOpen, setMenuOpen] = useState<boolean>(false);
+    const [referenceElement, setReferenceElement] = useState(null);
+    const [searchValue, setSearchValue] = useState<string>('');
 
     useEffect(() => {
         setInputFocus(false);
@@ -58,34 +61,25 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
     useEffect(() => { setMenuOpen(inputFocus); }, [inputFocus]);
     useEffect(() => { if (firstRun) setFirstRun(false); }, []);
 
-    const handleInputValue = useMemo((): string => {
-        if (itemsSelected.length === 1) return itemsSelected[0].label;
-        if (itemsSelected.length > 1) return `${itemsSelected[0].label} + (${itemsSelected.length - 1})`;
+    const inputSelectItems = useMemo(() => {
+        if (props.isSearchable && props.isSearchable === 'internal') {
+            return props.items.filter(item => item.label.toLowerCase().includes(searchValue.toLowerCase()));
+        }
 
-        return '';
-    }, [itemsSelected])
-
-    const inputPlaceholder = useMemo((): string => {
-        if (props.placeholder) return props.placeholder;
-        if (props.multiple) return 'Selecione os itens';
-
-        return 'Selecione o item';
-    }, [props.placeholder, props.multiple]);
-
-    const handleOnReset = () => {
-        setInputFocus(false);
-        setItemsSelected([]);
-
-        if (props.onReset) props.onReset();
-    }
-
-    const handleFocus = () => {
-        setInputFocus(true)
-    }
+        return props.items;
+    }, [props.isSearchable, searchValue, props.items]);
 
     const handleChange = useCallback((values: SelectItemProps[]) => {
+        setItemsSelected(values);
         if (props.onChange && !firstRun) props.onChange(values, name);
     }, [firstRun, props.onChange]);
+
+    const handleSearchValue = (value: string) => {
+        if (props.isSearchable) {
+            if (props.isSearchable === 'internal') setSearchValue(value);
+            else if (props.isSearchable === 'external') props.onSearchChange && props.onSearchChange(value);
+        }
+    }
 
     return (
         <InputSelectStyled ref={inputSelectRef} fullWidth={props.fullWidth} >
@@ -93,30 +87,26 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                 {
                     props.label && <InputLabel direction='column'>{props.label}</InputLabel>
                 }
-                <InputText
+                <SelectInputText
                     icon={props.icon}
-                    value={inputFocus ? '' : handleInputValue}
-                    placeholder={inputPlaceholder}
-                    onFocus={handleFocus}
-                    onReset={handleOnReset}
-                    hasReset={false}
-                    helpText={props.helpText}
-                    name={`input-text-${name}`}
-                    action={{
-                        icon: menuOpen ? 'angle-up' : 'angle-down',
-                        onClick: () => setInputFocus(oldFocus => !oldFocus),
-                        disabled: props.disabled
+                    isFocused={inputFocus}
+                    isSearchable={!!props.isSearchable}
+                    itemsSelected={itemsSelected}
+                    menuOpen={menuOpen}
+                    name={name}
+                    onFocus={() => { setInputFocus(true); }}
+                    onReset={() => {
+                        setInputFocus(false);
+                        setItemsSelected([]);
+
+                        if (props.onReset) props.onReset();
                     }}
-                    alert={props.alert}
-                    autoComplete={false}
-                    variant={props.inputVariant}
-                    disabled={props.disabled}
-                    readOnly
+                    onSearchChange={handleSearchValue}
                 />
             </InputSelectContent>
             <SelectMenu
                 isOpen={inputFocus}
-                items={props.items}
+                items={inputSelectItems}
                 multiple={props.multiple}
                 name={name}
                 onClose={() => setInputFocus(false)}

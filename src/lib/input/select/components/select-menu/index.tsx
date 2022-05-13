@@ -33,14 +33,20 @@ export const SelectMenu:FC<Props> = (props) => {
         const { value } = item;
         const isChecked = Boolean(checked);
 
-        setSelectedItems(oldSelected => {
-            if (isChecked) {
-                return [...oldSelected, value];
-            } else {
-                return oldSelected.filter(item => item !== value);
-            }
-        })
-    }, []);
+        if (props.multiple) {
+            setSelectedItems(oldSelected => {
+                if (isChecked) {
+                    return [...oldSelected, value];
+                } else {
+                    return oldSelected.filter(item => item !== value);
+                }
+            })
+        } else {
+            setSelectedItems([value])
+            props.onClose();
+        }
+
+    }, [props.multiple]);
 
     if (!props.isOpen) return null;
 
