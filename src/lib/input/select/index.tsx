@@ -1,11 +1,11 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { useOnClickOutside } from 'hooks';
-import { InputText, Item } from 'lib';
+import { InputText } from 'lib';
 import { InputAlertObj, InputVariants, SelectItemProps } from 'models';
-import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
-import { usePopper } from 'react-popper';
+import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { InputLabel } from '../components/general.style';
-import { InputSelectContent, InputSelectMenu, InputSelectStyled } from './index.style';
+import { SelectMenu } from './components';
+import { InputSelectContent, InputSelectStyled } from './index.style';
 
 export interface InputSelectProps {
     items: SelectItemProps[];
@@ -31,21 +31,13 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
     const name = useMemo(() => props.name || Math.random().toString(), [props.name]);
     const inputSelectRef = useRef<HTMLDivElement>()
     const [referenceElement, setReferenceElement] = useState(null);
-    const [popperElement, setPopperElement] = useState(null);
     const [firstRun, setFirstRun] = useState<boolean>(true);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [inputFocus, setInputFocus] = useState<boolean>(false);
     const [itemsSelected, setItemsSelected] = useState<SelectItemProps[]>(props.selectedItems || []);
-    const [menuGapTop, setMenuGapTop] = useState<number>(0);
-    const { styles, attributes } = usePopper(referenceElement, popperElement, {
-        modifiers: [{ name: 'arrow' }],
-    });
 
     useEffect(() => {
         setInputFocus(false);
-        const inputEl = inputSelectRef.current?.lastChild?.lastChild?.firstChild as HTMLDivElement;
-
-        if (inputEl) setMenuGapTop(inputEl.offsetTop + inputEl.offsetHeight);
     }, [props.label, inputSelectRef])
 
     useEffect(() => {
@@ -80,17 +72,6 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
         return 'Selecione o item';
     }, [props.placeholder, props.multiple]);
 
-    const handleSelectChange = (item: SelectItemProps) => {
-        if (props.multiple) {
-            setItemsSelected(oldItems => {
-                return [...oldItems, item];
-            })
-        } else {
-            setItemsSelected([item])
-            setInputFocus(false);
-        }
-    }
-
     const handleOnReset = () => {
         setInputFocus(false);
         setItemsSelected([]);
@@ -101,6 +82,10 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
     const handleFocus = () => {
         setInputFocus(true)
     }
+
+    const handleChange = useCallback((values: SelectItemProps[]) => {
+        if (props.onChange && !firstRun) props.onChange(values, name);
+    }, [firstRun, props.onChange]);
 
     return (
         <InputSelectStyled ref={inputSelectRef} fullWidth={props.fullWidth} >
@@ -129,13 +114,15 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                     readOnly
                 />
             </InputSelectContent>
-            {
-                inputFocus && <InputSelectMenu ref={setPopperElement} gapTop={menuGapTop} style={styles.popper} visibleRows={props.visibleRows || 5} { ...attributes.popper }>
-                    {
-                        props.items.map((item, index) => <Item key={index} type='text' onClick={() => handleSelectChange(item)}>{item.label}</Item>)
-                    }
-                </InputSelectMenu>
-            }
+            <SelectMenu
+                isOpen={inputFocus}
+                items={props.items}
+                multiple={props.multiple}
+                name={name}
+                onClose={() => setInputFocus(false)}
+                onChange={handleChange}
+                refContentInput={referenceElement}
+            />
         </InputSelectStyled>
     );
 };

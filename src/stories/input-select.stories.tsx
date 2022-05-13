@@ -34,6 +34,7 @@ const Template: InputSelectStory = (args) => <ThemeProvider theme={theme}>
 export const Default = Template.bind({});
 export const SelectComplete = Template.bind({});
 export const SelectDisabled = Template.bind({});
+export const SelectMultiple = Template.bind({});
 export const SelectVariantTertiary = Template.bind({});
 export const SelectWithLabel = Template.bind({});
 export const SelectWithPlaceholder = Template.bind({});
@@ -71,6 +72,12 @@ SelectDisabled.args = {
     label: 'Select',
     helpText: 'Texto de ajuda',
     placeholder: 'Selecione',
+}
+
+SelectMultiple.args = {
+    items,
+    label: 'Select Multiple',
+    multiple: true
 }
 
 SelectVariantTertiary.args = {
