@@ -19,6 +19,7 @@ interface Props {
 export const SelectMenu:FC<Props> = (props) => {
     const [popperElement, setPopperElement] = useState(null);
     const [selectedItems, setSelectedItems] = useState<any[]>([]);
+    const [ckbxAll, setCkbxAll] = useState<CheckTypes>(0);
     const { styles, attributes } = usePopper(props.refContentInput, popperElement, {
         modifiers: [{ name: 'arrow' }],
     });
@@ -52,16 +53,23 @@ export const SelectMenu:FC<Props> = (props) => {
 
     return <InputSelectMenu ref={setPopperElement} style={styles.popper} visibleRows={props.visibleRows || 5} { ...attributes.popper }>
         <CheckboxManager blackList={[`${props.name}-select-all`]}>
-            { props.multiple && <Item type='checkbox_master' name={`${props.name}-select-all`} >Selecione todos</Item> }
+            { props.multiple && <Item type='checkbox_master' active={ckbxAll} name={`${props.name}-select-all`} onChange={setCkbxAll} >Selecione todos</Item> }
             {
-                props.items.map((item, index) => <Item
-                    key={index}
-                    name={item.value}
-                    type={ props.multiple ? 'checkbox' : 'text' }
-                    onChange={handleSelectChange(item)}
-                >
-                    {item.label}
-                </Item>)
+                props.items.map((item, index) => {
+                    let isActive = selectedItems.includes(item.value);
+
+                    if (!isActive) isActive = false;
+
+                    return <Item
+                        key={index}
+                        active={+isActive as CheckTypes}
+                        name={item.value}
+                        type={ props.multiple ? 'checkbox' : 'text' }
+                        onChange={handleSelectChange(item)}
+                    >
+                        {item.label}
+                    </Item>
+                })
             }
         </CheckboxManager>
     </InputSelectMenu>;

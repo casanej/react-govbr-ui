@@ -8,6 +8,7 @@ interface Props {
     children: React.ReactNode;
     name: string;
     type: 'text' | 'radio' | 'checkbox' | 'checkbox_master';
+    active?: CheckTypes;
     disabled?: boolean;
     onClick?: (checked: CheckTypes) => void;
     onChange?: (checked: CheckTypes) => void;
@@ -15,7 +16,7 @@ interface Props {
 
 export const Item = (props: Props): ReactElement => {
     const { handleSelectAll } = useContext(CheckboxContext);
-    const [isActive, setIsActive] = useState<CheckTypes>(0);
+    const [isActive, setIsActive] = useState<CheckTypes>(props.active || 0);
     const [firstRun, setFirstRun] = useState<boolean>(true);
 
     useEffect(() => {
@@ -36,7 +37,9 @@ export const Item = (props: Props): ReactElement => {
     }, [props.type, isActive]);
 
     const handleChecked = (_: string, values: CheckTypes) => {
-        if (props.type === 'checkbox_master') handleSelectAll && handleSelectAll();
+        if (props.type === 'checkbox_master') {
+            handleSelectAll && handleSelectAll(undefined, values);
+        }
         setIsActive(values);
     }
 
@@ -49,7 +52,7 @@ export const Item = (props: Props): ReactElement => {
                 props.type === 'checkbox' && <Checkbox name={props.name} checked={isActive} label={props.children} onChange={handleChecked} />
             }
             {
-                props.type === 'checkbox_master' && <Checkbox name={props.name} checked={isActive} label={isActive ? 'Desselecionar todos' : 'Selecionar todos'} onChange={handleChecked} />
+                props.type === 'checkbox_master' && <Checkbox name={props.name} checked={props.active || isActive} label={isActive ? 'Desselecionar todos' : 'Selecionar todos'} onChange={handleChecked} />
             }
         </ItemStyled>
     );

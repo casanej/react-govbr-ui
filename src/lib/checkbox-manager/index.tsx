@@ -52,21 +52,22 @@ export const CheckboxManager = (props: Props): ReactElement => {
         setIsUpdating(true);
     }, [])
 
-    const handleSelectAll = useCallback((prefix?: string) => {
-        let setActive = false;
-        if (selectAllValue === 0) {
-            setActive = true;
-            setSelectAllValue(1);
+    const handleSelectAll = useCallback((prefix?: string, active?: CheckTypes) => {
+        let setActive: CheckTypes = 0;
+
+        if (active !== undefined) {
+            setActive = active;
         } else {
-            setActive = false;
-            setSelectAllValue(0);
+            setActive = selectAllValue === 1 ? 0 : 1;
         }
+
+        setSelectAllValue(setActive);
 
         boxes.forEach(box => {
             if (prefix) {
-                if (box.name.includes(prefix)) box.setValue(+setActive as CheckTypes);
+                if (box.name.includes(prefix)) box.setValue(setActive);
             } else {
-                box.setValue(+setActive as CheckTypes);
+                box.setValue(setActive);
             }
         });
     }, [boxes, selectAllValue])
@@ -83,7 +84,7 @@ export const CheckboxManager = (props: Props): ReactElement => {
     }
 
     return (
-        <CheckboxContext.Provider value={{ registerField, handleCheckboxUpdate, handleSelectAll }}>
+        <CheckboxContext.Provider value={{ registerField, handleCheckboxUpdate, handleSelectAll, selectAllValue }}>
             {
                 props.selectAll && <Checkbox
                     label='Selecionar todos'

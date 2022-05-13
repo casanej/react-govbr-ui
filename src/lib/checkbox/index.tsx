@@ -52,8 +52,6 @@ export const Checkbox = (props: Props): ReactElement => {
 
     const handleCheck = () => {
         const newChecked = checked === 0 ? 1 : 0;
-
-        if (props.onClick) props.onClick(name, newChecked);
         setChecked(newChecked);
     }
 
