@@ -12,7 +12,7 @@ interface Props {
     hasSearch?: boolean;
     hasSelect?: boolean;
     onPaginationChange?: (pageObj: PageObj) => void;
-    onSelectChange?: (selectedRows: string[]) => void;
+    onSelectChange?: (selectedRows: TableRow[], selectedRowId: string[]) => void;
     paginated?: TablePaginationTypes;
     tableWidth?: number;
     title?: string;
@@ -26,10 +26,8 @@ export const Table = (props: Props): ReactElement => {
     const [tableState, tableDispatch] = useReducer(tableReducer, tableStateInitialValue)
 
     useEffect(() => {
-        if (!tableState.firstRender && props.onSelectChange) {
-            props.onSelectChange(tableState.selectedRows);
-        }
-    }, [tableState.selectedRows.length])
+        if (!tableState.firstRender && props.onSelectChange) props.onSelectChange(tableState.selectedRawRows, tableState.selectedRowsId);
+    }, [tableState.selectedRowsId.length])
 
     useEffect(() => {
         tableDispatch({ type: 'first-render', payload: {
@@ -53,7 +51,7 @@ export const Table = (props: Props): ReactElement => {
             firstRender: tableState.firstRender,
             rows: tableState.treatedRows,
             numRowsSelected: tableState.numRowsSelected,
-            selectedRows: tableState.selectedRows,
+            selectedRowsId: tableState.selectedRowsId,
             isLoading: props.isLoading || tableState.loading,
             hasActions: props.hasActions,
             hasSearch: props.hasSearch,

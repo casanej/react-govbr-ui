@@ -11,7 +11,7 @@ interface Props {
 export const TableTr:FC<Props> = (props) => {
     const { row } = props;
 
-    const { columns, hasSelect, onSelectRow, selectedRows } = useContext(TableContext);
+    const { columns, hasSelect, onSelectRow, selectedRowsId } = useContext(TableContext);
 
     const [firstRender, setFirstRender] = useState(true);
 
@@ -20,8 +20,8 @@ export const TableTr:FC<Props> = (props) => {
     }, [])
 
     const isSelected = useMemo(() => {
-        return selectedRows.includes(row.id);
-    }, [selectedRows.length])
+        return selectedRowsId.includes(row.id);
+    }, [selectedRowsId.length])
 
     const columnsOrder = useMemo(() => columns.map(column => column.accessor), [columns]);
 

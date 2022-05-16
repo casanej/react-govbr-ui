@@ -10,7 +10,7 @@ export interface TableContextProps {
     firstRender: boolean;
     rows: TableRowTreated[];
     selectAllStatus: CheckTypes;
-    selectedRows: string[];
+    selectedRowsId: string[];
     numRowsSelected: number;
     isLoading?: boolean;
     hasActions?: boolean;
@@ -30,7 +30,7 @@ export const tableContextInitialValues:TableContextProps = {
     firstRender: true,
     numRowsSelected: 0,
     selectAllStatus: 0,
-    selectedRows: [],
+    selectedRowsId: [],
     rows: [],
     tableDispatch: (value) => { return value },
 };

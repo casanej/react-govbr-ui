@@ -1,10 +1,4 @@
-import { CheckTypes, PageObj, TablePaginationTypes, TableRowDefault, TableRowTreated, TableStateAction } from 'models';
-
-export const TableReducerInitialState = {};
-
-export const tableActionTypes = {
-    SELECT_ROW: 'SELECT_ROW',
-}
+import { CheckTypes, PageObj, TablePaginationTypes, TableRow, TableRowDefault, TableRowTreated, TableStateAction } from 'models';
 
 export interface TableState {
     cbCkSelectAll: boolean;
@@ -12,7 +6,8 @@ export interface TableState {
     loading: boolean;
     numRowsSelected: number;
     selectAllStatus: CheckTypes;
-    selectedRows: string[];
+    selectedRawRows: TableRow[];
+    selectedRowsId: string[];
     treatedRows: TableRowTreated[];
     paging?: PageObj;
     paginated?: TablePaginationTypes;
@@ -24,7 +19,8 @@ export const tableStateInitialValue: TableState = {
     loading: false,
     numRowsSelected: 0,
     selectAllStatus: 0,
-    selectedRows: [],
+    selectedRawRows: [],
+    selectedRowsId: [],
     treatedRows: [],
 }
 
@@ -113,30 +109,34 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
     }
 
     if (action.type === 'select-row') {
-        const newSelectedRows = state.selectedRows;
+        const newSelectedRawRows = state.selectedRawRows;
+        const newSelectedRowsId = state.selectedRowsId;
         const newTreatedRows = state.treatedRows;
-        let newNumRowsSelected = newSelectedRows.length;
+        let newNumRowsSelected = newSelectedRowsId.length;
 
         if (action.payload.selected) {
-            if (!newSelectedRows.includes(action.payload.id)) {
-                newSelectedRows.push(action.payload.id);
+            if (!newSelectedRowsId.includes(action.payload.id)) {
+                newSelectedRowsId.push(action.payload.id);
+                newSelectedRawRows.push(action.payload.row);
                 newNumRowsSelected++;
             }
         } else {
             if (newNumRowsSelected > 0) {
-                const rowIndex = newSelectedRows.findIndex(row => row === action.payload.id);
+                const rowIndex = newSelectedRowsId.findIndex(row => row === action.payload.id);
 
-                if (rowIndex >= 0) newSelectedRows.splice(rowIndex, 1);
+                if (rowIndex >= 0) {
+                    newSelectedRowsId.splice(rowIndex, 1);
+                    newSelectedRawRows.splice(rowIndex, 1);
+                }
 
                 newNumRowsSelected--;
             }
         }
 
-        // console.log('[SELECTED ROWS]', newSelectedRows, newTreatedRows)
-
         return {
             ...state,
-            selectedRows: newSelectedRows,
+            selectedRawRows: newSelectedRawRows,
+            selectedRowsId: newSelectedRowsId,
             numRowsSelected: newNumRowsSelected,
             treatedRows: newTreatedRows
         }
@@ -157,7 +157,7 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
         return {
             ...state,
             ...response,
-            numRowsSelected: state.selectedRows.length,
+            numRowsSelected: state.selectedRowsId.length,
             selectAllStatus: 1
         }
     }
