@@ -8,6 +8,7 @@ import { TableThIcons, TableThStyled, TableThTitle } from './index.style';
 interface Props {
     columWidth: string;
     accessor?: string;
+    onClick?: (e: React.MouseEvent<HTMLTableCellElement, MouseEvent>) => void;
     ordering?: TableOrdering;
 }
 
@@ -46,7 +47,7 @@ export const TableTh:FC<Props> = (props) => {
         return ['caret-up', 'caret-down'];
     }, [orderType]);
 
-    return <TableThStyled columWidth={props.columWidth} onClick={handleOrderType}>
+    return <TableThStyled columWidth={props.columWidth} onClick={(e) => { handleOrderType(); props.onClick && props.onClick(e) }}>
         <TableThTitle>
             <div>{props.children}</div>
             {

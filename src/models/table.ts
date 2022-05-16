@@ -81,7 +81,6 @@ export interface TableRowTreated {
     id: string;
     index: number;
     row: TableRow;
-    selected: boolean;
 }
 
 export interface TableRowDefault {

@@ -18,8 +18,9 @@ export const TablePagination:FC = () => {
         return rows.length;
     }, [rows, paginated, paging])
 
-    const handleChangePagination = (pageObj: PageObj) => {
+    const handleChangePagination = async(pageObj: PageObj) => {
         if (paginated && paginated.type === 'controlled') tableDispatch({ type: 'set-loading', payload: { loading: true } })
+
         tableDispatch({ type: 'new-page', payload: pageObj })
         onPaginationChange && onPaginationChange(pageObj);
     }

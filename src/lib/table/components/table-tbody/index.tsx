@@ -30,7 +30,7 @@ export const TableTBody = (): ReactElement => {
 
     return <TableBody>
         {
-            rows.map((row, index) => <TableTr key={index} row={row} />)
+            rows.map(row => <TableTr key={row.id} row={row} />)
         }
     </TableBody>;
 };

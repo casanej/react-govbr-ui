@@ -19,8 +19,8 @@ export const TableTdValue = (props: Props): ReactElement => {
     if (props.type === 'checkbox') {
         const customProps = props.payload as TableTdTypeCheckBox['payload'];
 
-        return <TableTdStyled width='50px'>
-            <Checkbox name={`table-row-${customProps.name}`} checked={customProps.checked} onClick={customProps.onSelectRow} />
+        return <TableTdStyled width='50px' onClick={() => { customProps.onSelectRow && customProps.onSelectRow(+!customProps.checked) }}>
+            <Checkbox name={`table-row-${customProps.name}`} checked={customProps.checked} />
         </TableTdStyled>
     }
 

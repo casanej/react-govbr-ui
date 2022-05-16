@@ -55,7 +55,11 @@ export const TableTHead = (): ReactElement => {
             const beforeIndexes = newCount.slice(pageIndex + 1);
             const sumDisregard = afterIndexes.reduce((acc, curr) => acc + curr, 0) + beforeIndexes.reduce((acc, curr) => acc + curr, 0);
 
-            newCount[pageIndex] = numRowsSelected - sumDisregard;
+            let finalCount = numRowsSelected - sumDisregard;
+
+            if (finalCount < 0) finalCount = 0;
+
+            newCount[pageIndex] = finalCount;
 
             setPageRowsCount(newCount);
         }
@@ -80,17 +84,18 @@ export const TableTHead = (): ReactElement => {
         return 0;
     }, [hasClicked, handleClickSelectAll, numRowsSelected, pageRowsCount, paging, paginated]);
 
-    const tableSelectAll = useCallback((_:string, value: CheckTypes) => {
+    const tableSelectAll = useCallback(() => {
         handleClickSelectAll(true);
-        tableDispatch({ type: 'select-all', payload: { checked: Boolean(value) } })
+        const newChecked = Boolean(!checkboxSelectStatus)
+        tableDispatch({ type: 'select-all', payload: { checked: newChecked } })
     }, [tableDispatch, handleClickSelectAll]);
 
     return (
         <TableTHeadStyled>
             <TableHeadTr>
                 {
-                    hasSelect && <TableTh columWidth={'50px'} >
-                        <Checkbox name='table-select-all' checked={checkboxSelectStatus} onClick={tableSelectAll} />
+                    hasSelect && <TableTh columWidth={'50px'} onClick={tableSelectAll} >
+                        <Checkbox name='table-select-all' checked={checkboxSelectStatus} />
                     </TableTh>
                 }
                 {columns.map((column: TableColumn) => {

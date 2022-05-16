@@ -55,7 +55,7 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
             const rowId = rawRow['id'];
 
             const id = rowId?.toString() || Math.random().toString();
-            treatedRows.push({ id, index, row, selected: false });
+            treatedRows.push({ id, index, row });
         });
 
         return {
@@ -117,8 +117,6 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
         const newTreatedRows = state.treatedRows;
         let newNumRowsSelected = newSelectedRows.length;
 
-        const rowIndex = newSelectedRows.indexOf(action.payload.id);
-
         if (action.payload.selected) {
             if (!newSelectedRows.includes(action.payload.id)) {
                 newSelectedRows.push(action.payload.id);
@@ -126,11 +124,15 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
             }
         } else {
             if (newNumRowsSelected > 0) {
-                newSelectedRows.splice(rowIndex, 1);
+                const rowIndex = newSelectedRows.findIndex(row => row === action.payload.id);
+
+                if (rowIndex >= 0) newSelectedRows.splice(rowIndex, 1);
 
                 newNumRowsSelected--;
             }
         }
+
+        // console.log('[SELECTED ROWS]', newSelectedRows, newTreatedRows)
 
         return {
             ...state,
@@ -143,37 +145,20 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
     if (action.type === 'select-all') {
         const allRows = state.treatedRows;
 
-        if (action.payload.checked) {
-            allRows.map(row => tableReducer(state, {
-                type: 'select-row',
-                payload: {
-                    id: row.id,
-                    row: row.row,
-                    selected: true,
-                }
-            }))
-
-            return {
-                ...state,
-                selectAllStatus: 1,
-                numRowsSelected: state.selectedRows.length,
+        const response = allRows.map(row => tableReducer(state, {
+            type: 'select-row',
+            payload: {
+                id: row.id,
+                row: row.row,
+                selected: action.payload.checked,
             }
-        } else {
-            const response = allRows.map(row => tableReducer(state, {
-                type: 'select-row',
-                payload: {
-                    id: row.id,
-                    row: row.row,
-                    selected: false,
-                }
-            }))
+        }))
 
-            return {
-                ...state,
-                ...response,
-                numRowsSelected: state.selectedRows.length,
-                selectAllStatus: 1
-            }
+        return {
+            ...state,
+            ...response,
+            numRowsSelected: state.selectedRows.length,
+            selectAllStatus: 1
         }
     }
 

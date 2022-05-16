@@ -25,7 +25,7 @@ export const TableTr:FC<Props> = (props) => {
 
     const columnsOrder = useMemo(() => columns.map(column => column.accessor), [columns]);
 
-    const handleSelectRow = (id: string) => (_: string, value: any) => {
+    const handleSelectRow = (id: string) => (value: any) => {
         const boolValue = Boolean(value);
 
         if (onSelectRow && !firstRender) onSelectRow({ selected: boolValue, id: id, row: row.row });
