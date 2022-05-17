@@ -28,7 +28,7 @@ export const TableTdValue = (props: Props): ReactElement => {
         const customProps = props.payload as TableTdTypeCustom['payload'];
 
         return <TableTdStyled>
-            {customProps.renderer(customProps.value.toString())}
+            {customProps.renderer(customProps.value)}
         </TableTdStyled>
     }
 

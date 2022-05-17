@@ -108,7 +108,7 @@ export interface TableTdTypeCustom extends TableTdTypesDefault {
     type: 'custom';
     payload: {
         value: string | number;
-        renderer: (value: string | number) => ReactNode;
+        renderer: (value: any) => ReactNode;
     }
 }
 

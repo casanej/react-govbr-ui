@@ -98,7 +98,7 @@ const tableColumnsCustom: TableColumn[] = [
     { title: 'COLUNA 2', accessor: 'coluna2', type: 'date' },
     { title: 'COLUNA 3', accessor: 'coluna3', type: 'date_time' },
     { title: 'COLUNA 4', accessor: 'coluna4' },
-    { title: 'COLUNA 5', accessor: 'coluna5' },
+    { title: 'COLUNA 5', accessor: 'coluna5', type: 'custom', renderer: (value) => <div>{value.toString()}</div> },
     { title: 'COLUNA 6', accessor: 'coluna6', type: 'number'},
 ]
 
@@ -131,11 +131,11 @@ const tableRows: TableRow[] = [
 ]
 
 const tableRowsTypes: TableRow[] = [
-    { coluna5: 0, coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
-    { coluna5: 0, coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
-    { coluna5: 0, coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
-    { coluna5: 0, coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
-    { coluna5: 0, coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
+    { coluna5: ['teste/22', true, undefined], coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
+    { coluna5: ['teste/22', true, undefined], coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
+    { coluna5: ['teste/22', true, undefined], coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
+    { coluna5: ['teste/22', true, undefined], coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
+    { coluna5: ['teste/22', true, undefined], coluna2: '2022-02-22T12:22:39.036846', coluna3: '2022-02-22T00:00:00', coluna6: 4, coluna4: 0, coluna1: 'XXXXX/22' },
 ]
 
 Default.args = {
