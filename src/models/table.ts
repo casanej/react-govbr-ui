@@ -84,7 +84,7 @@ export interface TableRowTreated {
 }
 
 export interface TableRowDefault {
-    [key: string]: string | number | null;
+    [key: string]: any;
 }
 
 export interface TableRowAction {
