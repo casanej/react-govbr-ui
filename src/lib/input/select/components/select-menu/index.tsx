@@ -25,6 +25,17 @@ export const SelectMenu:FC<Props> = (props) => {
     });
 
     useEffect(() => {
+        if (props.selectedItems) {
+            const newItems = props.selectedItems.map(item => item.value);
+            const currentItems = selectedItems;
+
+            const arrIsEqual = currentItems.every((value, index) => value === newItems[index]);
+
+            if (!arrIsEqual) setSelectedItems(props.selectedItems);
+        }
+    }, [props.selectedItems]);
+
+    useEffect(() => {
         const items = props.items.filter(item => selectedItems.includes(item.value))
 
         props.onChange(items);

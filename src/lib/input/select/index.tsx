@@ -24,6 +24,7 @@ export interface InputSelectProps {
     selectedItems?: SelectItemProps[];
     onChange?: (item: SelectItemProps[], name: string) => void;
     onFocus?: () => void;
+    onBlur?: () => void;
     onReset?: () => void;
     onSearchChange?: (value: string) => void;
     visibleRows?: number;
@@ -45,20 +46,18 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
 
     useEffect(() => {
         if (props.selectedItems) {
-            setItemsSelected(oldSelected => {
-                if (props.selectedItems) {
-                    if (JSON.stringify(oldSelected) !== JSON.stringify(props.selectedItems)) return props.selectedItems;
-                }
-
-                return oldSelected
-            });
+            setItemsSelected(props.selectedItems);
         }
     }, [props.selectedItems])
 
     useOnClickOutside(inputSelectRef, () => setInputFocus(false));
 
-    useEffect(() => { if (props.onChange && !firstRun) props.onChange(itemsSelected, name); }, [itemsSelected])
-    useEffect(() => { setMenuOpen(inputFocus); }, [inputFocus]);
+    useEffect(() => {
+        setMenuOpen(inputFocus);
+
+        if (!inputFocus && !firstRun) props.onBlur && props.onBlur();
+    }, [inputFocus]);
+
     useEffect(() => { if (firstRun) setFirstRun(false); }, []);
 
     const inputSelectItems = useMemo(() => {
@@ -88,6 +87,8 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                     props.label && <InputLabel direction='column'>{props.label}</InputLabel>
                 }
                 <SelectInputText
+                    alert={props.alert}
+                    hasReset={props.hasReset}
                     icon={props.icon}
                     isFocused={inputFocus}
                     isSearchable={!!props.isSearchable}
@@ -111,6 +112,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                 name={name}
                 onClose={() => setInputFocus(false)}
                 onChange={handleChange}
+                selectedItems={itemsSelected}
                 refContentInput={referenceElement}
             />
         </InputSelectStyled>

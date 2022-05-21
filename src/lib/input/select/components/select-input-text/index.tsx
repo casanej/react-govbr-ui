@@ -16,6 +16,7 @@ interface Props {
     icon?: IconName;
     inputVariant?: InputVariants;
     isSearchable?: boolean;
+    hasReset?: boolean;
     helpText?: React.ReactNode;
     multiple?: boolean;
     placeholder?: string;
@@ -46,7 +47,7 @@ export const SelectInputText:FC<Props> = (props) => {
             }}
             autoComplete={false}
             disabled={props.disabled}
-            hasReset={false}
+            hasReset={props.hasReset}
             helpText={props.helpText}
             icon={props.icon}
             name={`input-text-${props.name}`}

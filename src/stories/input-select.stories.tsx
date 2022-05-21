@@ -12,6 +12,7 @@ export default {
     component: InputSelect,
     argTypes: {
         onChange: { action: 'onChange(item, name)' },
+        onBlur: { action: 'onBlur()' },
         onSearchChange: { action: 'onSearchChange(value)' },
     }
 } as InputSelectExport;
@@ -23,14 +24,17 @@ const Template: InputSelectStory = (args) => <ThemeProvider theme={theme}>
         disabled={args.disabled}
         icon={args.icon}
         items={args.items}
+        hasReset={args.hasReset}
         helpText={args.helpText}
+        inputVariant={args.inputVariant}
         isSearchable={args.isSearchable}
         label={args.label}
         multiple={args.multiple}
         onChange={args.onChange}
+        onBlur={args.onBlur}
         onSearchChange={args.onSearchChange}
         placeholder={args.placeholder}
-        inputVariant={args.inputVariant}
+        selectedItems={args.selectedItems}
     />
 </ThemeProvider>
 
@@ -40,8 +44,10 @@ export const SelectDisabled = Template.bind({});
 export const SelectMultiple = Template.bind({});
 export const SelectSearchable = Template.bind({});
 export const SelectVariantTertiary = Template.bind({});
+export const SelectWithAlert = Template.bind({});
 export const SelectWithLabel = Template.bind({});
 export const SelectWithPlaceholder = Template.bind({});
+export const SelectWithSelection = Template.bind({});
 
 const items = [
     { label: 'Item 1', value: 'item1' },
@@ -94,6 +100,14 @@ SelectVariantTertiary.args = {
     inputVariant: 'secondary'
 }
 
+SelectWithAlert.args = {
+    alert: {
+        type: 'error',
+        message: 'This is an alert message'
+    },
+    items,
+}
+
 SelectWithLabel.args = {
     items,
     label: 'Select with label'
@@ -102,4 +116,9 @@ SelectWithLabel.args = {
 SelectWithPlaceholder.args = {
     items,
     placeholder: 'Selecione'
+}
+
+SelectWithSelection.args = {
+    items,
+    selectedItems: [items[0]]
 }
