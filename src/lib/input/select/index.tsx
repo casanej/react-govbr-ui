@@ -88,6 +88,7 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
                 }
                 <SelectInputText
                     alert={props.alert}
+                    disabled={props.disabled}
                     hasReset={props.hasReset}
                     icon={props.icon}
                     isFocused={inputFocus}
