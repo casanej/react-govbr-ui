@@ -107,7 +107,7 @@ export const TableTHead = (): ReactElement => {
 
                     let ordering = undefined;
 
-                    if (column.type !== 'actions' && column.type !== 'custom') ordering = column.order;
+                    if (column.type !== 'actions') ordering = column.order;
 
                     return <TableTh key={column.accessor} accessor={column.accessor} columWidth={columnWidth} ordering={ordering}>{column.title}</TableTh>
                 })}
