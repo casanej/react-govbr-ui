@@ -66,13 +66,13 @@ export const SelectMenu:FC<Props> = (props) => {
         <CheckboxManager blackList={[`${props.name}-select-all`]}>
             { props.multiple && <Item type='checkbox_master' active={ckbxAll} name={`${props.name}-select-all`} onChange={setCkbxAll} >Selecione todos</Item> }
             {
-                props.items.map((item, index) => {
+                props.items.map(item => {
                     let isActive = selectedItems.includes(item.value);
 
                     if (!isActive) isActive = false;
 
                     return <Item
-                        key={index}
+                        key={item.value}
                         active={+isActive as CheckTypes}
                         name={item.value}
                         type={ props.multiple ? 'checkbox' : 'text' }
