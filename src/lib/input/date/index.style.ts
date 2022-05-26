@@ -16,7 +16,8 @@ export const InputDatePickerMenu = styled.div<{ activeMonths: number; isOpen: bo
     gap: 5px;
     background-color: #fff;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
-    width: calc(350px * ${ props => props.activeMonths} + 68px * (${ props => props.activeMonths} - 1));
+    width: calc(350px * ${ props => props.activeMonths} + 68px * (${props => props.activeMonths} - 1));
+    z-index: 1;
 `;
 
 export const InputDateActions = styled.div`
