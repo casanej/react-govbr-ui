@@ -1,7 +1,8 @@
 import { PageObj, TablePaginationTypes } from './pagination.model';
 import { TableRow } from './table';
 
-export type TableStateAction = TableStateActionFirstRender | TableStateActionNewPage | TableStateActionNewRows | TableStateActionOrdering | TableStateActionSelectRow | TableStateActionSelectAll | TableStateActionSetLoading;
+export type TableStateAction = TableStateActionFirstRender | TableStateActionNewPage | TableStateActionNewRows | TableStateActionOrdering | TableStateActionSelectRow | TableStateActionSelectAll
+    | TableStateActionSetLoading | TableStateActionSetSelectedItems;
 
 /* ============== INTERFACE FIRST RENDER ============== */
 interface TableStateActionFirstRender {
@@ -9,6 +10,7 @@ interface TableStateActionFirstRender {
     payload: {
         rows: TableRow[];
         paginated?: TablePaginationTypes;
+        selectedItems?: string[];
     };
 }
 
@@ -62,6 +64,14 @@ interface TableStateActionSetLoading {
     type: 'set-loading';
     payload: {
         loading: boolean;
+    }
+}
+
+/* ============== INTERFACE SET SELECTED ITEMS ============== */
+interface TableStateActionSetSelectedItems {
+    type: 'set-selected-items';
+    payload: {
+        selectedItems: string[];
     }
 }
 

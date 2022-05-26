@@ -14,6 +14,7 @@ interface Props {
     onPaginationChange?: (pageObj: PageObj) => void;
     onSelectChange?: (selectedRows: TableRow[], selectedRowId: string[]) => void;
     paginated?: TablePaginationTypes;
+    selectedItems?: string[];
     tableWidth?: number;
     title?: string;
 }
@@ -33,8 +34,15 @@ export const Table = (props: Props): ReactElement => {
         tableDispatch({ type: 'first-render', payload: {
             rows: props.rows,
             paginated: props.paginated,
+            selectedItems: props.selectedItems,
         }})
     }, [])
+
+    useEffect(()=> {
+        if (props.selectedItems) tableDispatch({ type: 'set-selected-items', payload: {
+            selectedItems: props.selectedItems,
+        }})
+    }, [props.selectedItems])
 
     useEffect(() => {
         tableDispatch({ type: 'new-rows', payload: { rows: props.rows } });

@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { CheckTypes, PageObj, TablePaginationTypes, TableRow, TableRowDefault, TableRowTreated, TableStateAction } from 'models';
 
 export interface TableState {
@@ -166,6 +167,25 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
         return {
             ...state,
             loading: action.payload.loading,
+        }
+    }
+
+    if (action.type === 'set-selected-items') {
+        const allRows = state.treatedRows;
+
+        const response = allRows.map(row => tableReducer(state, {
+            type: 'select-row',
+            payload: {
+                id: row.id,
+                row: row.row,
+                selected: action.payload.selectedItems.includes(row.id),
+            }
+        }))
+
+        return {
+            ...state,
+            ...response,
+            numRowsSelected: state.selectedRowsId.length,
         }
     }
 
