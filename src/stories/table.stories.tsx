@@ -27,19 +27,8 @@ const Template: LoadingStory = (args) => {
     }, [window.location.search])
     const [pageObj, setPageObj] = useState<PageObj>({ page: 1, pageSize: 10, initialItem: 1, finalItem: 10 });
 
-    const [selectedItems, setSelectedItems] = useState<string[]>(args.selectedItems || []);
-
     return <ThemeProvider theme={theme}>
         <GlobalStyle theme={{ ...theme }} />
-        <button onClick={() => {
-            setSelectedItems(oldItems => {
-                const newItems = [...oldItems];
-
-                newItems.push((oldItems.length + 1).toString());
-                return newItems;
-            })
-        }} >ADD</button>
-        <button onClick={() => { setSelectedItems([]) }} >CLEAR</button>
         <div style={{height: '200vh', width: '100%', maxWidth: isSmall ? 1400 : 'auto', margin: '0 auto'}}>
             <Table
                 columns={args.columns}
@@ -53,7 +42,7 @@ const Template: LoadingStory = (args) => {
                 onPaginationChange={(pageObj: PageObj) => setPageObj(pageObj)}
                 onSelectChange={args.onSelectChange}
                 paginated={args.paginated}
-                selectedItems={selectedItems}
+                selectedItems={args.selectedItems}
                 title={args.title}
             />
         </div>

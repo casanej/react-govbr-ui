@@ -6,7 +6,7 @@ import { TableContext } from '../..';
 import { TableHeadTr, TableTHeadStyled } from './index.style';
 
 export const TableTHead = (): ReactElement => {
-    const { columns, hasActions, hasSelect, paginated, paging, tableDispatch, numRowsSelected } = useContext(TableContext);
+    const { columns, hasActions, hasSelect, paginated, paging, rows, tableDispatch, numRowsSelected } = useContext(TableContext);
 
     const [hasClicked, setHasClicked] = useState<boolean[]>([false]);
     const [pageRowsCount, setPageRowsCount] = useState<number[]>([]);
@@ -74,7 +74,7 @@ export const TableTHead = (): ReactElement => {
             const currentPageRowsCount = pageRowsCount[pageIndex];
 
             const pageSizeLastItem = Math.min(paging.pageSize, paging.page * paging.pageSize - paging.finalItem)
-            const pageSize = pageSizeLastItem === 0 ? paging.pageSize : pageSizeLastItem;
+            const pageSize = pageSizeLastItem === 0 ? rows.length : pageSizeLastItem;
 
             if (currentPageRowsCount === 0) return 0;
             if (pageSize === currentPageRowsCount) return 1;
