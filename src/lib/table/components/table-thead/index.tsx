@@ -1,6 +1,6 @@
 import { Checkbox } from 'lib';
 import { CheckTypes, TableColumn } from 'models';
-import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { ReactElement, useCallback, useContext, useMemo, useState } from 'react';
 import { TableTh } from '..';
 import { TableContext } from '../..';
 import { TableHeadTr, TableTHeadStyled } from './index.style';
@@ -8,14 +8,7 @@ import { TableHeadTr, TableTHeadStyled } from './index.style';
 export const TableTHead = (): ReactElement => {
     const { columns, hasActions, hasSelect, paginated, paging, rows, tableDispatch, numRowsSelected } = useContext(TableContext);
 
-    const [hasClicked, setHasClicked] = useState<boolean[]>([false]);
     const [pageRowsCount, setPageRowsCount] = useState<number[]>([]);
-
-    useEffect(()=> {
-        if (paging) {
-            if (hasClicked[paging.page - 1] === false) handleClickSelectAll(false);
-        }
-    }, [paging])
 
     const numColumns = useMemo(() => {
         let totalColumns = columns.filter(column => column.accessor !== 'actions').length;
@@ -35,17 +28,6 @@ export const TableTHead = (): ReactElement => {
         return width;
     }, [hasSelect]);
 
-    const handleClickSelectAll = useCallback((newStatus)=> {
-        if (paging) {
-
-            const pageIndex = paging.page - 1;
-            const newClicked = [...hasClicked];
-            newClicked[pageIndex] = newStatus;
-
-            setHasClicked(newClicked);
-        }
-    }, [paging, hasClicked]);
-
     const checkboxSelectStatus = useMemo(():CheckTypes => {
         const newCount = pageRowsCount;
         let pageIndex = 0;
@@ -64,9 +46,7 @@ export const TableTHead = (): ReactElement => {
             setPageRowsCount(newCount);
         }
 
-        if (hasClicked[pageIndex] !== true) return 0;
         if (pageRowsCount[pageIndex] === 0) {
-            handleClickSelectAll(false);
             return 0;
         }
 
@@ -82,13 +62,12 @@ export const TableTHead = (): ReactElement => {
         }
 
         return 0;
-    }, [hasClicked, handleClickSelectAll, numRowsSelected, pageRowsCount, paging, paginated]);
+    }, [numRowsSelected, pageRowsCount, paging, paginated]);
 
     const tableSelectAll = useCallback(() => {
-        handleClickSelectAll(true);
         const newChecked = Boolean(!checkboxSelectStatus)
         tableDispatch({ type: 'select-all', payload: { checked: newChecked } })
-    }, [tableDispatch, handleClickSelectAll]);
+    }, [tableDispatch, checkboxSelectStatus]);
 
     return (
         <TableTHeadStyled>
