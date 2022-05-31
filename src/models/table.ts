@@ -134,5 +134,6 @@ export interface TableTdTypesDefault {
 export interface TableColumnAction {
     icon: IconName | ReactElement;
     label: string;
-    fn: <IData = any>(payload?: IData) => void;
+    disabled?: boolean;
+    fn?: <IData = any>(payload?: IData) => void;
 }

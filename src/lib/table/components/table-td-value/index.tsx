@@ -35,10 +35,10 @@ export const TableTdValue = (props: Props): ReactElement => {
     if (props.type === 'actions') {
         const customProps = props.payload as TableTdTypeActions['payload'];
 
-        return <TableTdStyled>
+        return <TableTdStyled colAlign>
             {customProps.func.map((action) => {
 
-                if (typeof action.icon === 'string') return <Button key={action.label} variant='tertiary' circle onClick={action.fn}>
+                if (typeof action.icon === 'string') return <Button key={action.label} variant='tertiary' circle onClick={action.fn} disabled={action.disabled}>
                     <FontAwesomeIcon icon={action.icon} />
                 </Button>
 

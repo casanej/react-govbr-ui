@@ -52,7 +52,8 @@ const Template: LoadingStory = (args) => {
 const actions: TableColumnAction[] = [
     { fn: () => console.log('action 1'), label: 'Action 1', icon: 'cog' },
     { fn: () => console.log('action 2'), label: 'Action 2', icon: <div>W</div> },
-    { fn: () => console.log('action 3'), label: 'Action 3', icon: 'cog' },
+    { fn: () => console.log('action 3'), label: 'Action 3', icon: 'wrench' },
+    { fn: () => console.log('action 4'), label: 'Action 3', icon: 'eye', disabled: true },
 ]
 
 export const Default = Template.bind({});
