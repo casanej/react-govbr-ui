@@ -21,7 +21,8 @@ interface Props {
     range?: boolean;
     minBookDate?: Date;
     maxBookDate?: Date;
-    onChange?: (dates: Date[]) => void;
+    onChange?: (dates: [] | [Date, Date?]) => void;
+    value?: [Date, Date?];
 }
 
 export const InputDate = (props: Props) => {
@@ -41,6 +42,20 @@ export const InputDate = (props: Props) => {
     useEffect(() => {
         forceUpdate && forceUpdate();
     }, [datePickerOpen])
+
+    useEffect(() => {
+        if (props.value && props.value.length >= 1) {
+            const start = toDate(props.value[0]);
+            const end = props.value[1] && toDate(props.value[1]);
+            setDateState(oldDate => ({
+                ...oldDate,
+                start,
+                end,
+            }))
+        } else {
+            handleOnReset();
+        }
+    }, [props.value])
 
     const rangeDate = useCallback((isEdge?: boolean): Date | null => {
         if (!props.range) return initialDate;

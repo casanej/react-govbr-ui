@@ -26,6 +26,7 @@ const Template: InputDateStory = (args) => <ThemeProvider theme={theme}>
             minBookDate={args.minBookDate}
             maxBookDate={args.maxBookDate}
             onChange={args.onChange}
+            value={args.value}
         />
     </div>
 </ThemeProvider>
@@ -33,6 +34,7 @@ const Template: InputDateStory = (args) => <ThemeProvider theme={theme}>
 export const Default = Template.bind({});
 export const InputDateRange = Template.bind({});
 export const InputDateLimit = Template.bind({});
+export const InputDateCustomDate = Template.bind({});
 
 Default.args = {
     numberOfMonths: 1,
@@ -52,4 +54,13 @@ InputDateLimit.args = {
     range: true,
     minBookDate: new Date(2020, 0, 1),
     maxBookDate: new Date(2071, 11, 31),
+}
+
+InputDateCustomDate.args = {
+    range: true,
+    initialDate: {
+        start: new Date(2022, 8, 19),
+        end: new Date(2022, 8, 27)
+    },
+    value: [new Date(2022, 8, 19), new Date(2020, 8, 27)],
 }
