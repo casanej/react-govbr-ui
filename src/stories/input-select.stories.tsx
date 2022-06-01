@@ -1,8 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
 import { InputSelect } from 'lib';
-import { SelectItemProps } from 'models';
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 interface InputSelectExport extends ComponentMeta<typeof InputSelect> {}
@@ -19,7 +18,6 @@ export default {
 } as InputSelectExport;
 
 const Template: InputSelectStory = (args) => {
-    const [value, setValue] = useState<SelectItemProps>({ value: '', label: '' });
 
     return <ThemeProvider theme={theme}>
         <GlobalStyle theme={{ ...theme }} />
@@ -34,11 +32,11 @@ const Template: InputSelectStory = (args) => {
             isSearchable={args.isSearchable}
             label={args.label}
             multiple={args.multiple}
-            onChange={(value) => setValue(value[0] || [])}
+            onChange={args.onChange}
             onBlur={args.onBlur}
             onSearchChange={args.onSearchChange}
             placeholder={args.placeholder}
-            selectedItems={items.filter(item => item.value === value.value)}
+            selectedItems={args.selectedItems}
         />
     </ThemeProvider>
 }

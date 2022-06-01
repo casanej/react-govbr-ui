@@ -11,8 +11,8 @@ interface Props {
     onClose: () => void;
     onChange: (item: SelectItemProps[]) => void;
     refContentInput: any;
+    selectedItems: SelectItemProps[];
     multiple?: boolean;
-    selectedItems?: SelectItemProps[];
     visibleRows?: number;
 }
 
@@ -25,14 +25,12 @@ export const SelectMenu:FC<Props> = (props) => {
     });
 
     useEffect(() => {
-        if (props.selectedItems) {
-            const newItems = props.selectedItems.map(item => item.value);
-            const currentItems = selectedItems;
+        const newItems = props.selectedItems.map(item => item.value);
+        const currentItems = selectedItems;
 
-            const arrIsEqual = currentItems.every((value, index) => value === newItems[index]);
+        const arrIsEqual = currentItems.every((value, index) => value === newItems[index]);
 
-            if (!arrIsEqual) setSelectedItems(props.selectedItems);
-        }
+        if (!arrIsEqual) setSelectedItems(props.selectedItems.map(item => item.value));
     }, [props.selectedItems]);
 
     useEffect(() => {
