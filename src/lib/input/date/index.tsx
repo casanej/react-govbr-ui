@@ -1,4 +1,4 @@
-import { FocusedInput, OnDatesChangeProps, START_DATE, useDatepicker as useDatePicker } from '@datepicker-react/hooks';
+import { OnDatesChangeProps, START_DATE, useDatepicker as useDatePicker } from '@datepicker-react/hooks';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format, isValid, toDate } from 'date-fns';
@@ -27,6 +27,22 @@ interface Props {
 export const InputDate = (props: Props) => {
     const initialDate = useMemo(():Date => toDate(props.value?.[0] || new Date()), [props.value]);
 
+    const rangeDate = useCallback((isEdge?: boolean): Date | null => {
+        if (props.value) {
+            if (!props.range) return props.value[0];
+            if (isEdge && props.value[1]) return toDate(props.value[1]);
+            if (!isEdge) return toDate(props.value[0]);
+        }
+
+        return null;
+    }, [props.range]);
+
+    const [dateState, setDateState] = useState<OnDatesChangeProps>({
+        startDate: rangeDate(false),
+        endDate: rangeDate(true),
+        focusedInput: START_DATE,
+    });
+
     const pickerRef = useRef<HTMLDivElement>();
     const refMenuDatePicker = useRef<HTMLDivElement>();
     const [datePickerOpen, setDatePickerOpen] = useState(false);
@@ -54,21 +70,15 @@ export const InputDate = (props: Props) => {
         }
     }, [props.value])
 
-    const rangeDate = useCallback((isEdge?: boolean): Date | null => {
-        if (props.value) {
-            if (!props.range) return props.value[0];
-            if (isEdge && props.value[1]) return toDate(props.value[1]);
-            if (!isEdge) return toDate(props.value[0]);
+    useEffect(() => {
+        if (props.onChange) {
+            const { startDate, endDate } = dateState;
+
+            if (!startDate && !endDate) props.onChange([]);
+            if (!props.range && startDate) props.onChange([startDate]);
+            if (props.range && startDate && endDate) props.onChange([startDate]);
         }
-
-        return null;
-    }, [props.range]);
-
-    const [dateState, setDateState] = useState<{ startDate: Date | null; endDate: Date | null; focusedInput: FocusedInput }>({
-        startDate: rangeDate(false),
-        endDate: rangeDate(true),
-        focusedInput: START_DATE,
-    });
+    }, [dateState.startDate, dateState.endDate])
 
     const { firstDayOfWeek, activeMonths, isDateSelected, isDateHovered, isFirstOrLastSelectedDate, isDateBlocked, isDateFocused, focusedDate, onDateHover, onDateSelect, onDateFocus, goToDate } = useDatePicker({
         startDate: dateState.startDate,
@@ -89,12 +99,19 @@ export const InputDate = (props: Props) => {
         return '00/00/0000'
     }, [props.range, props.hasTime]);
 
+    const handleSetDateState = (date: Partial<OnDatesChangeProps>, byPass: boolean = false): void => {
+        const dateEqual = date.startDate?.toISOString() === dateState.startDate?.toISOString() && date.endDate?.toISOString() === dateState.endDate?.toISOString();
+
+        if (!dateEqual || byPass) {
+            setDateState(oldDates => ({
+                ...oldDates,
+                ...date
+            }));
+        }
+    }
+
     const setDateAndGo = (date: Date, startDate: Date, endDate: Date): void => {
-        setDateState(oldDates => ({
-            ...oldDates,
-            startDate,
-            endDate,
-        }))
+        handleSetDateState({ startDate, endDate });
         setMonth(date.getMonth());
         setYear(date.getFullYear());
         goToDate(props.range ? endDate : startDate);
@@ -128,17 +145,15 @@ export const InputDate = (props: Props) => {
     }, []);
 
     function handleDateChange(data: OnDatesChangeProps) {
+        const { startDate, endDate } = data;
+
         if (!data.focusedInput) {
-            setDateState({ ...data, focusedInput: START_DATE });
+            handleSetDateState({ ...data, focusedInput: START_DATE });
         } else {
             if (props.range) {
-                setDateState({ ...data, endDate: null });
+                handleSetDateState({ ...data, endDate: null });
             } else {
-                setDateState(oldData => ({
-                    ...oldData,
-                    startDate: data.startDate,
-                    endDate: data.startDate,
-                }))
+                handleSetDateState({ startDate, endDate })
             }
         }
     }
@@ -148,17 +163,13 @@ export const InputDate = (props: Props) => {
 
         if (props.range) {
             if (dateState.startDate && dateState.endDate) {
-                if (props.onChange) props.onChange([dateState.startDate, dateState.endDate]);
                 return `${format(dateState.startDate, dateFormat)} até ${format(dateState.endDate, dateFormat)}`
             }
         } else {
             if (dateState.startDate) {
-                if (props.onChange) props.onChange([dateState.startDate]);
                 return format(dateState.startDate, dateFormat);
             }
         }
-
-        if (props.onChange) props.onChange([]);
 
         return '';
     }, [props.hasTime, props.range, dateState.startDate, dateState.endDate]);
@@ -183,11 +194,7 @@ export const InputDate = (props: Props) => {
     }
 
     const handleOnReset = () => {
-        setDateState({
-            startDate: null,
-            endDate: null,
-            focusedInput: START_DATE,
-        });
+        handleSetDateState({ startDate: null, endDate: null, focusedInput: START_DATE }, true);
     }
 
     return (
