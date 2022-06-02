@@ -11,7 +11,7 @@ export default {
     title: 'Input/Date',
     component: InputDate,
     argTypes: {
-        onChange: { action: 'onChange(date)' },
+        onChange: { action: 'onChange(date[])' },
     }
 } as InputDateExport;
 
@@ -58,9 +58,5 @@ InputDateLimit.args = {
 
 InputDateCustomDate.args = {
     range: true,
-    initialDate: {
-        start: new Date(2022, 8, 19),
-        end: new Date(2022, 8, 27)
-    },
-    value: [new Date(2022, 8, 19), new Date(2020, 8, 27)],
+    value: [new Date(2022, 8, 19), new Date(2022, 8, 27)],
 }

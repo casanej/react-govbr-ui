@@ -47,11 +47,8 @@ export const InputDate = (props: Props) => {
         if (props.value && props.value.length >= 1) {
             const start = toDate(props.value[0]);
             const end = props.value[1] && toDate(props.value[1]);
-            setDateState(oldDate => ({
-                ...oldDate,
-                start,
-                end,
-            }))
+
+            if (end) setDateAndGo(end, start, end); else setDateAndGo(start, start, start);
         } else {
             handleOnReset();
         }
