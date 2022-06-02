@@ -34,6 +34,13 @@ export const SelectMenu:FC<Props> = (props) => {
     }, [props.selectedItems]);
 
     useEffect(() => {
+        if (selectedItems.length === 0) {
+            setCkbxAll(0);
+        } else if (selectedItems.length === props.items.length) {
+            setCkbxAll(1);
+        } else {
+            setCkbxAll(2);
+        }
         const items = props.items.filter(item => selectedItems.includes(item.value))
 
         props.onChange(items);

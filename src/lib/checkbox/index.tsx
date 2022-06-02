@@ -36,9 +36,8 @@ export const Checkbox = (props: Props): ReactElement => {
     useEffect(() => {
         let checkedParsed: CheckTypes = 0;
 
-        if (typeof props.checked !== 'undefined') {
-            const newChecked = `${props.checked}`;
-            checkedParsed = parseInt(newChecked) as CheckTypes;
+        if (typeof props.checked === 'number') {
+            checkedParsed = props.checked as CheckTypes;
         }
 
         setChecked(checkedParsed);
@@ -53,6 +52,8 @@ export const Checkbox = (props: Props): ReactElement => {
     const handleCheck = () => {
         const newChecked = checked === 0 ? 1 : 0;
         setChecked(newChecked);
+
+        props.onClick && props.onClick(name, newChecked);
     }
 
     return (

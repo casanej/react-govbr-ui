@@ -24,35 +24,30 @@ export const Item = (props: Props): ReactElement => {
     }, [isActive])
 
     useEffect(() => {
+        if (typeof props.active === 'number') setIsActive(props.active);
+    }, [props.active])
+
+    useEffect(() => {
         if (firstRun) setFirstRun(false);
     }, [])
 
-    const handleClickItem = useCallback(() => {
-        if (props.type === 'checkbox') {
-            if (isActive === 1) setIsActive(0);
-            else setIsActive(1);
-        } else {
-            setIsActive(1);
-        }
-    }, [props.type, isActive]);
-
-    const handleChecked = (_: string, values: CheckTypes) => {
+    const handleClickItem = useCallback((_: string, value: CheckTypes) => {
         if (props.type === 'checkbox_master') {
-            handleSelectAll && handleSelectAll(undefined, values);
+            if (handleSelectAll) handleSelectAll(undefined, value);
         }
-        setIsActive(values);
-    }
+        setIsActive(value);
+    }, [props.type, isActive, handleSelectAll]);
 
     return (
-        <ItemStyled disabled={props.disabled} isActive={!!isActive} onClick={handleClickItem}>
+        <ItemStyled disabled={props.disabled} isActive={isActive === 1} onClick={() => handleClickItem('', +!isActive as CheckTypes)}>
             {
                 props.type === 'text' && props.children
             }
             {
-                props.type === 'checkbox' && <Checkbox name={props.name} checked={isActive} label={props.children} onChange={handleChecked} />
+                props.type === 'checkbox' && <Checkbox name={props.name} checked={isActive} label={props.children} onChange={handleClickItem} />
             }
             {
-                props.type === 'checkbox_master' && <Checkbox name={props.name} checked={props.active || isActive} label={isActive ? 'Desselecionar todos' : 'Selecionar todos'} onChange={handleChecked} />
+                props.type === 'checkbox_master' && <Checkbox name={props.name} checked={isActive} label={isActive ? 'Desselecionar todos' : 'Selecionar todos'} />
             }
         </ItemStyled>
     );
