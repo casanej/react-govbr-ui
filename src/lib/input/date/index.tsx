@@ -21,14 +21,14 @@ interface Props {
     minBookDate?: Date;
     maxBookDate?: Date;
     onChange?: (dates: [] | [Date, Date?]) => void;
-    value?: [Date, Date?];
+    value?: [] | [Date, Date?];
 }
 
 export const InputDate = (props: Props) => {
-    const initialDate = useMemo(():Date => toDate(props.value?.[0] || new Date()), [props.value]);
+    const initialDate = useMemo(():Date => toDate(props.value?.[0] || new Date()), []);
 
     const rangeDate = useCallback((isEdge?: boolean): Date | null => {
-        if (props.value) {
+        if (props.value && props.value.length) {
             if (!props.range) return props.value[0];
             if (isEdge && props.value[1]) return toDate(props.value[1]);
             if (!isEdge) return toDate(props.value[0]);
@@ -60,23 +60,12 @@ export const InputDate = (props: Props) => {
     }, [datePickerOpen])
 
     useEffect(() => {
-        if (props.value && props.value.length >= 1) {
-            const start = toDate(props.value[0]);
-            const end = props.value[1] && toDate(props.value[1]);
-
-            if (end) setDateAndGo(end, start, end); else setDateAndGo(start, start, start);
-        } else {
-            handleOnReset();
-        }
-    }, [props.value])
-
-    useEffect(() => {
         if (props.onChange) {
             const { startDate, endDate } = dateState;
 
             if (!startDate && !endDate) props.onChange([]);
             if (!props.range && startDate) props.onChange([startDate]);
-            if (props.range && startDate && endDate) props.onChange([startDate]);
+            if (props.range && startDate && endDate) props.onChange([startDate, endDate]);
         }
     }, [dateState.startDate, dateState.endDate])
 

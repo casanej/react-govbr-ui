@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { GlobalStyle, theme } from 'assets';
 import { InputDate } from 'lib';
-import React from 'react';
+import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 interface InputDateExport extends ComponentMeta<typeof InputDate> {}
@@ -15,20 +15,24 @@ export default {
     }
 } as InputDateExport;
 
-const Template: InputDateStory = (args) => <ThemeProvider theme={theme}>
-    <GlobalStyle theme={{ ...theme }} />
-    <div style={{ height: 50, width: 320, marginTop: 0, marginLeft: 600 }} >
-        <InputDate
-            label={args.label}
-            numberOfMonths={args.numberOfMonths}
-            range={args.range}
-            minBookDate={args.minBookDate}
-            maxBookDate={args.maxBookDate}
-            onChange={args.onChange}
-            value={args.value}
-        />
-    </div>
-</ThemeProvider>
+const Template: InputDateStory = (args) => {
+    const [date, setDate] = useState(args.value);
+
+    return <ThemeProvider theme={theme}>
+        <GlobalStyle theme={{ ...theme }} />
+        <div style={{ height: 50, width: 320, marginTop: 0, marginLeft: 600 }} >
+            <InputDate
+                label={args.label}
+                numberOfMonths={args.numberOfMonths}
+                range={args.range}
+                minBookDate={args.minBookDate}
+                maxBookDate={args.maxBookDate}
+                onChange={date => { setDate(date); args.onChange && args.onChange(date); }}
+                value={date}
+            />
+        </div>
+    </ThemeProvider>
+}
 
 export const Default = Template.bind({});
 export const InputDateCustomSimpleDate = Template.bind({});
@@ -48,7 +52,7 @@ InputDateCustomSimpleDate.args = {
 
 InputDateCustomRangeDate.args = {
     range: true,
-    value: [new Date(2022, 7, 18), new Date(2022, 7, 26)],
+    value: [new Date(2022, 7, 19), new Date(2022, 7, 26)],
 }
 
 InputDateRange.args = {
