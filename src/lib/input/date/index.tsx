@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format, isValid, toDate } from 'date-fns';
 import { useOnClickOutside } from 'hooks';
 import { Button, InputSelect, InputText } from 'lib';
-import { InputDateInitialDates, OnChangeValueParameter } from 'models';
+import { OnChangeValueParameter } from 'models';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { MONTHS } from 'utils';
@@ -14,7 +14,6 @@ import DatePickerContext from './datepicker.context';
 import { InputDateActions, InputDateMenu, InputDatePickerMenu, InputDateStyled, InputDateYearSelect } from './index.style';
 
 interface Props {
-    initialDate?: InputDateInitialDates;
     hasTime?: boolean;
     label?: string;
     numberOfMonths?: number;
@@ -26,10 +25,11 @@ interface Props {
 }
 
 export const InputDate = (props: Props) => {
+    const initialDate = useMemo(():Date => toDate(props.value?.[0] || new Date()), [props.value]);
+
     const pickerRef = useRef<HTMLDivElement>();
     const refMenuDatePicker = useRef<HTMLDivElement>();
     const [datePickerOpen, setDatePickerOpen] = useState(false);
-    const initialDate = useMemo(():Date => toDate(props.initialDate?.start || new Date()), [props.initialDate]);
     const [year, setYear] = useState(initialDate.getFullYear());
     const [month, setMonth] = useState(initialDate.getMonth());
     const { styles, attributes, forceUpdate } = usePopper(pickerRef.current, refMenuDatePicker.current, {
@@ -55,11 +55,10 @@ export const InputDate = (props: Props) => {
     }, [props.value])
 
     const rangeDate = useCallback((isEdge?: boolean): Date | null => {
-        if (!props.range) return initialDate;
-
-        if (props.initialDate) {
-            if (isEdge && props.initialDate.end) return toDate(props.initialDate?.end);
-            if (!isEdge) return toDate(props.initialDate.start);
+        if (props.value) {
+            if (!props.range) return props.value[0];
+            if (isEdge && props.value[1]) return toDate(props.value[1]);
+            if (!isEdge) return toDate(props.value[0]);
         }
 
         return null;
