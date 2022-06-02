@@ -69,6 +69,17 @@ export const InputDate = (props: Props) => {
         }
     }, [dateState.startDate, dateState.endDate])
 
+    useEffect(() => {
+        if (props.value && props.value.length) {
+            const start = toDate(props.value[0]);
+            const end = props.value[1] && toDate(props.value[1]);
+
+            if (end) setDateAndGo(end, start, end); else setDateAndGo(start, start, start);
+        } else {
+            handleOnReset();
+        }
+    }, [props.value])
+
     const { firstDayOfWeek, activeMonths, isDateSelected, isDateHovered, isFirstOrLastSelectedDate, isDateBlocked, isDateFocused, focusedDate, onDateHover, onDateSelect, onDateFocus, goToDate } = useDatePicker({
         startDate: dateState.startDate,
         endDate: dateState.endDate,
