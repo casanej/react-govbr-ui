@@ -5,7 +5,7 @@ import { useOnClickOutside } from 'hooks';
 import { AnyMaskedOptions } from 'imask';
 import { Alert, Button, Item } from 'lib';
 import { InputAlertObj, InputListParams, InputTextButtonAction, InputVariants, OnChangeValueParameter } from 'models';
-import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { useIMask } from 'react-imask';
 import { InputLabel } from '../components/general.style';
 import { InputAction, InputContent, InputHelpText, InputIcon, InputListMenu, InputReset, inputSize, InputStyled, InputTextStyled } from './index.style';
@@ -34,6 +34,7 @@ export interface InputTextProps {
     onReset?: () => void;
     placeholder?: string;
     rawRef?: (ref: any) => void;
+    rawSetValue?: (value: { unmaskValue: Dispatch<string> }) => void;
     readOnly?: boolean;
     type?: string;
     variant?: InputVariants;
@@ -55,6 +56,7 @@ export const InputText = (props: InputTextProps): ReactElement => {
             const inputRef = ref.current as HTMLInputElement;
 
             if (props.rawRef) props.rawRef(inputRef);
+            if (props.rawSetValue) props.rawSetValue({ unmaskValue: setUnmaskedValue });
         }
     }, [ref]),
 

@@ -30,6 +30,8 @@ export const SelectMenu:FC<Props> = (props) => {
 
         const arrIsEqual = currentItems.every((value, index) => value === newItems[index]);
 
+        if (arrIsEqual && newItems.length === 0) setCkbxAll(0);
+
         if (!arrIsEqual) setSelectedItems(props.selectedItems.map(item => item.value));
     }, [props.selectedItems]);
 
