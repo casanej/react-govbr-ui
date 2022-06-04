@@ -1,5 +1,5 @@
 import { tableReducer, tableStateInitialValue } from 'hooks';
-import { PageObj, TableColumn, tableContextInitialValues, TableContextProps, TablePaginationTypes, TableRow } from 'models';
+import { PageObj, TableColumn, tableContextInitialValues, TableContextProps, TableOrdering, TablePaginationTypes, TableRow } from 'models';
 import React, { createContext, ReactElement, useContext, useEffect, useReducer } from 'react';
 import { TableContent } from './components';
 import { TableStyled } from './index.style';
@@ -11,6 +11,7 @@ interface Props {
     hasActions?: boolean;
     hasSearch?: boolean;
     hasSelect?: boolean;
+    ordering?: TableOrdering;
     onPaginationChange?: (pageObj: PageObj) => void;
     onSelectChange?: (selectedRows: TableRow[], selectedRowId: string[]) => void;
     paginated?: TablePaginationTypes;
@@ -33,6 +34,7 @@ export const Table = (props: Props): ReactElement => {
     useEffect(() => {
         tableDispatch({ type: 'first-render', payload: {
             rows: props.rows,
+            ordering: props.ordering,
             paginated: props.paginated,
             selectedItems: props.selectedItems,
         }})
@@ -64,11 +66,13 @@ export const Table = (props: Props): ReactElement => {
             hasActions: props.hasActions,
             hasSearch: props.hasSearch,
             hasSelect: props.hasSelect,
+            ordering: tableState.ordering,
             onPaginationChange: handlePaginationChange,
             onSelectRow: (payload) => tableDispatch({ type: 'select-row', payload}),
             paging: tableState.paging,
             paginated: props.paginated,
             selectAllStatus: tableState.selectAllStatus,
+            selectedOrder: tableState.selectedOrder,
             tableDispatch,
             tableWidth: props.tableWidth,
             title: props.title,

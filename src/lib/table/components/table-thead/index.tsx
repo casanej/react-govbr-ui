@@ -84,11 +84,7 @@ export const TableTHead = (): ReactElement => {
                         return null;
                     }
 
-                    let ordering = undefined;
-
-                    if (column.type !== 'actions') ordering = column.order;
-
-                    return <TableTh key={column.accessor} accessor={column.accessor} columWidth={columnWidth} ordering={ordering}>{column.title}</TableTh>
+                    return <TableTh key={column.accessor} accessor={column.accessor} columWidth={columnWidth}>{column.title}</TableTh>
                 })}
             </TableHeadTr>
         </TableTHeadStyled>

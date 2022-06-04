@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-import { CheckTypes, PageObj, TablePaginationTypes, TableRow, TableRowDefault, TableRowTreated, TableStateAction } from 'models';
+import { CheckTypes, PageObj, TableOrdering, TablePaginationTypes, TableRow, TableRowDefault, TableRowTreated, TableSelectedOrdering, TableStateAction } from 'models';
 
 export interface TableState {
     cbCkSelectAll: boolean;
@@ -7,9 +7,11 @@ export interface TableState {
     loading: boolean;
     numRowsSelected: number;
     selectAllStatus: CheckTypes;
+    selectedOrder: TableSelectedOrdering;
     selectedRawRows: TableRow[];
     selectedRowsId: string[];
     treatedRows: TableRowTreated[];
+    ordering?: TableOrdering;
     paging?: PageObj;
     paginated?: TablePaginationTypes;
 }
@@ -20,6 +22,7 @@ export const tableStateInitialValue: TableState = {
     loading: false,
     numRowsSelected: 0,
     selectAllStatus: 0,
+    selectedOrder: {},
     selectedRawRows: [],
     selectedRowsId: [],
     treatedRows: [],
@@ -29,10 +32,23 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
 
     if (action.type === 'first-render') {
 
+        let newSelectedOrder = {};
+
+        if (action.payload.ordering) {
+            action.payload.ordering.columnsOrder.forEach((accessor) => {
+                newSelectedOrder = {
+                    ...newSelectedOrder,
+                    [accessor]: { order: 'none' },
+                }
+            });
+        }
+
         return {
             ...state,
             firstRender: false,
             paginated: action.payload.paginated,
+            ordering: action.payload.ordering,
+            selectedOrder: newSelectedOrder,
         }
     }
 
@@ -98,15 +114,65 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
             return 0;
         }
 
-        if (action.payload.order === 'none') sortedRows.sort(sortByNone);
-        if (action.payload.order === 'asc') sortedRows.sort(sortByAsc);
-        if (action.payload.order === 'desc') sortedRows.sort(sortByDesc);
+        if (!state.ordering) return state;
+
+        const accessor = action.payload.orderBy;
+        const currentOrder = state.selectedOrder[accessor].order;
+        const nextOrder = {
+            none: 'asc',
+            asc: 'desc',
+            desc: 'none',
+        }
+        const sortOptions = {
+            none: sortByNone,
+            asc: sortByAsc,
+            desc: sortByDesc,
+        }
+        const newOrder = nextOrder[currentOrder] as keyof typeof sortOptions;
+        let newSelectedOrder: TableSelectedOrdering = {};
+
+        const newState: Partial<TableState> = {}
+
+        if (!state.ordering.multiple) {
+            state.ordering.columnsOrder.forEach((key) => {
+                if (key === accessor) {
+                    newSelectedOrder = {
+                        ...newSelectedOrder,
+                        [key]: {
+                            order: newOrder,
+                        },
+                    }
+                } else {
+                    newSelectedOrder = {
+                        ...newSelectedOrder,
+                        [key]: {
+                            order: 'none',
+                        },
+                    }
+                }
+            });
+        }
+
+        if (state.ordering.type === 'internal') {
+            sortedRows.sort(sortOptions[newOrder]);
+
+            newState.treatedRows = sortedRows;
+
+        } else if (state.ordering.type === 'external') {
+            state.ordering.onOrderChange && state.ordering.onOrderChange(accessor, newSelectedOrder)
+            newState.loading = true;
+
+        } else {
+            newState.loading = false;
+        }
 
         return {
             ...state,
             loading: false,
             treatedRows: sortedRows,
-        };
+            selectedOrder: newSelectedOrder,
+        }
+
     }
 
     if (action.type === 'select-row') {

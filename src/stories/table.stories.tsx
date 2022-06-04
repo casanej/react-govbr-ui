@@ -15,7 +15,7 @@ export default {
     component: Table,
     argTypes: {
         onSelectChange: { action: 'onSelectChange(rows)' },
-    }
+    },
 } as LoadingExport;
 
 const Template: LoadingStory = (args) => {
@@ -39,6 +39,10 @@ const Template: LoadingStory = (args) => {
                 isLoading={args.isLoading}
                 hasActions={args.hasActions}
                 hasSelect={args.hasSelect}
+                ordering={args.ordering && {
+                    ...args.ordering,
+                    onOrderChange: args.ordering.onOrderChange
+                }}
                 onPaginationChange={(pageObj: PageObj) => setPageObj(pageObj)}
                 onSelectChange={args.onSelectChange}
                 paginated={args.paginated}
@@ -85,8 +89,8 @@ const tableColumns: TableColumn[] = [
 const tableColumnsWithOrder: TableColumn[] = [
     { title: 'Coluna 1', accessor: 'column1' },
     { title: 'Coluna 2', accessor: 'column2' },
-    { title: 'Coluna 3 IN', accessor: 'column3', order: { type: 'internal' } },
-    { title: 'Coluna 4 EX', accessor: 'column4', order: { type: 'external', onOrder: (name, order) => console.log('[ORDERING INTERNAL]', name, order) } },
+    { title: 'Coluna 3 OR', accessor: 'column3' },
+    { title: 'Coluna 4 OR', accessor: 'column4' },
     { title: 'Coluna 5', accessor: 'column5' },
     { title: 'Coluna 6', accessor: 'column6' },
     { title: 'Coluna 7', accessor: 'column7' },
@@ -204,6 +208,11 @@ TableSmall.args = {
 TableWithOrder.args = {
     columns: tableColumnsWithOrder,
     rows: tableRows,
+    ordering: {
+        type: 'external',
+        columnsOrder: ['column3', 'column4'],
+        onOrderChange: (key, values) => console.log('onOrderChange(lastKeyClicked, values) =>', key, values)
+    }
 }
 
 TableWithSelectPaginatedControlled.args = {

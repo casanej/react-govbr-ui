@@ -1,7 +1,6 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TableOrdering, TableOrderType } from 'models';
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import { useTableContext } from '../..';
 import { TableThIcons, TableThStyled, TableThTitle } from './index.style';
 
@@ -9,36 +8,40 @@ interface Props {
     columWidth: string;
     accessor?: string;
     onClick?: (e: React.MouseEvent<HTMLTableCellElement, MouseEvent>) => void;
-    ordering?: TableOrdering;
 }
 
 export const TableTh:FC<Props> = (props) => {
-    const { tableDispatch } = useTableContext();
-    const [orderType, setOrderType] = useState<TableOrderType>('none');
+    const { tableDispatch, ordering, selectedOrder } = useTableContext();
+    const accessor = useMemo(() => {
+        if (props.accessor) return props.accessor;
+
+        return '';
+    }, [props.accessor]);
+
+    const hasOrder = useMemo(() => {
+        if (ordering) {
+            return ordering.columnsOrder.includes(accessor)
+        }
+
+        return false;
+    }, [accessor, ordering]);
+
+    const orderType = useMemo(() => {
+        if (selectedOrder) {
+            const selectedOrderAccessor = selectedOrder[accessor];
+
+            if (selectedOrderAccessor) return selectedOrderAccessor.order;
+        }
+
+        return 'none';
+    }, [accessor, selectedOrder]);
 
     const handleOrderType = useCallback(() => {
-        let newOrderType = orderType;
-
-        if (orderType === 'none') {
-            newOrderType = 'asc';
-        } else if (orderType === 'asc') {
-            newOrderType = 'desc';
-        } else if (orderType === 'desc') {
-            newOrderType = 'none';
-        }
-
-        if (props.ordering) {
+        if (hasOrder) {
             tableDispatch({ type: 'set-loading', payload: { loading: true } });
-            const accessor = props.accessor || '';
-            if (props.ordering?.type === 'external') {
-                props.ordering.onOrder(accessor, newOrderType);
-            } else {
-                tableDispatch({ type: 'ordering', payload: { order: newOrderType, orderBy: accessor } });
-            }
+            tableDispatch({ type: 'ordering', payload: { orderBy: accessor } });
         }
-
-        setOrderType(newOrderType);
-    }, [orderType]);
+    }, [accessor, hasOrder, orderType]);
 
     const iconOrderType = useMemo(():IconProp[] => {
         if (orderType === 'asc') return ['caret-up'];
@@ -51,7 +54,7 @@ export const TableTh:FC<Props> = (props) => {
         <TableThTitle>
             <div>{props.children}</div>
             {
-                props.ordering && <TableThIcons>
+                hasOrder && <TableThIcons>
                     {
                         iconOrderType.map((icon, index) => {
                             return <FontAwesomeIcon key={index} icon={icon} />

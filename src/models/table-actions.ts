@@ -1,5 +1,5 @@
 import { PageObj, TablePaginationTypes } from './pagination.model';
-import { TableRow } from './table';
+import { TableOrdering, TableRow } from './table';
 
 export type TableStateAction = TableStateActionFirstRender | TableStateActionNewPage | TableStateActionNewRows | TableStateActionOrdering | TableStateActionSelectRow | TableStateActionSelectAll
     | TableStateActionSetLoading | TableStateActionSetSelectedItems;
@@ -9,6 +9,7 @@ interface TableStateActionFirstRender {
     type: 'first-render';
     payload: {
         rows: TableRow[];
+        ordering?: TableOrdering;
         paginated?: TablePaginationTypes;
         selectedItems?: string[];
     };
@@ -29,14 +30,12 @@ interface TableStateActionNewRows {
 }
 
 /* ============== INTERFACE ORDERING ============== */
-export type TableOrderType = 'asc' | 'desc' | 'none';
 
 interface TableStateActionOrdering {
     type: 'ordering';
     payload: {
-        order: TableOrderType;
         orderBy: string;
-    }
+    };
 }
 
 /* ============== INTERFACE SELECT ALL ============== */

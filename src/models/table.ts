@@ -2,7 +2,7 @@ import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { ReactElement, ReactNode } from 'react';
 import { CheckTypes } from './input-checkbox.model';
 import { PageObj, TablePaginationTypes } from './pagination.model';
-import { TableOrderType, TableStateAction, TableStateActionSelectRowProps } from './table-actions';
+import { TableStateAction, TableStateActionSelectRowProps } from './table-actions';
 
 // ======================= /* TABLE CONTEXT */ ======================= //
 export interface TableContextProps {
@@ -16,8 +16,10 @@ export interface TableContextProps {
     hasActions?: boolean;
     hasSearch?: boolean;
     hasSelect?: boolean;
+    ordering?: TableOrdering;
     onPaginationChange?: (pageObj: PageObj) => void;
     onSelectRow?: (payload: TableStateActionSelectRowProps) => void;
+    selectedOrder?: TableSelectedOrdering;
     paging?: PageObj;
     paginated?: TablePaginationTypes;
     tableDispatch: (value: TableStateAction) => void
@@ -40,21 +42,9 @@ export type TableColumn = TableColumnCustom | TableColumnActions | TableColumnDe
 
 export type TableColumnTypes = 'text' | 'number' | 'number_min' | 'date' | 'date_time' | 'boolean' | 'money' | 'money_min' | 'action';
 
-export type TableOrdering = TableOrderingInternal | TableOrderingExternal;
-
-export interface TableOrderingInternal {
-    type: 'internal';
-}
-
-export interface TableOrderingExternal {
-    type: 'external';
-    onOrder: (name: string, order: TableOrderType) => void;
-}
-
 export interface TableColumnDefault {
     title: string;
     accessor: string;
-    order?: TableOrdering;
     type?: TableColumnTypes;
 }
 
@@ -63,7 +53,6 @@ export interface TableColumnCustom {
     title: string;
     accessor: string;
     renderer: (value: string | number) => ReactNode;
-    order?: TableOrdering;
 }
 
 export interface TableColumnActions {
@@ -89,6 +78,23 @@ export interface TableRowDefault {
 
 export interface TableRowAction {
     actions: TableColumnAction[];
+}
+
+// ======================= /* TABLE ORDERING */ ======================= //
+export type TableOrderingTypes = 'asc' | 'desc' | 'none';
+export type TableOrderType = 'external' | 'internal'
+
+export type TableOrdering = {
+    columnsOrder: string[];
+    type: TableOrderType;
+    multiple?: boolean;
+    onOrderChange?: (lastClicked: string, orderValue: TableSelectedOrdering) => void;
+}
+
+export type TableSelectedOrdering = {
+    [key: string]: {
+        order: TableOrderingTypes;
+    }
 }
 
 // ======================= /* TABLE TD TYPES */ ======================= //
