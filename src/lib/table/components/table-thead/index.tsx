@@ -62,7 +62,7 @@ export const TableTHead = (): ReactElement => {
         }
 
         return 0;
-    }, [numRowsSelected, pageRowsCount, paging, paginated]);
+    }, [numRowsSelected, pageRowsCount, paging, paginated, rows]);
 
     const tableSelectAll = useCallback(() => {
         const newChecked = Boolean(!checkboxSelectStatus)
