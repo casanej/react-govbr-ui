@@ -97,7 +97,7 @@ SelectMultiple.args = {
 
 SelectSearchable.args = {
     items,
-    isSearchable: 'internal',
+    isSearchable: 'external',
     searchOptions: {
         minLength: 3,
     }

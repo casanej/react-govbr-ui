@@ -77,8 +77,8 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
 
     const handleSearchValue = (value: string) => {
         if (props.isSearchable && inputFocus) {
-            if (props.isSearchable === 'internal') setSearchValue(value);
-            else if (props.isSearchable === 'external') props.onSearchChange && props.onSearchChange(value);
+            setSearchValue(value)
+            if (props.isSearchable === 'external') props.onSearchChange && props.onSearchChange(value);
         }
     }
 
