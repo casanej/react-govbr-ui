@@ -30,6 +30,8 @@ const Template: InputSelectStory = (args) => {
             helpText={args.helpText}
             inputVariant={args.inputVariant}
             isSearchable={args.isSearchable}
+            loading={args.loading}
+            searchOptions={args.searchOptions}
             label={args.label}
             multiple={args.multiple}
             onChange={args.onChange}
@@ -44,6 +46,7 @@ const Template: InputSelectStory = (args) => {
 export const Default = Template.bind({});
 export const SelectComplete = Template.bind({});
 export const SelectDisabled = Template.bind({});
+export const SelectLoading = Template.bind({});
 export const SelectMultiple = Template.bind({});
 export const SelectSearchable = Template.bind({});
 export const SelectVariantTertiary = Template.bind({});
@@ -81,6 +84,11 @@ SelectDisabled.args = {
     placeholder: 'Selecione',
 }
 
+SelectLoading.args = {
+    items,
+    loading: true,
+}
+
 SelectMultiple.args = {
     items,
     label: 'Select Multiple',
@@ -90,6 +98,9 @@ SelectMultiple.args = {
 SelectSearchable.args = {
     items,
     isSearchable: 'internal',
+    searchOptions: {
+        minLength: 3,
+    }
 }
 
 SelectVariantTertiary.args = {

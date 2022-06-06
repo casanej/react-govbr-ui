@@ -5,3 +5,7 @@ export interface SelectItemProps {
 }
 
 export type SelectSearchableProps = 'internal' | 'external';
+
+export interface SearchOptions {
+    minLength?: number;
+}

@@ -1,6 +1,6 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { useOnClickOutside } from 'hooks';
-import { InputAlertObj, InputVariants, SelectItemProps, SelectSearchableProps } from 'models';
+import { InputAlertObj, InputVariants, SearchOptions, SelectItemProps, SelectSearchableProps } from 'models';
 import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { InputLabel } from '../components/general.style';
 import { SelectMenu } from './components';
@@ -18,9 +18,11 @@ export interface InputSelectProps {
     helpText?: React.ReactNode;
     isSearchable?: SelectSearchableProps;
     label?: string;
+    loading?: boolean;
     multiple?: boolean;
     name?: string;
     placeholder?: string;
+    searchOptions?: SearchOptions;
     selectedItems?: SelectItemProps[];
     onChange?: (item: SelectItemProps[], name: string) => void;
     onFocus?: () => void;
@@ -110,10 +112,14 @@ export const InputSelect = (props: InputSelectProps): ReactElement => {
             <SelectMenu
                 isOpen={inputFocus}
                 items={inputSelectItems}
+                isSearchable={!!props.isSearchable}
+                loading={props.loading}
                 multiple={props.multiple}
                 name={name}
                 onClose={() => setInputFocus(false)}
                 onChange={handleChange}
+                searchValue={searchValue}
+                searchOptions={props.searchOptions}
                 selectedItems={itemsSelected}
                 refContentInput={referenceElement}
             />

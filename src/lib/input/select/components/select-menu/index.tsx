@@ -1,5 +1,5 @@
-import { CheckboxManager, Item } from 'lib';
-import { CheckTypes, SelectItemProps } from 'models';
+import { CheckboxManager, Item, Loading } from 'lib';
+import { CheckTypes, SearchOptions, SelectItemProps } from 'models';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { InputSelectMenu } from './index.style';
@@ -11,8 +11,12 @@ interface Props {
     onClose: () => void;
     onChange: (item: SelectItemProps[]) => void;
     refContentInput: any;
+    searchValue: string;
     selectedItems: SelectItemProps[];
+    isSearchable?: boolean;
+    loading?: boolean;
     multiple?: boolean;
+    searchOptions?: SearchOptions;
     visibleRows?: number;
 }
 
@@ -68,6 +72,28 @@ export const SelectMenu:FC<Props> = (props) => {
     }, [props.multiple]);
 
     if (!props.isOpen) return null;
+
+    if (props.loading) return <InputSelectMenu ref={setPopperElement} style={styles.popper} visibleRows={props.visibleRows || 5} { ...attributes.popper }>
+        <Item
+            name={`${props.name}-min-length`}
+            type='text'
+            disabled
+        >
+            <Loading infinity='md' />
+        </Item>
+    </InputSelectMenu>
+
+    if (props.searchOptions) {
+        if (props.isSearchable && props.searchValue.length < (props.searchOptions.minLength || 3)) return <InputSelectMenu ref={setPopperElement} style={styles.popper} visibleRows={props.visibleRows || 5} { ...attributes.popper }>
+            <Item
+                name={`${props.name}-min-length`}
+                type='text'
+                disabled
+            >
+                Digite ao menos {(props.searchOptions.minLength || 3)} caracteres
+            </Item>
+        </InputSelectMenu>;
+    }
 
     return <InputSelectMenu ref={setPopperElement} style={styles.popper} visibleRows={props.visibleRows || 5} { ...attributes.popper }>
         <CheckboxManager blackList={[`${props.name}-select-all`]}>
