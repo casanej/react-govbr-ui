@@ -85,18 +85,6 @@ export const paginationReducer = (state: PaginationReduceState, action: Paginati
             hasNext: state.pageSize < totalItems,
             finalItem: totalItems < state.pageSize ? totalItems : state.pageSize,
         }
-    case 'updateValues':
-        const updateNewPage = action.payload.page;
-        const updateInitialItem = 1 + state.pageSize * (updateNewPage - 1);
-        const updateFinalItem = state.pageSize * updateNewPage > state.totalItems ? state.totalItems : state.pageSize * updateNewPage;
-
-        return {
-            ...state,
-            initialItem: updateInitialItem,
-            finalItem: updateFinalItem,
-            hasNext: updateNewPage < state.maxPages,
-            hasPrev: updateNewPage > 1,
-        }
     default:
         return state
     }
