@@ -1,8 +1,8 @@
 import { PageObj, TablePaginationTypes } from './pagination.model';
 import { TableOrdering, TableRow } from './table';
 
-export type TableStateAction = TableStateActionFirstRender | TableStateActionNewPage | TableStateActionNewRows | TableStateActionOrdering | TableStateActionSelectRow | TableStateActionSelectAll
-    | TableStateActionSetLoading | TableStateActionSetSelectedItems;
+export type TableStateAction = TableStateActionFirstRender | TableStateActionSetForcedSelectedItems | TableStateActionNewPage | TableStateActionNewRows | TableStateActionOrdering | TableStateActionSelectRow | TableStateActionSelectAll
+    | TableStateActionSetLoading | TableStateActionSetPaginated | TableStateActionSetSelectedItems;
 
 /* ============== INTERFACE FIRST RENDER ============== */
 interface TableStateActionFirstRender {
@@ -66,11 +66,26 @@ interface TableStateActionSetLoading {
     }
 }
 
+/* ============== INTERFACE SET LOADING ============== */
+interface TableStateActionSetPaginated {
+    type: 'set-paginated';
+    payload: TablePaginationTypes | undefined;
+}
+
 /* ============== INTERFACE SET SELECTED ITEMS ============== */
 interface TableStateActionSetSelectedItems {
     type: 'set-selected-items';
     payload: {
         selectedItems: string[];
+    }
+}
+
+/* ============== INTERFACE SET FORCED SELECTED ITEMS ============== */
+interface TableStateActionSetForcedSelectedItems {
+    type: 'set-forced-selected-items';
+    payload: {
+        selectedRawRows: TableRow[];
+        selectedRowsId: string[];
     }
 }
 

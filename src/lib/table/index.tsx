@@ -14,6 +14,7 @@ interface Props {
     ordering?: TableOrdering;
     onPaginationChange?: (pageObj: PageObj) => void;
     onSelectChange?: (selectedRows: TableRow[], selectedRowId: string[]) => void;
+    paging?: Pick<PageObj, 'page' | 'pageSize'>;
     paginated?: TablePaginationTypes;
     selectedItems?: string[];
     tableWidth?: number;
@@ -41,14 +42,27 @@ export const Table = (props: Props): ReactElement => {
     }, [])
 
     useEffect(()=> {
-        if (props.selectedItems) tableDispatch({ type: 'set-selected-items', payload: {
-            selectedItems: props.selectedItems,
+        if (Array.isArray(props.selectedItems)) tableDispatch({ type: 'set-forced-selected-items', payload: {
+            selectedRowsId: props.selectedItems,
+            selectedRawRows: []
         }})
     }, [props.selectedItems])
 
     useEffect(() => {
+        tableDispatch({ type: 'set-paginated', payload: props.paginated })
+    }, [props.paginated])
+
+    useEffect(() => {
         tableDispatch({ type: 'new-rows', payload: { rows: props.rows } });
     }, [props.rows])
+
+    useEffect(() => {
+        if (props.paging && props.paging.page && props.paging.pageSize) {
+            const initialItem = 1 + props.paging.pageSize * (props.paging.page - 1);
+            const finalItem = Math.min(props.paging.pageSize * props.paging.page, props.rows.length);
+            tableDispatch({ type: 'new-page', payload: { ...props.paging, initialItem, finalItem } })
+        }
+    }, [props.paging])
 
     const handlePaginationChange = (pageObj: PageObj): void => {
         tableDispatch({ type: 'new-page', payload: pageObj });
@@ -70,7 +84,7 @@ export const Table = (props: Props): ReactElement => {
             onPaginationChange: handlePaginationChange,
             onSelectRow: (payload) => tableDispatch({ type: 'select-row', payload}),
             paging: tableState.paging,
-            paginated: props.paginated,
+            paginated: tableState.paginated,
             selectAllStatus: tableState.selectAllStatus,
             selectedOrder: tableState.selectedOrder,
             tableDispatch,

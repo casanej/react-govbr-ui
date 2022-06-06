@@ -10,7 +10,7 @@ export const TablePagination:FC = () => {
         if (paginated && paginated.type === 'controlled') return paginated.initialPage;
 
         return 1;
-    }, []);
+    }, [paginated]);
 
     const paginationTotalItems = useMemo(() => {
         if (paginated && paginated.type === 'controlled') return paginated.totalItems;
@@ -18,16 +18,18 @@ export const TablePagination:FC = () => {
         return rows.length;
     }, [rows, paginated, paging])
 
-    const handleChangePagination = async(pageObj: PageObj) => {
+    const handleChangePagination = (pageObj: PageObj) => {
         if (paginated && paginated.type === 'controlled') tableDispatch({ type: 'set-loading', payload: { loading: true } })
 
         tableDispatch({ type: 'new-page', payload: pageObj })
         onPaginationChange && onPaginationChange(pageObj);
     }
 
-    if (!paginated) return null;
+    if (!paginated || !paging) return null;
 
     return <Pagination
+        currentPage={paging.page}
+        currentPageSize={paging.pageSize}
         initialPage={paginationInitialPage}
         totalItems={paginationTotalItems}
         onChange={handleChangePagination}

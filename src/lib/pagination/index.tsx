@@ -10,6 +10,8 @@ import { PaginationActionsButtons, PaginationContentInput, PaginationLeftSide, P
 interface Props {
     initialPage: number;
     totalItems: number;
+    currentPage?: number;
+    currentPageSize?: number;
     onChange?: (pageObj: PageObj) => void;
     variant?: 1 | 2 | 3;
 }
@@ -21,6 +23,10 @@ export const Pagination = (props: Props): ReactElement => {
         dispatch({ type: 'setTotalItems', payload: { totalItems: props.totalItems } });
         dispatch({ type: 'setPageSize', payload: { pageSize: 10 } });
     }, [props.totalItems]);
+
+    useEffect(() => {
+        if (props.currentPage && props.currentPageSize) dispatch({ type: 'setPage', payload: { page: props.currentPage } })
+    }, [props.currentPage, props.currentPageSize]);
 
     useEffect(() => {
         if (props.onChange) props.onChange({

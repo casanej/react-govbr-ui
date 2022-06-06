@@ -14,6 +14,7 @@ export default {
     title: 'Exibição de Dados/Table',
     component: Table,
     argTypes: {
+        onPaginationChange: { action: 'onPaginationChange({ page, pageSize, initialItem, finalItem })' },
         onSelectChange: { action: 'onSelectChange(rows)' },
     },
 } as LoadingExport;
@@ -29,6 +30,8 @@ const Template: LoadingStory = (args) => {
 
     return <ThemeProvider theme={theme}>
         <GlobalStyle theme={{ ...theme }} />
+        {/* <button onClick={() => setPageObj(old => ({ ...old, page: old.page + 1 }))}>NEXT PAGE</button> */}
+        {/* <button onClick={() => setPageObj(old => ({ ...old, page: old.page - 1 }))}>BACK PAGE</button> */}
         <div style={{height: '200vh', width: '100%', maxWidth: isSmall ? 1400 : 'auto', margin: '0 auto'}}>
             <Table
                 columns={args.columns}
@@ -43,8 +46,9 @@ const Template: LoadingStory = (args) => {
                     ...args.ordering,
                     onOrderChange: args.ordering.onOrderChange
                 }}
-                onPaginationChange={(pageObj: PageObj) => setPageObj(pageObj)}
+                onPaginationChange={(pageObj: PageObj) => { args.onPaginationChange && args.onPaginationChange(pageObj); setPageObj(pageObj) }}
                 onSelectChange={args.onSelectChange}
+                paging={pageObj}
                 paginated={args.paginated}
                 selectedItems={args.selectedItems}
                 title={args.title}

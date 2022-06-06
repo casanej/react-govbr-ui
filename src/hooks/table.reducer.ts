@@ -178,7 +178,6 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
     if (action.type === 'select-row') {
         const newSelectedRawRows = state.selectedRawRows;
         const newSelectedRowsId = state.selectedRowsId;
-        const newTreatedRows = state.treatedRows;
         let newNumRowsSelected = newSelectedRowsId.length;
 
         if (action.payload.selected) {
@@ -205,7 +204,6 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
             selectedRawRows: newSelectedRawRows,
             selectedRowsId: newSelectedRowsId,
             numRowsSelected: newNumRowsSelected,
-            treatedRows: newTreatedRows
         }
     }
 
@@ -252,6 +250,15 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
             ...state,
             ...response,
             numRowsSelected: state.selectedRowsId.length,
+        }
+    }
+
+    if (action.type === 'set-forced-selected-items') {
+        return {
+            ...state,
+            selectedRawRows: action.payload.selectedRawRows,
+            selectedRowsId: action.payload.selectedRowsId,
+            numRowsSelected: action.payload.selectedRowsId.length,
         }
     }
 
