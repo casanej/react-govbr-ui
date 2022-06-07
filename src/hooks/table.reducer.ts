@@ -13,7 +13,7 @@ export interface TableState {
     treatedRows: TableRowTreated[];
     ordering?: TableOrdering;
     paging?: PageObj;
-    paginated?: TablePaginationTypes;
+    paginated?: TablePaginationTypes | undefined;
 }
 
 export const tableStateInitialValue: TableState = {
@@ -260,6 +260,11 @@ export const tableReducer = (state: TableState, action: TableStateAction): Table
             selectedRowsId: action.payload.selectedRowsId,
             numRowsSelected: action.payload.selectedRowsId.length,
         }
+    }
+
+    if (action.type === 'set-paginated') return {
+        ...state,
+        paginated: action.payload,
     }
 
     return state;

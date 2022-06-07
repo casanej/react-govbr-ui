@@ -53,7 +53,8 @@ export const TableTHead = (): ReactElement => {
         if (paginated && paginated.type === 'controlled' && paging) {
             const currentPageRowsCount = pageRowsCount[pageIndex];
 
-            const pageSizeLastItem = Math.min(paging.pageSize, paging.page * paging.pageSize - paging.finalItem)
+            const finalItem = Math.min(paging.pageSize * paging.page, rows.length)
+            const pageSizeLastItem = Math.min(paging.pageSize, paging.page * paging.pageSize - finalItem)
             const pageSize = pageSizeLastItem === 0 ? rows.length : pageSizeLastItem;
 
             if (currentPageRowsCount === 0) return 0;

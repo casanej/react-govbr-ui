@@ -18,7 +18,7 @@ interface TableStateActionFirstRender {
 /* ============== INTERFACE NEW ROWS ============== */
 interface TableStateActionNewPage {
     type: 'new-page';
-    payload: PageObj;
+    payload: PageObj | undefined;
 }
 
 /* ============== INTERFACE NEW ROWS ============== */

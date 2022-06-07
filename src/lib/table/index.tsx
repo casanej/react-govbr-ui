@@ -57,7 +57,7 @@ export const Table = (props: Props): ReactElement => {
     }, [props.rows])
 
     useEffect(() => {
-        if (props.paging) tableDispatch({ type: 'new-page', payload: props.paging })
+        tableDispatch({ type: 'new-page', payload: props.paging })
     }, [props.paging])
 
     const handlePaginationChange = (pageObj: PageObj): void => {
