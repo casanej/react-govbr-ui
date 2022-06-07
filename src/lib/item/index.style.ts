@@ -1,9 +1,11 @@
 import styled, { css } from 'styled-components';
 import { hexColorApplyAlpha } from 'utils';
 
-export const ItemStyled = styled.div < { disabled?: boolean; isActive?: boolean }>`
+export const ItemStyled = styled.div < { disabled?: boolean; isActive?: boolean; hidden?: boolean }>`
     padding: 16px;
     cursor: pointer;
+
+    ${props => props.hidden && 'display: none;'}
 
     ${props => props.disabled
         ? css`

@@ -8,4 +8,5 @@ export type SelectSearchableProps = 'internal' | 'external';
 
 export interface SearchOptions {
     minLength?: number;
+    hiddenSelectAll?: boolean;
 }

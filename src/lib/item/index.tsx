@@ -10,6 +10,7 @@ interface Props {
     type: 'text' | 'radio' | 'checkbox' | 'checkbox_master';
     active?: CheckTypes;
     disabled?: boolean;
+    hidden?: boolean;
     onClick?: (checked: CheckTypes) => void;
     onChange?: (checked: CheckTypes) => void;
 }
@@ -39,7 +40,7 @@ export const Item = (props: Props): ReactElement => {
     }, [props.type, isActive, handleSelectAll]);
 
     return (
-        <ItemStyled disabled={props.disabled} isActive={isActive === 1} onClick={() => handleClickItem('', +!isActive as CheckTypes)}>
+        <ItemStyled disabled={props.disabled} isActive={isActive === 1} hidden={props.hidden} onClick={() => handleClickItem('', +!isActive as CheckTypes)}>
             {
                 props.type === 'text' && props.children
             }

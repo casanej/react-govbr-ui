@@ -1,6 +1,7 @@
+/* eslint-disable complexity */
 import { CheckboxManager, Item, Loading } from 'lib';
 import { CheckTypes, SearchOptions, SelectItemProps } from 'models';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { InputSelectMenu } from './index.style';
 
@@ -52,7 +53,25 @@ export const SelectMenu:FC<Props> = (props) => {
         props.onChange(items);
     }, [selectedItems])
 
+    const searchOptionsData = useMemo(() => {
+        const MIN_SEARCH_DEFAULT = 3;
+
+        const minSearch = props.searchOptions?.minLength || MIN_SEARCH_DEFAULT;
+
+        return {
+            show: props.isSearchable && props.searchValue.length < minSearch
+        }
+    }, [props.searchOptions, props.searchValue]);
+
+    const showSelectAll = useMemo(() => {
+        if (props.multiple && props.searchOptions) return props.searchOptions.hiddenSelectAll
+
+        return false;
+    }, [props.items.length]);
+
     const handleSelectChange = useCallback((item: SelectItemProps) => (checked: CheckTypes) => {
+        if (item.disabled || props.loading) return;
+
         const { value } = item;
         const isChecked = Boolean(checked);
 
@@ -69,35 +88,27 @@ export const SelectMenu:FC<Props> = (props) => {
             props.onClose();
         }
 
-    }, [props.multiple]);
+    }, [props.multiple, props.loading]);
 
     if (!props.isOpen) return null;
 
-    if (props.loading) return <InputSelectMenu ref={setPopperElement} style={styles.popper} visibleRows={props.visibleRows || 5} { ...attributes.popper }>
-        <Item
-            name={`${props.name}-min-length`}
-            type='text'
-            disabled
-        >
-            <Loading infinity='md' />
-        </Item>
-    </InputSelectMenu>
-
-    if (props.searchOptions) {
-        if (props.isSearchable && props.searchValue.length < (props.searchOptions.minLength || 3)) return <InputSelectMenu ref={setPopperElement} style={styles.popper} visibleRows={props.visibleRows || 5} { ...attributes.popper }>
-            <Item
-                name={`${props.name}-min-length`}
-                type='text'
-                disabled
-            >
-                Digite ao menos {(props.searchOptions.minLength || 3)} caracteres
-            </Item>
-        </InputSelectMenu>;
-    }
-
     return <InputSelectMenu ref={setPopperElement} style={styles.popper} visibleRows={props.visibleRows || 5} { ...attributes.popper }>
         <CheckboxManager blackList={[`${props.name}-select-all`]}>
-            { props.multiple && <Item type='checkbox_master' active={ckbxAll} name={`${props.name}-select-all`} onChange={setCkbxAll} >Selecione todos</Item> }
+            {
+                props.loading && <Item name={`${props.name}-min-length`} type='text' disabled >
+                    <Loading infinity='md' />
+                </Item>
+            }
+            {
+                searchOptionsData.show && <Item
+                    name={`${props.name}-min-length`}
+                    type='text'
+                    disabled
+                >
+                    Digite ao menos {(props.searchOptions?.minLength || 3)} caracteres
+                </Item>
+            }
+            { props.multiple && <Item type='checkbox_master' active={ckbxAll} name={`${props.name}-select-all`} hidden={showSelectAll} onChange={setCkbxAll} >Selecione todos</Item> }
             {
                 props.items.map(item => {
                     let isActive = selectedItems.includes(item.value);
@@ -107,6 +118,7 @@ export const SelectMenu:FC<Props> = (props) => {
                     return <Item
                         key={item.value}
                         active={+isActive as CheckTypes}
+                        disabled={item.disabled || props.loading}
                         name={item.value}
                         type={ props.multiple ? 'checkbox' : 'text' }
                         onChange={handleSelectChange(item)}

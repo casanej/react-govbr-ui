@@ -48,6 +48,7 @@ export const SelectComplete = Template.bind({});
 export const SelectDisabled = Template.bind({});
 export const SelectLoading = Template.bind({});
 export const SelectMultiple = Template.bind({});
+export const SelectMultipleSearchable = Template.bind({});
 export const SelectSearchable = Template.bind({});
 export const SelectVariantTertiary = Template.bind({});
 export const SelectWithAlert = Template.bind({});
@@ -93,6 +94,17 @@ SelectMultiple.args = {
     items,
     label: 'Select Multiple',
     multiple: true
+}
+
+SelectMultipleSearchable.args = {
+    isSearchable: 'external',
+    items,
+    label: 'Select Multiple',
+    multiple: true,
+    searchOptions: {
+        minLength: 3,
+        hiddenSelectAll: true,
+    }
 }
 
 SelectSearchable.args = {
