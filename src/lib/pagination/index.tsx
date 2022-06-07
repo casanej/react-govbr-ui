@@ -31,9 +31,7 @@ export const Pagination = (props: Props): ReactElement => {
     useEffect(() => {
         if (props.onChange) props.onChange({
             page: state.page,
-            pageSize: state.pageSize,
-            initialItem: state.initialItem,
-            finalItem: state.finalItem,
+            pageSize: state.pageSize
         });
     }, [state.page, state.pageSize]);
 

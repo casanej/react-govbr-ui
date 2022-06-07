@@ -14,7 +14,7 @@ interface Props {
     ordering?: TableOrdering;
     onPaginationChange?: (pageObj: PageObj) => void;
     onSelectChange?: (selectedRows: TableRow[], selectedRowId: string[]) => void;
-    paging?: Pick<PageObj, 'page' | 'pageSize'>;
+    paging?: PageObj;
     paginated?: TablePaginationTypes;
     selectedItems?: string[];
     tableWidth?: number;
@@ -57,11 +57,7 @@ export const Table = (props: Props): ReactElement => {
     }, [props.rows])
 
     useEffect(() => {
-        if (props.paging && props.paging.page && props.paging.pageSize) {
-            const initialItem = 1 + props.paging.pageSize * (props.paging.page - 1);
-            const finalItem = Math.min(props.paging.pageSize * props.paging.page, props.rows.length);
-            tableDispatch({ type: 'new-page', payload: { ...props.paging, initialItem, finalItem } })
-        }
+        if (props.paging) tableDispatch({ type: 'new-page', payload: props.paging })
     }, [props.paging])
 
     const handlePaginationChange = (pageObj: PageObj): void => {

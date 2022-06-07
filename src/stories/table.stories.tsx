@@ -14,7 +14,7 @@ export default {
     title: 'Exibição de Dados/Table',
     component: Table,
     argTypes: {
-        onPaginationChange: { action: 'onPaginationChange({ page, pageSize, initialItem, finalItem })' },
+        onPaginationChange: { action: 'onPaginationChange({ page, pageSize })' },
         onSelectChange: { action: 'onSelectChange(rows)' },
     },
 } as LoadingExport;
@@ -26,7 +26,9 @@ const Template: LoadingStory = (args) => {
 
         return false;
     }, [window.location.search])
-    const [pageObj, setPageObj] = useState<PageObj>({ page: 1, pageSize: 10, initialItem: 1, finalItem: 10 });
+    const [pageObj, setPageObj] = useState<PageObj>({ page: 1, pageSize: 10 });
+
+    console.log('[PAGE SIZE]', 1 + pageObj.pageSize * (pageObj.page - 1) - 1, Math.min(pageObj.pageSize * pageObj.page, args.rows.length))
 
     return <ThemeProvider theme={theme}>
         <GlobalStyle theme={{ ...theme }} />
@@ -36,7 +38,7 @@ const Template: LoadingStory = (args) => {
             <Table
                 columns={args.columns}
                 rows={args.paginated && args.paginated.type === 'controlled'
-                    ? args.rows.slice(pageObj.initialItem - 1, pageObj.finalItem)
+                    ? args.rows.slice(1 + pageObj.pageSize * (pageObj.page - 1) - 1, Math.min(pageObj.pageSize * pageObj.page, args.rows.length))
                     : args.rows
                 }
                 isLoading={args.isLoading}

@@ -1,8 +1,6 @@
 export interface PageObj {
     page: number;
     pageSize: number;
-    initialItem: number;
-    finalItem: number;
 }
 
 export type TablePaginationTypes = TablePaginationControlled | TablePaginationUncontrolled;
