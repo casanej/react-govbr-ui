@@ -21,9 +21,12 @@ export const TableTBody = (): ReactElement => {
     </TableTdValue>;
 
     if (paging && paginated && paginated.type === 'uncontrolled') {
+        const initialItem = paging.pageSize * (paging.page - 1);
+        const finalItem = Math.min(paging.pageSize * paging.page, rows.length)
+
         return <TableBody>
             {
-                rows.slice(paging.initialItem - 1, paging.finalItem).map((row, index) => <TableTr key={index} row={row} />)
+                rows.slice(initialItem, finalItem).map((row, index) => <TableTr key={index} row={row} />)
             }
         </TableBody>;
     }
