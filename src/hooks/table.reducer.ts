@@ -6,13 +6,13 @@ export interface TableState {
     firstRender: boolean;
     loading: boolean;
     numRowsSelected: number;
+    paging: PageObj;
     selectAllStatus: CheckTypes;
     selectedOrder: TableSelectedOrdering;
     selectedRawRows: TableRow[];
     selectedRowsId: string[];
     treatedRows: TableRowTreated[];
     ordering?: TableOrdering;
-    paging?: PageObj;
     paginated?: TablePaginationTypes | undefined;
 }
 
@@ -21,6 +21,7 @@ export const tableStateInitialValue: TableState = {
     firstRender: true,
     loading: false,
     numRowsSelected: 0,
+    paging: { page: 1, pageSize: 10 },
     selectAllStatus: 0,
     selectedOrder: {},
     selectedRawRows: [],

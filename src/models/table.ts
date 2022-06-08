@@ -9,6 +9,7 @@ export interface TableContextProps {
     columns: TableColumn[];
     firstRender: boolean;
     rows: TableRowTreated[];
+    paging: PageObj;
     selectAllStatus: CheckTypes;
     selectedRowsId: string[];
     numRowsSelected: number;
@@ -20,7 +21,6 @@ export interface TableContextProps {
     onPaginationChange?: (pageObj: PageObj) => void;
     onSelectRow?: (payload: TableStateActionSelectRowProps) => void;
     selectedOrder?: TableSelectedOrdering;
-    paging?: PageObj;
     paginated?: TablePaginationTypes;
     tableDispatch: (value: TableStateAction) => void
     tableWidth?: number;
@@ -33,6 +33,7 @@ export const tableContextInitialValues:TableContextProps = {
     numRowsSelected: 0,
     selectAllStatus: 0,
     selectedRowsId: [],
+    paging: { page: 1, pageSize: 10 },
     rows: [],
     tableDispatch: (value) => { return value },
 };

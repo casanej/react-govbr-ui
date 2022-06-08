@@ -7,6 +7,7 @@ import { TableStyled } from './index.style';
 interface Props {
     columns: TableColumn[];
     rows: TableRow[];
+    paging: PageObj;
     isLoading?: boolean;
     hasActions?: boolean;
     hasSearch?: boolean;
@@ -14,7 +15,6 @@ interface Props {
     ordering?: TableOrdering;
     onPaginationChange?: (pageObj: PageObj) => void;
     onSelectChange?: (selectedRows: TableRow[], selectedRowId: string[]) => void;
-    paging?: PageObj;
     paginated?: TablePaginationTypes;
     selectedItems?: string[];
     tableWidth?: number;

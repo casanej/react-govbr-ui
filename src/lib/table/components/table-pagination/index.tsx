@@ -25,7 +25,7 @@ export const TablePagination:FC = () => {
         onPaginationChange && onPaginationChange(pageObj);
     }
 
-    if (!paginated || !paging) return null;
+    if (!paginated) return null;
 
     return <Pagination
         currentPage={paging.page}
